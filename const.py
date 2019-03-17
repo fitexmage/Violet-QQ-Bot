@@ -1,0 +1,1 @@
+player_qq_path = "data/qq.txt"
