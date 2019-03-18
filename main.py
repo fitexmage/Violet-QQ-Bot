@@ -41,6 +41,4 @@ async def handle_group_request(content):
                 return {'approve': True}
 
 
-# bot.run(host=HOST, port=PORT)
-
-print(auto_crawler("如何采矿"))
+bot.run(host=HOST, port=PORT)
