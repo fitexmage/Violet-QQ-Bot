@@ -4,6 +4,7 @@ from crawler import *
 from mcstatus import MinecraftServer
 from mcrcon import MCRcon
 
+
 class Violet:
     def __init__(self):
         self.enable = True
@@ -24,8 +25,8 @@ class Violet:
 
             elif message == "白名单":
                 reply = "申请白名单格式：白名单 游戏名\n" \
-                          "如：白名单 Fitexmage\n" \
-                          "注意：游戏名只能包含英文、数字、和下划线，不能有中文和横线"
+                        "如：白名单 Fitexmage\n" \
+                        "注意：游戏名只能包含英文、数字、和下划线，不能有中文和横线"
 
             elif regex_match("^白名单 ", message):
                 if regex_match("^白名单 [a-zA-Z0-9_]{3,}$", message):
@@ -66,10 +67,11 @@ class Violet:
             if context['group_id'] == 298466962:  # 影之乡服务器
                 if message == "小紫" or message == "[CQ:at,qq=" + QQ_number + "] ":
                     reply = "你好呀，我是腐竹的搭档小紫。\n" \
-                              "目前我可以:\n" \
-                              "1. 添加白名单。（私聊我\"白名单\"获取详情）\n" \
-                              "2. 获取服务器在线人数。（@我并发送在线人数）\n" \
-                              "我刚从微信过来，还不太适应QQ，更多功能正在添加中~"
+                            "目前我可以:\n" \
+                            "1. 添加白名单。（私聊我\"白名单\"获取详情）\n" \
+                            "2. 获取服务器在线人数。（@我并发送\"在线人数\"）\n" \
+                            "3. 获取服务器延迟。（@我并发送\"服务器延迟\"）\n" \
+                            "我刚从微信过来，还不太适应QQ，更多功能正在添加中~"
 
                 elif regex_match("^\\[CQ:at,qq=" + QQ_number + "\\] .*", message):
                     at_content = re.match("^\\[CQ:at,qq=" + QQ_number + "\\] (.*)", message).group(1)
@@ -88,8 +90,14 @@ class Violet:
                     elif at_content == "服务器延迟":
                         server = MinecraftServer.lookup(server_host + ":" + str(server_port))
                         reply = "服务器延迟：" + str(server.ping()) + "ms"
-                    # else:
-                    #     reply = auto_crawler(at_content)
+                        # else:
+                        #     reply = auto_crawler(at_content)
+                    elif regex_match('^/.*', at_content):
+                        if qq_number == partner_QQ_number:
+                            with MCRcon(host=server_host, password=self.rcon_password, port=rcon_port) as mcr:
+                                at_content.replace("/", "")
+                                mcr.command(at_content)
+                                reply = "已执行该指令！"
 
         return reply
 
