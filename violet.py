@@ -44,6 +44,9 @@ class Violet:
                     reply = "游戏名格式有误！"
 
             elif regex_match("^我是谁", message):
+                print("A")
+                print(self.rcon_password)
+                print("A")
                 if qq_number in self.player_qq_dict:
                     reply = "你是" + self.player_qq_dict[qq_number] + "！"
                 else:
@@ -84,7 +87,7 @@ class Violet:
                     elif at_content == "在线人数":
                         print("A")
                         print(self.rcon_password)
-                        print("b")
+                        print("A")
                         with MCRcon(host=server_host, password=self.rcon_password, port=rcon_port) as mcr:
                             text = mcr.command("list")
                             reply = re.sub('§.', "", text)
