@@ -44,9 +44,6 @@ class Violet:
                     reply = "游戏名格式有误！"
 
             elif regex_match("^我是谁", message):
-                print("A")
-                print(self.rcon_password)
-                print("A")
                 if qq_number in self.player_qq_dict:
                     reply = "你是" + self.player_qq_dict[qq_number] + "！"
                 else:
@@ -85,12 +82,9 @@ class Violet:
                         else:
                             reply = "我不是那么随便的人~"
                     elif at_content == "在线人数":
-                        print("A")
-                        print(self.rcon_password)
-                        print("A")
                         with MCRcon(host=server_host, password=self.rcon_password, port=rcon_port) as mcr:
                             text = mcr.command("list")
-                            reply = re.sub('§.', "", text)
+                            reply = re.sub('§.', "", text).strip()
                     elif at_content == "服务器延迟":
                         server = MinecraftServer.lookup(server_host + ":" + str(server_port))
                         reply = "服务器延迟：" + str(server.ping()) + "ms"
