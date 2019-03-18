@@ -9,6 +9,9 @@ class Violet:
         self.enable = True
         self.player_qq_dict = load_player_qq()
 
+        with open(rcon_password_path, "r") as f:
+            self.rcon_password = f.readline()
+
     def reply_private_msg(self, context):
         message = context['message']
         qq_number = str(context['sender']['user_id'])
@@ -29,10 +32,8 @@ class Violet:
                     if qq_number in self.player_qq_dict:
                         reply = "你是" + self.player_qq_dict[qq_number] + "，你已经申请过白名单了，别想骗我！"
                     else:
-                        player_name = re.match("^白名单 ([a-zA-Z0-9_]{3,})$", message, flags=0).group(1)
-                        with open(rcon_password_path, "r") as f:
-                            rcon_password = f.readline()
-                        with MCRcon(host=server_host, password=rcon_password, port=rcon_port) as mcr:
+                        player_name = re.match("^白名单 ([a-zA-Z0-9_]{3,})$", message).group(1)
+                        with MCRcon(host=server_host, password=self.rcon_password, port=rcon_port) as mcr:
                             mcr.command("whitelist add " + player_name)
                         self.player_qq_dict[qq_number] = player_name
                         with open(player_qq_path, 'w+') as f:
@@ -71,7 +72,7 @@ class Violet:
                               "我刚从微信过来，还不太适应QQ，更多功能正在添加中~"
 
                 elif regex_match("^\\[CQ:at,qq=" + QQ_number + "\\] .*", message):
-                    at_content = re.match("^\\[CQ:at,qq=" + QQ_number + "\\] (.*)", message, flags=0).group(1)
+                    at_content = re.match("^\\[CQ:at,qq=" + QQ_number + "\\] (.*)", message).group(1)
                     if debug:
                         print(at_content)
 
@@ -81,14 +82,14 @@ class Violet:
                         else:
                             reply = "我不是那么随便的人~"
                     elif at_content == "在线人数":
-                        server = MinecraftServer.lookup(server_host + ":" + str(server_port))
-                        players = server.status().players
-                        reply = "在线人数：" + str(players.online) + "/" + str(players.max)
+                        with MCRcon(host=server_host, password=self.rcon_password, port=rcon_port) as mcr:
+                            text = mcr.command("list")
+                            reply = re.sub('§.', "", text)
                     elif at_content == "服务器延迟":
                         server = MinecraftServer.lookup(server_host + ":" + str(server_port))
                         reply = "服务器延迟：" + str(server.ping()) + "ms"
-                    else:
-                        reply = auto_crawler(at_content)
+                    # else:
+                    #     reply = auto_crawler(at_content)
 
         return reply
 
