@@ -95,8 +95,8 @@ class Violet:
                     elif regex_match('^/.*', at_content):
                         if qq_number == partner_QQ_number:
                             with MCRcon(host=server_host, password=self.rcon_password, port=rcon_port) as mcr:
-                                at_content.replace("/", "")
-                                mcr.command(at_content)
+                                command = at_content.replace("/", "")
+                                mcr.command(command)
                                 reply = "已执行该指令！"
 
         return reply
