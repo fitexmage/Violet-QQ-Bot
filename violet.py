@@ -82,6 +82,9 @@ class Violet:
                         else:
                             reply = "我不是那么随便的人~"
                     elif at_content == "在线人数":
+                        print("A")
+                        print(self.rcon_password)
+                        print("b")
                         with MCRcon(host=server_host, password=self.rcon_password, port=rcon_port) as mcr:
                             text = mcr.command("list")
                             reply = re.sub('§.', "", text)
