@@ -37,7 +37,7 @@ async def handle_group_increase(content):
 async def handle_group_request(content):
     if violet.enable:
         if content['group_id'] == 298466962:
-            if content['comment'] == "mcbbs" or content['comment'] == "贴吧" or content['comment'] == "论坛":
+            if content['comment'].lower() == "mcbbs" or content['comment'] == "贴吧" or content['comment'] == "论坛":
                 return {'approve': True}
 
 
