@@ -4,11 +4,11 @@ from crawler import *
 from mcstatus import MinecraftServer
 from mcrcon import MCRcon
 
-
 class Violet:
     def __init__(self):
         self.enable = True
         self.player_qq_dict = load_player_qq()
+        self.debug = False
 
         with open(rcon_password_path, "r") as f:
             self.rcon_password = f.readline()
@@ -75,7 +75,7 @@ class Violet:
 
                 elif regex_match("^\\[CQ:at,qq=" + QQ_number + "\\] .*", message):
                     at_content = re.match("^\\[CQ:at,qq=" + QQ_number + "\\] (.*)", message).group(1)
-                    if debug:
+                    if self.debug:
                         print(at_content)
 
                     if at_content == "我爱你":
@@ -90,14 +90,16 @@ class Violet:
                     elif at_content == "服务器延迟":
                         server = MinecraftServer.lookup(server_host + ":" + str(server_port))
                         reply = "服务器延迟：" + str(server.ping()) + "ms"
-                        # else:
-                        #     reply = auto_crawler(at_content)
                     elif regex_match('^/.*', at_content):
                         if qq_number == partner_QQ_number:
                             with MCRcon(host=server_host, password=self.rcon_password, port=rcon_port) as mcr:
                                 command = at_content.replace("/", "")
-                                mcr.command(command)
-                                reply = "已执行该指令！"
+                                text = mcr.command(command)
+                                reply = re.sub('§.', "", text).strip()
+                    elif at_content == "debug":
+                        self.debug = not self.debug
+                        reply = "Debug模式已更换！"
+
 
         return reply
 

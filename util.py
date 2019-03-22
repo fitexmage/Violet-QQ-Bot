@@ -2,12 +2,12 @@ from const import *
 
 import re
 
-debug = False
 
 def regex_match(pattern, message):
     if re.match(pattern, message) is not None:
         return True
     return False
+
 
 def load_player_qq():
     with open(player_qq_path, 'r') as f:
