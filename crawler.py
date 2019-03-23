@@ -92,7 +92,3 @@ def crawler_result(url):
                 return reply
 
     return "对不起，我不太懂，我还需要学习~"
-
-url = search_url("怎么挖钻石最好？")
-reply = crawler_result(url)
-print(reply)
