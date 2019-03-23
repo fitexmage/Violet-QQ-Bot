@@ -87,4 +87,4 @@ def crawler_result(url):
         reply = post.find_element_by_class_name('t_f').text
     else:
         reply = ""
-    print(reply)
+    return reply

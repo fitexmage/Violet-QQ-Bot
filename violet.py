@@ -102,7 +102,9 @@ class Violet:
                         reply = "Debug模式已更换为：" + str(self.debug) + "!"
                     else:
                         url = search_url(at_content)
-                        crawler_result(url)
+                        if self.debug:
+                            print(url)
+                        reply = crawler_result(url)
 
         return reply
 
