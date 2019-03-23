@@ -3,6 +3,7 @@ from const import *
 from selenium import webdriver
 import random
 import csv
+import time
 import jieba
 
 
@@ -50,7 +51,7 @@ def load_stopwords():
     return stopwords_set
 
 
-def search(message):
+def search_url(message):
     stopwords_set = load_stopwords()
 
     list = jieba.cut(message, cut_all=False)
@@ -58,7 +59,7 @@ def search(message):
     for word in list:
         if word not in stopwords_set:
             new_list.append(word)
-
+    print(new_list)
     result_list = []
     with open(new_url_path) as f:
         reader = csv.reader(f)
@@ -73,4 +74,17 @@ def search(message):
                     result_list.append(row)
 
     r = random.randint(0, len(result_list) - 1)
-    return result_list[r]
+    print(result_list[r])
+    return result_list[r][1]
+
+def crawler_result(url):
+    driver = get_driver(False)
+    driver.get(url)
+    time.sleep(1)
+    post_list = driver.find_element_by_id('postlist').find_elements_by_class_name('plhin')
+    if len(post_list) > 1:
+        post = post_list[1]
+        reply = post.find_element_by_class_name('t_f').text
+    else:
+        reply = ""
+    print(reply)

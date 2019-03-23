@@ -4,6 +4,7 @@ from crawler import *
 from mcstatus import MinecraftServer
 from mcrcon import MCRcon
 
+
 class Violet:
     def __init__(self):
         self.enable = True
@@ -98,8 +99,10 @@ class Violet:
                                 reply = re.sub('§.', "", text).strip()
                     elif at_content == "debug":
                         self.debug = not self.debug
-                        reply = "Debug模式已更换！"
-
+                        reply = "Debug模式已更换为：" + str(self.debug) + "!"
+                    else:
+                        url = search_url(at_content)
+                        crawler_result(url)
 
         return reply
 
