@@ -90,10 +90,7 @@ def crawler_result(url):
             post = post_list[r]
             if author is not post.find_element_by_class_name('authi').text:
                 reply = post.find_element_by_class_name('t_f').text
-                if "发表于" in reply:
-                    reply = re.sub('发表于.*\n', "", reply)
-                elif "本帖最后由" in reply:
-                    reply = re.sub('本帖最后由.*\n', "", reply)
+                reply = reply.split("\n")[-1]
                 return reply
 
     return "对不起，我不太懂，我还需要学习~"

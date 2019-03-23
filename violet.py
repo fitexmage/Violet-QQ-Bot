@@ -98,8 +98,9 @@ class Violet:
                                 text = mcr.command(command)
                                 reply = re.sub('§.', "", text).strip()
                     elif at_content == "debug":
-                        self.debug = not self.debug
-                        reply = "Debug模式已更换为：" + str(self.debug) + "!"
+                        if qq_number == partner_QQ_number:
+                            self.debug = not self.debug
+                            reply = "Debug模式已更换为：" + str(self.debug) + "!"
                     else:
                         url = search_url(at_content)
                         if url is not "":
