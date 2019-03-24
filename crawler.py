@@ -91,6 +91,7 @@ def crawler_result(url):
             if author is not post.find_element_by_class_name('authi').text:
                 reply = post.find_element_by_class_name('t_f').text
                 reply = reply.split("\n")[-1]
-                return reply
+                if re.match('http.*', reply) is not None:
+                    return reply
 
     return "对不起，我不太懂，我还需要学习~"

@@ -67,11 +67,11 @@ class Violet:
         elif self.enable:
             if context['group_id'] == 298466962:  # 影之乡服务器
                 if message == "小紫" or message == "[CQ:at,qq=" + QQ_number + "] ":
-                    reply = "你好呀，我是腐竹的搭档小紫。\n" \
+                    reply = "你好呀，我是腐竹的人工智能搭档小紫。\n" \
                             "目前我可以:\n" \
                             "1. 添加白名单。（私聊我\"白名单\"获取详情）\n" \
                             "2. 获取服务器在线人数。（@我并发送\"在线人数\"）\n" \
-                            "3. 获取服务器延迟。（@我并发送\"服务器延迟\"）\n" \
+                            "3. 获取服务器延迟。（@我并发送\"服务器延迟\"）\n\n" \
                             "我刚从微信过来，还不太适应QQ，更多功能正在添加中~"
 
                 elif regex_match("^\\[CQ:at,qq=" + QQ_number + "\\] .*", message):
@@ -107,6 +107,10 @@ class Violet:
                             if self.debug:
                                 print(url)
                             reply = crawler_result(url)
+                else:
+                    if random.randint(0,1) == 0:
+                        with MCRcon(host=server_host, password=self.rcon_password, port=rcon_port) as mcr:
+                            mcr.command("say §f<§2" + context['sender']['card'] + "§f> " + message)
 
         return reply
 
