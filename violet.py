@@ -108,7 +108,8 @@ class Violet:
                                 print(url)
                             reply = crawler_result(url)
                 else:
-                    if random.randint(0,1) == 0:
+                    message = re.sub('\[.*\]', "", message).strip()
+                    if message is not "":
                         with MCRcon(host=server_host, password=self.rcon_password, port=rcon_port) as mcr:
                             mcr.command("say §f<§2" + context['sender']['card'] + "§f> " + message)
 
@@ -123,3 +124,4 @@ class Violet:
         self.enable = False
         reply = "小紫已关闭"
         return reply
+
