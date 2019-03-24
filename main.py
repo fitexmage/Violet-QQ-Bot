@@ -1,5 +1,5 @@
 from const import *
-from violet import *
+from violet import Violet
 
 from aiocqhttp import CQHttp
 
@@ -33,14 +33,13 @@ async def handle_group_increase(context):
         print(context)
 
     if violet.enable:
-        reply = "新人你好，我是腐竹的人工智能搭档小紫，欢迎加入影之乡服务器！请在群共享中下载客户端，想要获取白名单请私聊我\"白名单\"，其他事宜请阅读群公告。"
+        reply = "新人你好，我是人工智能小紫，欢迎加入影之乡服务器！\n请在群共享中下载客户端，想要获取白名单请私聊我\"白名单\"，其他事宜请阅读群公告。"
         await bot.send(context, message=reply, at_sender=True, auto_escape=True)
 
 
 @bot.on_request('group')
 async def handle_group_request(context):
-    if violet.debug:
-        print(context)
+    print(context)
 
     if violet.enable:
         if context['group_id'] == 298466962:
