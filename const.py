@@ -12,4 +12,4 @@ server_host = "wt.D.mcmiao.com"
 server_port = 34874
 rcon_port = 34884
 
-question_set = ["Mod讨论", "游戏技巧", "编程开发", "联机教程", "Mod教程", "Mod问答", "联机问答", "原版问答"]
+question_set = ["Mod讨论", "游戏技巧", "编程开发", "联机教程", "Mod教程", "Mod问答", "联机问答", "原版问答", "矿工茶馆"]
