@@ -39,7 +39,8 @@ async def handle_group_increase(context):
 
 @bot.on_request('group')
 async def handle_group_request(context):
-    print(context)
+    if violet.debug:
+        print(context)
 
     if violet.enable:
         if context['group_id'] == 298466962:

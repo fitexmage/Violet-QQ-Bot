@@ -114,12 +114,12 @@ class Violet:
                             reply = crawler_result(url)
                         if reply is "":
                             reply = "对不起，我不太懂，我还需要学习~"
-                else:
-                    if qq_number in self.player_qq_dict:
-                        message = re.sub('\[.*\]', "", message).strip()
-                        if message is not "":
-                            with MCRcon(host=server_host, password=self.rcon_password, port=rcon_port) as mcr:
-                                mcr.command("say §f<§2" + self.player_qq_dict[qq_number] + "§f> " + message)
+                # else:
+                #     if qq_number in self.player_qq_dict:
+                #         message = re.sub('\[.*\]', "", message).strip()
+                #         if message is not "":
+                #             with MCRcon(host=server_host, password=self.rcon_password, port=rcon_port) as mcr:
+                #                 mcr.command("say §f<§2" + self.player_qq_dict[qq_number] + "§f> " + message)
 
         return reply
 
