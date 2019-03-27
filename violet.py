@@ -91,6 +91,11 @@ class Violet:
                     elif at_content == "服务器延迟":
                         server = MinecraftServer.lookup(server_host + ":" + str(server_port))
                         reply = "服务器延迟：" + str(server.ping()) + "ms"
+                    elif regex_match("^我是谁", message):
+                        if qq_number in self.player_qq_dict:
+                            reply = "你是" + self.player_qq_dict[qq_number] + "！"
+                        else:
+                            reply = "你都没有白名单，我哪知道。。。"
                     elif regex_match('^/.*', at_content):
                         if qq_number == partner_QQ_number:
                             with MCRcon(host=server_host, password=self.rcon_password, port=rcon_port) as mcr:
