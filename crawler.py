@@ -71,7 +71,7 @@ def search_url(message):
                     if word in row[2]:
                         count += 1
 
-                if count >= len(new_list) * 0.7:
+                if count >= len(new_list) * 0.6:
                     result_list.append(row)
 
     if len(result_list) > 0:

@@ -43,7 +43,11 @@ async def handle_group_request(context):
 
     if violet.enable:
         if context['group_id'] == 298466962:
-            if context['comment'].lower() == "mcbbs" or context['comment'] == "贴吧" or context['comment'] == "论坛":
+            comment = "问题：从哪里知道的影之乡？\n答案："
+            if context['comment'].lower() == comment + "mcbbs" or \
+                            context['comment'].lower() == comment + "bbs" or \
+                            context['comment'] == comment + "贴吧" or \
+                            context['comment'] == comment + "论坛":
                 return {'approve': True}
 
 
