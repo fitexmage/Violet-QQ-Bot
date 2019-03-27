@@ -97,4 +97,4 @@ def crawler_result(url):
                 if re.match('http.*', reply) is None:
                     return reply
 
-    return "对不起，我不太懂，我还需要学习~"
+    return ""
