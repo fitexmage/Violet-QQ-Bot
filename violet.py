@@ -91,7 +91,7 @@ class Violet:
                     elif at_content == "服务器延迟":
                         server = MinecraftServer.lookup(server_host + ":" + str(server_port))
                         reply = "服务器延迟：" + str(server.ping()) + "ms"
-                    elif regex_match("^我是谁", message):
+                    elif regex_match("^我是谁", at_content):
                         if qq_number in self.player_qq_dict:
                             reply = "你是" + self.player_qq_dict[qq_number] + "！"
                         else:
