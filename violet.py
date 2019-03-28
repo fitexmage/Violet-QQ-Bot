@@ -9,6 +9,7 @@ class Violet:
     def __init__(self):
         self.enable = True
         self.player_qq_dict = load_player_qq()
+        self.chat_upload = False
         self.debug = False
 
         with open(rcon_password_path, "r") as f:
@@ -114,12 +115,13 @@ class Violet:
                             reply = crawler_result(url)
                         if reply is "":
                             reply = "对不起，我不太懂，我还需要学习~"
-                # else:
-                #     if qq_number in self.player_qq_dict:
-                #         message = re.sub('\[.*\]', "", message).strip()
-                #         if message is not "":
-                #             with MCRcon(host=server_host, password=self.rcon_password, port=rcon_port) as mcr:
-                #                 mcr.command("say §f<§2" + self.player_qq_dict[qq_number] + "§f> " + message)
+                else:
+                    if self.chat_upload:
+                        if qq_number in self.player_qq_dict:
+                            message = re.sub('\[.*\]', "", message).strip()
+                            if message is not "":
+                                with MCRcon(host=server_host, password=self.rcon_password, port=rcon_port) as mcr:
+                                    mcr.command("say §f<§2" + self.player_qq_dict[qq_number] + "§f> " + message)
 
         return reply
 
