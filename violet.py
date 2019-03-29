@@ -120,7 +120,7 @@ class Violet:
                         if reply is "":
                             reply = "对不起，我不太懂，我还需要学习~"
                 else:
-                    if self.chat_upload:
+                    if self.syn_chat:
                         if qq_number in self.player_qq_dict:
                             message = re.sub('\[.*\]', "", message).strip()
                             if message is not "":
