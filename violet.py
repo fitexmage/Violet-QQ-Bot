@@ -9,7 +9,7 @@ class Violet:
     def __init__(self):
         self.enable = True
         self.player_qq_dict = load_player_qq()
-        self.chat_upload = False
+        self.syn_chat = False
         self.debug = False
 
         with open(rcon_password_path, "r") as f:
@@ -92,6 +92,10 @@ class Violet:
                     elif at_content == "服务器延迟":
                         server = MinecraftServer.lookup(server_host + ":" + str(server_port))
                         reply = "服务器延迟：" + str(server.ping()) + "ms"
+                    elif at_content == "切换聊天同步":
+                        if qq_number == partner_QQ_number:
+                            self.syn_chat = not self.syn_chat
+                            reply = "聊天同步已切换为：" + str(self.syn_chat) + "!"
                     elif regex_match("^我是谁", at_content):
                         if qq_number in self.player_qq_dict:
                             reply = "你是" + self.player_qq_dict[qq_number] + "！"

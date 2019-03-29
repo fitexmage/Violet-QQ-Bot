@@ -37,6 +37,11 @@ async def handle_group_increase(context):
         await bot.send(context, message=reply, at_sender=True, auto_escape=True)
 
 
+@bot.on_notice('group_decrease')
+async def handle_group_decrease(context):
+    print(context)
+
+
 @bot.on_request('group')
 async def handle_group_request(context):
     if violet.debug:
