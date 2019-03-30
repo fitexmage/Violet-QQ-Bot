@@ -125,7 +125,7 @@ class Violet:
                             message = re.sub('\[.*\]', "", message).strip()
                             if message is not "":
                                 with MCRcon(host=server_host, password=self.rcon_password, port=rcon_port) as mcr:
-                                    mcr.command("svs synchat §f<§2" + self.player_qq_dict[qq_number] + "§f> " + message)
+                                    mcr.command("svs synchat §2[群]§f<§2" + self.player_qq_dict[qq_number] + "§f> " + message)
 
         return reply
 
