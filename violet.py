@@ -83,8 +83,8 @@ class Violet:
                             "3. 获取服务器延迟。（@我并发送\"服务器延迟\"）\n\n" \
                             "我刚从微信过来，还不太适应QQ，更多功能正在添加中~"
 
-                elif regex_match("^\\[CQ:at,qq=" + QQ_number + "\\] .*", message):
-                    at_content = re.match("^\\[CQ:at,qq=" + QQ_number + "\\] (.*)", message).group(1)
+                elif regex_match("^\\[CQ:at,qq=" + QQ_number + "\\].*", message):
+                    at_content = re.match("^\\[CQ:at,qq=" + QQ_number + "\\](.*)", message).group(1).strip()
                     if self.debug:
                         print(at_content)
 

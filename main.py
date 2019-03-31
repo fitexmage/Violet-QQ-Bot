@@ -52,8 +52,9 @@ async def handle_group_request(context):
             comment = "问题：从哪里知道的影之乡？\n答案："
             if context['comment'].lower() == comment + "mcbbs" or \
                             context['comment'].lower() == comment + "bbs" or \
+                            context['comment'] == comment + "论坛" or \
                             context['comment'] == comment + "贴吧" or \
-                            context['comment'] == comment + "论坛":
+                            context['comment'].lower() == comment + "b站":
                 return {'approve': True}
 
 
