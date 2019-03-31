@@ -15,6 +15,17 @@ class Violet:
         with open(rcon_password_path, "r") as f:
             self.rcon_password = f.readline()
 
+    def update_qq_dict(self):
+        with open(player_qq_path, 'w+') as f:
+            for qq in self.player_qq_dict:
+                f.write(qq + " " + self.player_qq_dict[qq] + "\n")
+
+    def rcon_command(self, command):
+        with MCRcon(host=server_host, password=self.rcon_password, port=rcon_port) as mcr:
+            text = mcr.command(command)
+            text = re.sub('§.', "", text).strip()
+            return text
+
     def reply_private_msg(self, context):
         message = context['message']
         qq_number = str(context['sender']['user_id'])
@@ -36,12 +47,9 @@ class Violet:
                         reply = "你是" + self.player_qq_dict[qq_number] + "，你已经申请过白名单了，别想骗我！"
                     else:
                         player_name = re.match("^白名单 ([a-zA-Z0-9_]{3,})$", message).group(1)
-                        with MCRcon(host=server_host, password=self.rcon_password, port=rcon_port) as mcr:
-                            mcr.command("whitelist add " + player_name)
+                        self.rcon_command("whitelist add " + player_name)
                         self.player_qq_dict[qq_number] = player_name
-                        with open(player_qq_path, 'w+') as f:
-                            for qq in self.player_qq_dict:
-                                f.write(qq + " " + self.player_qq_dict[qq] + "\n")
+                        self.update_qq_dict()
                         reply = "白名单添加成功！"
                 else:
                     reply = "游戏名格式有误！"
@@ -86,9 +94,7 @@ class Violet:
                         else:
                             reply = "我不是那么随便的人~"
                     elif at_content == "在线人数":
-                        with MCRcon(host=server_host, password=self.rcon_password, port=rcon_port) as mcr:
-                            text = mcr.command("list")
-                            reply = re.sub('§.', "", text).strip()
+                        reply = self.rcon_command("list")
                     elif at_content == "服务器延迟":
                         server = MinecraftServer.lookup(server_host + ":" + str(server_port))
                         reply = "服务器延迟：" + str(server.ping()) + "ms"
@@ -103,10 +109,9 @@ class Violet:
                             reply = "你都没有白名单，我哪知道。。。"
                     elif regex_match('^/.*', at_content):
                         if qq_number == partner_QQ_number:
-                            with MCRcon(host=server_host, password=self.rcon_password, port=rcon_port) as mcr:
-                                command = at_content.replace("/", "")
-                                text = mcr.command(command)
-                                reply = re.sub('§.', "", text).strip()
+                            command = at_content.replace("/", "")
+                            reply = self.rcon_command(command)
+
                     elif at_content == "debug":
                         if qq_number == partner_QQ_number:
                             self.debug = not self.debug
@@ -124,8 +129,8 @@ class Violet:
                         if qq_number in self.player_qq_dict:
                             message = re.sub('\[.*\]', "", message).strip()
                             if message is not "":
-                                with MCRcon(host=server_host, password=self.rcon_password, port=rcon_port) as mcr:
-                                    mcr.command("svs synchat §2[群]§f<§2" + self.player_qq_dict[qq_number] + "§f> " + message)
+                                self.rcon_command(
+                                    "svs synchat §2[群]§f<§2" + self.player_qq_dict[qq_number] + "§f> " + message)
 
         return reply
 

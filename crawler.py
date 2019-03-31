@@ -79,6 +79,7 @@ def search_url(message):
         return result_list[r][1]
     return ""
 
+
 def crawler_result(url):
     driver = get_driver(False)
     driver.get(url)
@@ -89,7 +90,7 @@ def crawler_result(url):
         author = post_list[0].find_element_by_class_name('authi').text
 
         for i in range(5):
-            r = random.randint(1, len(post_list)-1)
+            r = random.randint(1, len(post_list) - 1)
             post = post_list[r]
             if author is not post.find_element_by_class_name('authi').text:
                 reply = post.find_element_by_class_name('t_f').text
