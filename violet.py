@@ -95,6 +95,11 @@ class Violet:
                             reply = "我不是那么随便的人~"
                     elif at_content == "在线人数":
                         reply = self.rcon_command("list")
+                    elif at_content == "不在线人数":
+                        num_online = int(re.search('[0-9]+', self.rcon_command("list")).group())
+                        num_player = len(self.player_qq_dict)
+                        num_offline = num_player - num_online
+                        reply = "当前有" + str(num_offline) + "个玩家不在线，最大不在线人数为" + str(num_player) + "个玩家."
                     elif at_content == "服务器延迟":
                         server = MinecraftServer.lookup(server_host + ":" + str(server_port))
                         reply = "服务器延迟：" + str(server.ping()) + "ms"
