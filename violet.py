@@ -79,8 +79,11 @@ class Violet:
                     reply = "你好呀，我是腐竹的人工智能搭档小紫。\n" \
                             "目前我可以:\n" \
                             "1. 添加白名单。（私聊我\"白名单\"获取详情）\n" \
-                            "2. 获取服务器在线人数。（@我并发送\"在线人数\"）\n" \
-                            "3. 获取服务器延迟。（@我并发送\"服务器延迟\"）\n\n" \
+                            "2. 获取自己的游戏名。（私聊我或@我并发送\"我是谁\"获取游戏名）\n" \
+                            "3. 获取服务器在线人数。（@我并发送\"在线人数\"）\n" \
+                            "4. 获取服务器不在线人数。（@我并发送\"不在线人数\"）\n" \
+                            "5. 获取服务器延迟。（@我并发送\"服务器延迟\"）\n" \
+                            "6. 回答有关游戏的问题。（@我并发送任意问题）\n\n" \
                             "我刚从微信过来，还不太适应QQ，更多功能正在添加中~"
 
                 elif regex_match("^\\[CQ:at,qq=" + QQ_number + "\\].*", message):
@@ -93,9 +96,9 @@ class Violet:
                             reply = "我也爱你呀~"
                         else:
                             reply = "我不是那么随便的人~"
-                    elif at_content == "在线人数":
+                    elif at_content == "在线人数" or at_content == "在线玩家":
                         reply = self.rcon_command("list")
-                    elif at_content == "不在线人数":
+                    elif at_content == "不在线人数" or at_content == "不在线玩家":
                         num_online = int(re.search('[0-9]+', self.rcon_command("list")).group())
                         num_player = len(self.player_qq_dict)
                         num_offline = num_player - num_online
