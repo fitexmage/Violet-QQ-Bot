@@ -13,10 +13,10 @@ def get_driver(head=False):  # 得到驱动器
         driver = webdriver.Chrome()
         return driver
     else:
-        option = webdriver.ChromeOptions()
-        option.add_argument('--no-sandbox')
-        option.add_argument('--headless')
-        driver = webdriver.Chrome(chrome_options=option)
+        options = webdriver.ChromeOptions()
+        options.add_argument('--no-sandbox')
+        options.add_argument('--headless')
+        driver = webdriver.Chrome(options=options)
         return driver
 
 
@@ -72,11 +72,12 @@ def search_url(message):
                         count += 1
 
                 if count >= len(new_list) * 0.6:
-                    result_list.append(row)
+                    result_list.append((row, count))
 
     if len(result_list) > 0:
-        r = random.randint(0, len(result_list) - 1)
-        return result_list[r][1]
+        result_list.sort(key=lambda count: count[1], reverse=True)
+        r = random.randint(0, len(result_list) - 1 if len(result_list) <= 100 else 100)
+        return result_list[r][0][1]
     return ""
 
 
@@ -94,8 +95,13 @@ def crawler_result(url):
             post = post_list[r]
             if author is not post.find_element_by_class_name('authi').text:
                 reply = post.find_element_by_class_name('t_f').text
-                # reply = reply.split("\n")[-1]
+                reply = re.sub(".* 发表于 [0-9]*-[0-9]*-[0-9]* [0-9]*:[0-9]*", "", reply)
+                reply = re.sub("登录/注册后可看大图", "", reply)
+                reply = reply.strip()
                 if re.match('http.*', reply) is None:
                     return reply
 
     return ""
+
+url = search_url("RPG")
+print(crawler_result(url))
