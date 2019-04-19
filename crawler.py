@@ -94,8 +94,11 @@ def crawler_result(url):
             post = post_list[r]
             if author is not post.find_element_by_class_name('authi').text:
                 reply = post.find_element_by_class_name('t_f').text
-                reply = reply.split("\n")[-1]
+                # reply = reply.split("\n")[-1]
                 if re.match('http.*', reply) is None:
                     return reply
 
     return ""
+
+url = search_url("什么是公益服")
+print(crawler_result(url))

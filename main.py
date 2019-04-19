@@ -41,7 +41,7 @@ async def handle_group_increase(context):
 async def handle_group_decrease(context):
     print(context)
     if context['group_id'] == 298466962:
-        qq_number = context['user_id']
+        qq_number = str(context['user_id'])
         if qq_number in violet.player_qq_dict:
             violet.rcon_command("whitelist remove " + violet.player_qq_dict[qq_number])
             violet.player_qq_dict.pop(qq_number)
