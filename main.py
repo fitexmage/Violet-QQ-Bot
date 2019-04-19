@@ -2,6 +2,7 @@ from const import *
 from violet import Violet
 
 from aiocqhttp import CQHttp
+import re
 
 bot = CQHttp(api_root='http://127.0.0.1:5700/')
 violet = Violet()
@@ -56,11 +57,12 @@ async def handle_group_request(context):
     if violet.enable:
         if context['group_id'] == 298466962:
             comment = "问题：从哪里知道的影之乡？\n答案："
-            if context['comment'].lower() == comment + "mcbbs" or \
-                            context['comment'].lower() == comment + "bbs" or \
-                            context['comment'] == comment + "论坛" or \
-                            context['comment'] == comment + "贴吧" or \
-                            context['comment'].lower() == comment + "b站":
+            answer = re.match(comment + "(.*)", context['comment']).group(1).lower()
+
+            if re.search("bbs", answer) or \
+                    re.search("论坛", answer) or \
+                    re.search("贴吧", answer) or \
+                    re.search("b站", answer):
                 return {'approve': True}
 
 
