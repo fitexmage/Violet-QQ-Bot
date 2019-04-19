@@ -99,6 +99,3 @@ def crawler_result(url):
                     return reply
 
     return ""
-
-url = search_url("什么是公益服")
-print(crawler_result(url))
