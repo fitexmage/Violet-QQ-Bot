@@ -39,6 +39,7 @@ async def handle_group_increase(context):
 
 @bot.on_notice('group_decrease')
 async def handle_group_decrease(context):
+    print(context)
     if context['group_id'] == 298466962:
         qq_number = context['user_id']
         if qq_number in violet.player_qq_dict:
