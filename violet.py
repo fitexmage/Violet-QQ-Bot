@@ -59,7 +59,6 @@ class Violet:
                     reply = "你是" + self.player_qq_dict[qq_number] + "！"
                 else:
                     reply = "你都没有白名单，我哪知道。。。"
-
         return reply
 
     def reply_group_msg(self, context):
@@ -114,6 +113,12 @@ class Violet:
                             reply = "你是" + self.player_qq_dict[qq_number] + "！"
                         else:
                             reply = "你都没有白名单，我哪知道。。。"
+                    elif regex_match("^[0-9]*是谁", at_content):
+                        qq_number = re.search("[0-9]*", at_content).group(0)
+                        if qq_number in self.player_qq_dict:
+                            reply = "这位玩家是" + self.player_qq_dict[qq_number] + "！"
+                        else:
+                            reply = "此人未获得白名单！"
                     elif regex_match('^/.*', at_content):
                         if qq_number == partner_QQ_number:
                             command = at_content.replace("/", "")
