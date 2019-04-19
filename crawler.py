@@ -96,12 +96,10 @@ def crawler_result(url):
             if author is not post.find_element_by_class_name('authi').text:
                 reply = post.find_element_by_class_name('t_f').text
                 reply = re.sub(".* 发表于 [0-9]*-[0-9]*-[0-9]* [0-9]*:[0-9]*", "", reply)
+                reply = re.sub("本帖最后由 .* 于 [0-9]*-[0-9]*-[0-9]* [0-9]*:[0-9]* 编辑", "", reply)
                 reply = re.sub("登录/注册后可看大图", "", reply)
                 reply = reply.strip()
                 if re.match('http.*', reply) is None:
                     return reply
 
     return ""
-
-url = search_url("RPG")
-print(crawler_result(url))
