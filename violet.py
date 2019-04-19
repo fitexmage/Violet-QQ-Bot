@@ -78,18 +78,20 @@ class Violet:
                     reply = "你好呀，我是腐竹的人工智能搭档小紫。\n" \
                             "目前我可以:\n" \
                             "1. 添加白名单。（私聊我\"白名单\"获取详情）\n" \
-                            "2. 获取自己的游戏名。（私聊我\"我是谁\"获取游戏名）\n" \
+                            "2. 获取自己的游戏名。（@我并发送\"我是谁\"）\n" \
+                            "3. 获取其他玩家的游戏名。（@我并发送\"xxxxxx（QQ号）是谁\"）\n" \
                             "3. 获取服务器在线人数或不在线人数。（@我并发送\"在线人数\"或\"不在线人数\"）\n" \
                             "4. 获取服务器延迟。（@我并发送\"服务器延迟\"）\n" \
-                            "5. 回答有关游戏的问题。（@我并发送任意问题）\n\n" \
-                            "我刚从微信过来，还不太适应QQ，更多功能正在添加中~"
+                            "5. 回答有关游戏的问题。（@我并发送任意问题）"
 
                 elif regex_match("^\\[CQ:at,qq=" + QQ_number + "\\].*", message):
                     at_content = re.match("^\\[CQ:at,qq=" + QQ_number + "\\](.*)", message).group(1).strip()
                     if self.debug:
                         print(at_content)
 
-                    if at_content == "我爱你":
+                    if regex_match("^你是谁", at_content):
+                        reply = "我是小紫呀~"
+                    elif at_content == "我爱你":
                         if qq_number == partner_QQ_number:
                             reply = "我也爱你呀~"
                         else:
