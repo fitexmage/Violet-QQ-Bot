@@ -41,12 +41,12 @@ class Violet:
                         "如：白名单 Fitexmage\n" \
                         "注意：游戏名只能包含英文、数字、和下划线，不能有中文和横线"
 
-            elif regex_match("^白名单 ", message):
-                if regex_match("^白名单 [a-zA-Z0-9_]{3,}$", message):
+            elif regex_match("白名单 ", message):
+                if regex_match("白名单 [a-zA-Z0-9_]{3,}$", message):
                     if qq_number in self.player_qq_dict:
                         reply = "你是" + self.player_qq_dict[qq_number] + "，你已经申请过白名单了，别想骗我！"
                     else:
-                        player_name = re.match("^白名单 ([a-zA-Z0-9_]{3,})$", message).group(1)
+                        player_name = re.match("白名单 ([a-zA-Z0-9_]{3,})$", message).group(1)
                         self.rcon_command("whitelist add " + player_name)
                         self.player_qq_dict[qq_number] = player_name
                         self.update_qq_dict()
@@ -54,7 +54,7 @@ class Violet:
                 else:
                     reply = "游戏名格式有误！"
 
-            elif regex_match("^我是谁", message):
+            elif regex_match("我是谁", message):
                 if qq_number in self.player_qq_dict:
                     reply = "你是" + self.player_qq_dict[qq_number] + "！"
                 else:
@@ -84,13 +84,24 @@ class Violet:
                             "4. 获取服务器延迟。（@我并发送\"服务器延迟\"）\n" \
                             "5. 回答有关游戏的问题。（@我并发送任意问题）"
 
-                elif regex_match("^\\[CQ:at,qq=" + QQ_number + "\\].*", message):
+                elif regex_match("\\[CQ:at,qq=" + QQ_number + "\\].*", message):
                     at_content = re.match("^\\[CQ:at,qq=" + QQ_number + "\\](.*)", message).group(1).strip()
                     if self.debug:
                         print(at_content)
 
                     if regex_match("你是谁", at_content):
                         reply = "我是小紫呀~"
+                    elif regex_match("我是谁", at_content):
+                        if qq_number in self.player_qq_dict:
+                            reply = "你是" + self.player_qq_dict[qq_number] + "！"
+                        else:
+                            reply = "你都没有白名单，我哪知道。。。"
+                    elif regex_match("[0-9]*.*是谁", at_content):
+                        qq_number = re.search("[0-9]*", at_content).group(0)
+                        if qq_number in self.player_qq_dict:
+                            reply = "这位玩家是" + self.player_qq_dict[qq_number] + "！"
+                        else:
+                            reply = "此人未获得白名单！"
                     elif at_content == "我爱你":
                         if qq_number == partner_QQ_number:
                             reply = "我也爱你呀~"
@@ -106,25 +117,19 @@ class Violet:
                     elif at_content == "服务器延迟":
                         server = MinecraftServer.lookup(server_host + ":" + str(server_port))
                         reply = "服务器延迟：" + str(server.ping()) + "ms"
+                    elif regex_match('/.*', at_content):
+                        if qq_number == partner_QQ_number:
+                            command = at_content.replace("/", "")
+                            reply = self.rcon_command(command)
                     elif at_content == "切换聊天同步":
                         if qq_number == partner_QQ_number:
                             self.syn_chat = not self.syn_chat
                             reply = "聊天同步已切换为：" + str(self.syn_chat) + "!"
-                    elif regex_match("^我是谁", at_content):
-                        if qq_number in self.player_qq_dict:
-                            reply = "你是" + self.player_qq_dict[qq_number] + "！"
-                        else:
-                            reply = "你都没有白名单，我哪知道。。。"
-                    elif regex_match("^[0-9]*.*是谁", at_content):
-                        qq_number = re.search("[0-9]*", at_content).group(0)
-                        if qq_number in self.player_qq_dict:
-                            reply = "这位玩家是" + self.player_qq_dict[qq_number] + "！"
-                        else:
-                            reply = "此人未获得白名单！"
-                    elif regex_match('^/.*', at_content):
-                        if qq_number == partner_QQ_number:
-                            command = at_content.replace("/", "")
-                            reply = self.rcon_command(command)
+                    elif regex_match('.*是什么', at_content):
+                        question = re.match('(.*)是什么', at_content).group(1)
+                        reply = crawler_mcmod(question)
+                        if reply is None:
+                            reply = "对不起，我不太懂，我还需要学习~"
 
                     elif at_content == "debug":
                         if qq_number == partner_QQ_number:
@@ -132,11 +137,11 @@ class Violet:
                             reply = "Debug模式已更换为：" + str(self.debug) + "!"
                     else:
                         url = search_url(at_content)
-                        if url is not "":
+                        if url:
                             if self.debug:
                                 print(url)
                             reply = crawler_result(url)
-                        if reply is "":
+                        if reply is None:
                             reply = "对不起，我不太懂，我还需要学习~"
                 else:
                     if self.syn_chat:

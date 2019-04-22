@@ -78,7 +78,7 @@ def search_url(message):
         result_list.sort(key=lambda count: count[1], reverse=True)
         r = random.randint(0, len(result_list) - 1 if len(result_list) <= 100 else 100)
         return result_list[r][0][1]
-    return ""
+    return None
 
 
 def crawler_result(url):
@@ -102,4 +102,18 @@ def crawler_result(url):
                 if re.match('http.*', reply) is None:
                     return reply
 
-    return ""
+    return None
+
+def crawler_mcmod(question):
+    driver = get_driver(True)
+    driver.get("https://www.mcmod.cn/s?key=" + question + "&filter=2")
+    time.sleep(1)
+    try:
+        result_list = driver.find_elements_by_class_name('result-item')
+        result_list[0].find_element_by_class_name('head').find_element_by_tag_name('a').click()
+        driver.close()
+        time.sleep(1)
+        driver.switch_to.window(driver.window_handles[0])
+        return driver.find_element_by_class_name('item-content').text
+    except Exception:
+        return None
