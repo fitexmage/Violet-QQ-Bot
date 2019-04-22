@@ -127,6 +127,7 @@ class Violet:
                             reply = "聊天同步已切换为：" + str(self.syn_chat) + "!"
                     elif regex_match('.*是什么', at_content):
                         question = re.match('(.*)是什么', at_content).group(1)
+                        print(question)
                         reply = crawler_mcmod(question)
                         if reply is None:
                             reply = "对不起，我不太懂，我还需要学习~"
