@@ -104,16 +104,24 @@ def crawler_result(url):
 
     return None
 
+
 def crawler_mcmod(question):
     driver = get_driver(False)
     driver.get("https://www.mcmod.cn/s?key=" + question + "&filter=2")
     time.sleep(1)
+    print("a")
     try:
         result_list = driver.find_elements_by_class_name('result-item')
         result_list[0].find_element_by_class_name('head').find_element_by_tag_name('a').click()
+        print("b")
         driver.close()
-        time.sleep(1)
+        print("c")
         driver.switch_to.window(driver.window_handles[0])
-        return driver.find_element_by_class_name('item-content').text
+        print("d")
+        answer = driver.find_element_by_class_name('item-content').text
+        return answer
     except Exception:
         return None
+
+
+print(crawler_mcmod("核弹"))
