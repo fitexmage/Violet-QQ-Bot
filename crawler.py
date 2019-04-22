@@ -105,7 +105,7 @@ def crawler_result(url):
     return None
 
 def crawler_mcmod(question):
-    driver = get_driver(True)
+    driver = get_driver(False)
     driver.get("https://www.mcmod.cn/s?key=" + question + "&filter=2")
     time.sleep(1)
     try:
