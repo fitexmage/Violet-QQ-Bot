@@ -120,5 +120,3 @@ def crawler_mcmod(question):
         return answer
     except Exception:
         return None
-
-crawler_mcmod("核弹")

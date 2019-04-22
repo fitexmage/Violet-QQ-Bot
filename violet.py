@@ -125,11 +125,11 @@ class Violet:
                         if qq_number == partner_QQ_number:
                             self.syn_chat = not self.syn_chat
                             reply = "聊天同步已切换为：" + str(self.syn_chat) + "!"
-                    elif regex_match('.*是什么', at_content):
-                        question = re.match('(.*)是什么', at_content).group(1)
-                        reply = crawler_mcmod(question)
-                        if reply is None:
-                            reply = "对不起，我不太懂，我还需要学习~"
+                    # elif regex_match('.*是什么', at_content):
+                    #     question = re.match('(.*)是什么', at_content).group(1)
+                    #     reply = crawler_mcmod(question)
+                    #     if reply is None:
+                    #         reply = "对不起，我不太懂，我还需要学习~"
                     elif at_content == "debug":
                         if qq_number == partner_QQ_number:
                             self.debug = not self.debug
