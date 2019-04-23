@@ -107,8 +107,9 @@ def crawler_result(url):
 
 
 def crawler_mcmod(question):
+    print(question)
     driver = get_driver(False)
-    driver.set_page_load_timeout(5)
+    driver.set_page_load_timeout(10)
     try:
         driver.get("http://www.mcmod.cn/s?key=" + question + "&filter=2")
     except TimeoutException:
