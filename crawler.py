@@ -1,6 +1,7 @@
 from const import *
 
 from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
 import random
 import re
 import csv
@@ -107,16 +108,31 @@ def crawler_result(url):
 
 def crawler_mcmod(question):
     driver = get_driver(False)
-    print("a")
-    driver.get("http://www.mcmod.cn/s?key=" + question + "&filter=2")
-    print("b")
-    time.sleep(1)
+    driver.set_page_load_timeout(5)
     try:
-        result_list = driver.find_elements_by_class_name('result-item')
-        result_list[0].find_element_by_class_name('head').find_element_by_tag_name('a').click()
+        driver.get("http://www.mcmod.cn/s?key=" + question + "&filter=2")
+    except TimeoutException:
+        pass
+    try:
+        result_list = driver.find_element_by_class_name('search-result-list')
+        results = result_list.find_elements_by_class_name('result-item')
+        head = None
+        for result in results:
+            body = result.find_element_by_class_name('body')
+            if body.text != "":
+                head = result.find_element_by_class_name('head')
+                break
+        if head is None:
+            return None
+        mod = re.search('- (.*)', head.text).group(1)
+        head.find_element_by_tag_name('a').click()
         driver.close()
         driver.switch_to.window(driver.window_handles[0])
-        answer = driver.find_element_by_class_name('item-content').text
+        try:
+            answer = driver.find_element_by_class_name('item-content').text
+        except TimeoutException:
+            answer = driver.find_element_by_class_name('item-content').text
+        answer = "在" + mod + "中：\n" + answer
         return answer
     except Exception:
         return None
