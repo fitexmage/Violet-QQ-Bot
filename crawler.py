@@ -114,25 +114,34 @@ def crawler_mcmod(question):
     except TimeoutException:
         pass
     try:
+        print("Stage 1")
         result_list = driver.find_element_by_class_name('search-result-list')
         results = result_list.find_elements_by_class_name('result-item')
         head = None
+        print("Stage 2")
         for result in results:
             body = result.find_element_by_class_name('body')
             if body.text != "":
                 head = result.find_element_by_class_name('head')
                 break
+        print("Stage 3")
         if head is None:
+            print("case 1")
             return None
         mod = re.search('- (.*)', head.text).group(1)
         head.find_element_by_tag_name('a').click()
+        print("Stage 4")
         driver.close()
         driver.switch_to.window(driver.window_handles[0])
+        print("Stage 5")
         try:
             answer = driver.find_element_by_class_name('item-content').text
         except TimeoutException:
             answer = driver.find_element_by_class_name('item-content').text
+        print("Stage 6")
         answer = "在" + mod + "中：\n" + answer
         return answer
-    except Exception:
+    except Exception as e:
+        print("case 2")
+        print(e)
         return None
