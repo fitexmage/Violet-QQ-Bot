@@ -4,7 +4,7 @@ import re
 
 
 def regex_match(pattern, message):
-    if re.match(pattern, message) is not None:
+    if re.match(pattern, message):
         return True
     return False
 

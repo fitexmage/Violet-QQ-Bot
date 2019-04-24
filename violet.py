@@ -41,7 +41,7 @@ class Violet:
                         "如：白名单 Fitexmage\n" \
                         "注意：游戏名只能包含英文、数字、和下划线，不能有中文和横线"
 
-            elif regex_match("白名单 ", message):
+            elif regex_match("白名单 ", message=message):
                 if regex_match("白名单 [a-zA-Z0-9_]{3,}$", message):
                     if qq_number in self.player_qq_dict:
                         reply = "你是" + self.player_qq_dict[qq_number] + "，你已经申请过白名单了，别想骗我！"
@@ -96,8 +96,8 @@ class Violet:
                             reply = "你是" + self.player_qq_dict[qq_number] + "！"
                         else:
                             reply = "你都没有白名单，我哪知道。。。"
-                    elif regex_match("[0-9]*.*是谁", at_content):
-                        qq_number = re.search("[0-9]*", at_content).group(0)
+                    elif regex_match("[0-9]+.*是谁", at_content):
+                        qq_number = re.search("[0-9]+", at_content).group(0)
                         if qq_number in self.player_qq_dict:
                             reply = "这位玩家是" + self.player_qq_dict[qq_number] + "！"
                         else:
@@ -107,13 +107,13 @@ class Violet:
                             reply = "我也爱你呀~"
                         else:
                             reply = "我不是那么随便的人~"
-                    elif at_content == "在线人数" or at_content == "在线玩家":
-                        reply = self.rcon_command("list")
-                    elif at_content == "不在线人数" or at_content == "不在线玩家":
+                    elif regex_match('不在线', at_content):
                         num_online = int(re.search('[0-9]+', self.rcon_command("list")).group())
                         num_player = len(self.player_qq_dict)
                         num_offline = num_player - num_online
                         reply = "当前有" + str(num_offline) + "个玩家不在线，最大不在线人数为" + str(num_player) + "个玩家."
+                    elif regex_match('在线', at_content):
+                        reply = self.rcon_command("list")
                     elif at_content == "服务器延迟":
                         server = MinecraftServer.lookup(server_host + ":" + str(server_port))
                         reply = "服务器延迟：" + str(server.ping()) + "ms"
@@ -125,8 +125,12 @@ class Violet:
                         if qq_number == partner_QQ_number:
                             self.syn_chat = not self.syn_chat
                             reply = "聊天同步已切换为：" + str(self.syn_chat) + "!"
-                    elif regex_match('.*是什么', at_content):
-                        question = re.match('(.*)是什么', at_content).group(1)
+                    elif regex_match('.+是什么|.+是啥|.+怎么用', at_content):
+                        regex = re.match('(.+)是什么|(.+)是啥|(.+)怎么用', at_content)
+                        question = ""
+                        for i in range(len(regex) - 1):
+                            if regex.group(i+1):
+                                question = regex.group(i+1)
                         reply = crawler_mcmod(question)
                         if reply is None:
                             reply = "对不起，我不太懂，我还需要学习~"
