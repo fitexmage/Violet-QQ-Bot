@@ -59,6 +59,13 @@ class Violet:
                     reply = "你是" + self.player_qq_dict[qq_number] + "！"
                 else:
                     reply = "你都没有白名单，我哪知道。。。"
+
+            elif regex_match("[0-9]+.*是谁", message):
+                qq_number = re.search("[0-9]+", message).group(0)
+                if qq_number in self.player_qq_dict:
+                    reply = "这位玩家是" + self.player_qq_dict[qq_number] + "！"
+                else:
+                    reply = "此人未获得白名单！"
         return reply
 
     def reply_group_msg(self, context):
@@ -75,14 +82,13 @@ class Violet:
         elif self.enable:
             if context['group_id'] == 298466962:  # 影之乡服务器
                 if message == "小紫" or message == "@【影之接待】小紫" or message == "\\[CQ:at,qq=" + self_QQ_number + "\\] ":
-                    reply = "你好呀，我是腐竹的人工智能搭档小紫。\n" \
-                            "目前我可以:\n" \
+                    reply = "你好呀~我是腐竹的人工智能搭档小紫，目前我可以:\n" \
                             "1. 添加白名单。（私聊我\"白名单\"获取详情）\n" \
                             "2. 获取自己的游戏名。（@我并发送\"我是谁\"）\n" \
                             "3. 获取其他玩家的游戏名。（@我并发送\"xxxxxx（QQ号）是谁\"）\n" \
                             "3. 获取服务器在线人数或不在线人数。（@我并发送\"在线人数\"或\"不在线人数\"）\n" \
                             "4. 获取服务器延迟。（@我并发送\"服务器延迟\"）\n" \
-                            "5. 回答有关游戏的问题。（@我并发送任意问题）"
+                            "5. 回答有关MC的问题。（@我并发送任意问题）\n"
 
                 elif regex_match("\\[CQ:at,qq=" + self_QQ_number + "\\].*", message):
                     at_content = re.match("^\\[CQ:at,qq=" + self_QQ_number + "\\](.*)", message).group(1).strip()
@@ -107,13 +113,13 @@ class Violet:
                             reply = "我也爱你呀~"
                         else:
                             reply = "我不是那么随便的人~"
+                    elif regex_match('在线', at_content):
+                        reply = self.rcon_command("list")
                     elif regex_match('不在线', at_content):
                         num_online = int(re.search('[0-9]+', self.rcon_command("list")).group())
                         num_player = len(self.player_qq_dict)
                         num_offline = num_player - num_online
                         reply = "当前有" + str(num_offline) + "个玩家不在线，最大不在线人数为" + str(num_player) + "个玩家."
-                    elif regex_match('在线', at_content):
-                        reply = self.rcon_command("list")
                     elif at_content == "服务器延迟":
                         server = MinecraftServer.lookup(server_host + ":" + str(server_port))
                         reply = "服务器延迟：" + str(server.ping()) + "ms"
