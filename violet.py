@@ -74,7 +74,7 @@ class Violet:
 
         elif self.enable:
             if context['group_id'] == 298466962:  # 影之乡服务器
-                if message == "小紫" or message == "[CQ:at,qq=" + QQ_number + "] ":
+                if message == "小紫" or message == "[CQ:at,qq=" + self_QQ_number + "] ":
                     reply = "你好呀，我是腐竹的人工智能搭档小紫。\n" \
                             "目前我可以:\n" \
                             "1. 添加白名单。（私聊我\"白名单\"获取详情）\n" \
@@ -84,8 +84,8 @@ class Violet:
                             "4. 获取服务器延迟。（@我并发送\"服务器延迟\"）\n" \
                             "5. 回答有关游戏的问题。（@我并发送任意问题）"
 
-                elif regex_match("\\[CQ:at,qq=" + QQ_number + "\\].*", message):
-                    at_content = re.match("^\\[CQ:at,qq=" + QQ_number + "\\](.*)", message).group(1).strip()
+                elif regex_match("\\[CQ:at,qq=" + self_QQ_number + "\\].*", message):
+                    at_content = re.match("^\\[CQ:at,qq=" + self_QQ_number + "\\](.*)", message).group(1).strip()
                     if self.debug:
                         print(at_content)
 
@@ -156,6 +156,3 @@ class Violet:
         self.enable = False
         reply = "小紫已关闭"
         return reply
-
-regex = re.match('(.+)(是什么|是啥|怎么用)', "苹果是啥")
-print(regex.group(2))

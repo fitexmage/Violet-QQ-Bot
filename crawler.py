@@ -83,24 +83,28 @@ def search_url(message):
 
 
 def crawler_result(url):
-    driver = get_driver(False)
-    driver.get(url)
-    time.sleep(1)
-    post_list = driver.find_element_by_id('postlist').find_elements_by_class_name('plhin')
+    try:
+        driver = get_driver(False)
+        driver.get(url)
+        time.sleep(1)
+        post_list = driver.find_element_by_id('postlist').find_elements_by_class_name('plhin')
 
-    if len(post_list) > 1:
-        author = post_list[0].find_element_by_class_name('authi').text
+        if len(post_list) > 1:
+            author = post_list[0].find_element_by_class_name('authi').text
 
-        for i in range(5):
-            r = random.randint(1, len(post_list) - 1)
-            post = post_list[r]
-            if author is not post.find_element_by_class_name('authi').text:
-                reply = post.find_element_by_class_name('t_f').text
-                reply = re.sub(".* 发表于 [0-9]*-[0-9]*-[0-9]* [0-9]*:[0-9]*", "", reply)
-                reply = re.sub("本帖最后由 .* 于 [0-9]*-[0-9]*-[0-9]* [0-9]*:[0-9]* 编辑", "", reply)
-                reply = re.sub("登录/注册后可看大图", "", reply)
-                reply = reply.strip()
-                if re.match('http.*', reply) is None:
-                    return reply
+            for i in range(5):
+                r = random.randint(1, len(post_list) - 1)
+                post = post_list[r]
+                if author is not post.find_element_by_class_name('authi').text:
+                    reply = post.find_element_by_class_name('t_f').text
+                    reply = re.sub(".* 发表于 [0-9]*-[0-9]*-[0-9]* [0-9]*:[0-9]*", "", reply)
+                    reply = re.sub("本帖最后由 .* 于 [0-9]*-[0-9]*-[0-9]* [0-9]*:[0-9]* 编辑", "", reply)
+                    reply = re.sub("登录/注册后可看大图", "", reply)
+                    reply = reply.strip()
+                    if re.match('http.*', reply) is None:
+                        return reply
+
+    except:
+        pass
 
     return None
