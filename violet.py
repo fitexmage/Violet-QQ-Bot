@@ -81,7 +81,7 @@ class Violet:
 
         elif self.enable:
             if context['group_id'] == 298466962:  # 影之乡服务器
-                if message == "小紫" or message == "@【影之接待】小紫" or message == "\\[CQ:at,qq=" + self_QQ_number + "\\] ":
+                if message == "小紫" or message == "@【影之接待】小紫" or message == "[CQ:at,qq=" + self_QQ_number + "] ":
                     reply = "你好呀~我是腐竹的人工智能搭档小紫，目前我可以:\n" \
                             "1. 添加白名单。（私聊我\"白名单\"获取详情）\n" \
                             "2. 获取自己的游戏名。（@我并发送\"我是谁\"）\n" \
