@@ -1,7 +1,6 @@
 from const import *
 
 from selenium import webdriver
-from selenium.common.exceptions import TimeoutException
 import random
 import re
 import csv
