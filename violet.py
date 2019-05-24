@@ -36,11 +36,6 @@ class Violet:
             if message == "你好":
                 reply = "你好呀~"
 
-            elif message == "白名单":
-                reply = "申请白名单格式：白名单 游戏名\n" \
-                        "如：白名单 Fitexmage\n" \
-                        "注意：游戏名只能包含英文、数字、和下划线，不能有中文和横线"
-
             elif regex_match("白名单 ", message=message):
                 if regex_match("白名单 [a-zA-Z0-9_]{3,}$", message):
                     if qq_number in self.player_qq_dict:
@@ -53,6 +48,11 @@ class Violet:
                         reply = "白名单添加成功！"
                 else:
                     reply = "游戏名格式有误！"
+
+            elif "白名单" in message:
+                reply = "申请白名单格式：白名单 游戏名\n" \
+                        "如：白名单 Fitexmage\n" \
+                        "注意：游戏名只能包含英文、数字、和下划线，不能有中文和横线"
 
             elif regex_match("我是谁", message):
                 if qq_number in self.player_qq_dict:
