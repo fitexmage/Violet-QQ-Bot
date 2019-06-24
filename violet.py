@@ -137,10 +137,6 @@ class Violet:
                         if qq_number == partner_QQ_number:
                             command = at_content.replace("/", "")
                             reply = self.rcon_command(command)
-                    # elif at_content == "切换聊天同步":
-                    #     if qq_number == partner_QQ_number:
-                    #         self.syn_chat = not self.syn_chat
-                    #         reply = "聊天同步已切换为：" + str(self.syn_chat) + "!"
                     elif at_content == "debug":
                         if qq_number == partner_QQ_number:
                             self.debug = not self.debug
@@ -153,13 +149,6 @@ class Violet:
                             reply = crawler_result(url)
                         if reply is None:
                             reply = "对不起，我不太懂，我还需要学习~"
-                # else:
-                #     if self.syn_chat:
-                #         if qq_number in self.player_qq_dict:
-                #             message = re.sub('\[.*\]', "", message).strip()
-                #             if message is not "":
-                #                 self.rcon_command(
-                #                     "svs synchat §2[群]§f<§2" + self.player_qq_dict[qq_number] + "§f> " + message)
 
         return reply
 
