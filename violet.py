@@ -94,7 +94,7 @@ class Violet:
                 elif regex_match("\\[CQ:at,qq=" + self_QQ_number + "\\].*", message):
                     at_content = re.match("^\\[CQ:at,qq=" + self_QQ_number + "\\](.*)", message).group(1).strip()
                     if self.debug:
-                        print("Contect: " + at_content)
+                        print("Context: " + at_content)
 
                     if regex_match("你是谁", at_content):
                         reply = "我是小紫呀~"
