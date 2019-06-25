@@ -9,7 +9,6 @@ class Violet:
     def __init__(self):
         self.enable = True
         self.player_qq_dict = load_player_qq()
-        self.syn_chat = True
         self.debug = False
 
         with open(rcon_password_path, "r") as f:

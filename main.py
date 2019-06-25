@@ -46,7 +46,7 @@ async def handle_group_decrease(context):
     if context['group_id'] == 298466962:
         qq_number = str(context['user_id'])
         if qq_number in violet.player_qq_dict:
-            violet.rcon_command("whitelist remove " + violet.player_qq_dict[qq_number])
+            violet.rcon_command("wldel " + violet.player_qq_dict[qq_number])
             violet.player_qq_dict.pop(qq_number)
             violet.update_qq_dict()
 
