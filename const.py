@@ -9,8 +9,9 @@ PORT = 8080
 self_QQ_number = "2511310647"
 partner_QQ_number = "424506920"
 
+
 server_host = "P.polarstar.cc"
-server_port = 25565
-rcon_port = 25575
+server_port = 39727
+rcon_port = 39745
 
 question_set = ["Mod讨论", "游戏技巧", "编程开发", "联机教程", "Mod教程", "Mod问答", "联机问答", "原版问答", "矿工茶馆"]

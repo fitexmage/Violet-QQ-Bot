@@ -42,7 +42,7 @@ class Violet:
                         reply = "你是" + self.player_qq_dict[qq_number] + "，你已经申请过白名单了，别想骗我！"
                     else:
                         player_name = re.match("白名单 ([a-zA-Z0-9_]{3,})$", message).group(1)
-                        self.rcon_command("whitelist add " + player_name)
+                        self.rcon_command("wladd " + player_name)
                         self.player_qq_dict[qq_number] = player_name
                         self.update_qq_dict()
                         reply = "白名单添加成功！"
@@ -87,8 +87,7 @@ class Violet:
                             "2. 获取自己的游戏名。（@我并发送\"我是谁\"）\n" \
                             "3. 获取其他玩家的游戏名。（@我并发送\"xxxxxx（QQ号）是谁\"）\n" \
                             "3. 获取服务器在线人数或不在线人数。（@我并发送\"在线人数\"或\"不在线人数\"）\n" \
-                            "4. 获取服务器延迟。（@我并发送\"服务器延迟\"）\n" \
-                            "5. 回答有关MC的问题。（@我并发送任意问题）\n"
+                            "4. 回答有关MC的问题。（@我并发送任意问题）\n"
 
                 elif regex_match("\\[CQ:at,qq=" + self_QQ_number + "\\].*", message):
                     at_content = re.match("^\\[CQ:at,qq=" + self_QQ_number + "\\](.*)", message).group(1).strip()
@@ -130,9 +129,6 @@ class Violet:
                         num_player = len(self.player_qq_dict)
                         num_offline = num_player - num_online
                         reply = "当前有" + str(num_offline) + "个玩家不在线，最大不在线人数为" + str(num_player) + "个玩家."
-                    elif at_content == "服务器延迟":
-                        server = MinecraftServer.lookup(server_host + ":" + str(server_port))
-                        reply = "服务器延迟：" + str(server.ping()) + "ms"
                     elif regex_match('/.*', at_content):
                         if qq_number == partner_QQ_number:
                             command = at_content.replace("/", "")
