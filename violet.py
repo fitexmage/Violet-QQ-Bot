@@ -20,6 +20,8 @@ class Violet:
                 f.write(qq + " " + self.player_qq_dict[qq] + "\n")
 
     def rcon_command(self, command):
+        if self.debug:
+            print("Command: " + command)
         with MCRcon(host=server_host, password=self.rcon_password, port=rcon_port) as mcr:
             text = mcr.command(command)
             text = re.sub('§.', "", text).strip()
@@ -92,7 +94,7 @@ class Violet:
                 elif regex_match("\\[CQ:at,qq=" + self_QQ_number + "\\].*", message):
                     at_content = re.match("^\\[CQ:at,qq=" + self_QQ_number + "\\](.*)", message).group(1).strip()
                     if self.debug:
-                        print(at_content)
+                        print("Contect: " + at_content)
 
                     if regex_match("你是谁", at_content):
                         reply = "我是小紫呀~"
@@ -144,7 +146,7 @@ class Violet:
                         url = search_url(at_content)
                         if url:
                             if self.debug:
-                                print(url)
+                                print("URL: " + url)
                             reply = crawler_result(url)
                         if reply is None:
                             reply = "对不起，我不太懂，我还需要学习~"
