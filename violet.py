@@ -138,6 +138,8 @@ class Violet:
                         if qq_number == partner_QQ_number:
                             command = at_content.replace("/", "")
                             reply = self.rcon_command(command)
+                        else:
+                            reply = "这个指令只有我和腐竹可以用！"
                     elif at_content == "debug":
                         if qq_number == partner_QQ_number:
                             self.debug = not self.debug
