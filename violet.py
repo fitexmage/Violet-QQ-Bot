@@ -61,7 +61,7 @@ class Violet:
                 else:
                     reply = "你都没有白名单，我哪知道。。。"
 
-            elif regex_match("[0-9]+.*是谁", message):
+            elif regex_match(".*[0-9]+.*是谁", message):
                 qq_number = re.search("[0-9]+", message).group(0)
                 if qq_number in self.player_qq_dict:
                     reply = "这位玩家是" + self.player_qq_dict[qq_number] + "！"
