@@ -7,8 +7,8 @@ class FF_System:
         print()
 
     def reply_intro(self):
-        reply = "你好呀~我是腐竹的人工智能cp小紫，目前我可以:\n" \
-                "1. 我也不知道我能干啥，正在跟隔壁獭獭学习\n"
+        reply = "你好呀~我是夏月熦风的人工智能cp小紫，目前我可以:\n" \
+                "1. 我也不知道我能干啥，正在跟隔壁獭獭学习~"
         return reply
 
     def reply_private_msg(self, context):
