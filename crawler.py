@@ -1,4 +1,4 @@
-from const import *
+from config import *
 
 from selenium import webdriver
 import random
@@ -102,8 +102,6 @@ def crawler_result(url):
                     reply = reply.strip()
                     if re.match('http.*', reply) is None:
                         return reply
-
     except:
         pass
-
     return None

@@ -38,11 +38,11 @@ class Violet:
                 reply = "你好呀~"
 
             elif regex_match("白名单 ", message=message):
-                if regex_match("白名单 [a-zA-Z0-9_]{3,}$", message):
+                if regex_match("白名单 [a-zA-Z0-9_?]{3,}$", message):
                     if qq_number in self.player_qq_dict:
                         reply = "你是" + self.player_qq_dict[qq_number] + "，你已经申请过白名单了，别想骗我！"
                     else:
-                        player_name = re.match("白名单 ([a-zA-Z0-9_]{3,})$", message).group(1)
+                        player_name = re.match("白名单 ([a-zA-Z0-9_?]{3,})$", message).group(1)
                         self.rcon_command("wladd " + player_name)
                         self.player_qq_dict[qq_number] = player_name
                         self.update_qq_dict()
@@ -144,14 +144,14 @@ class Violet:
                         if qq_number == partner_QQ_number:
                             self.debug = not self.debug
                             reply = "Debug模式已更换为：" + str(self.debug) + "!"
-                    else:
-                        url = search_url(at_content)
-                        if url:
-                            if self.debug:
-                                print("URL: " + url)
-                            reply = crawler_result(url)
-                        if reply is None:
-                            reply = "对不起，我不太懂，我还需要学习~"
+                    # else:
+                        # url = search_url(at_content)
+                        # if url:
+                        #     if self.debug:
+                        #         print("URL: " + url)
+                        #     reply = crawler_result(url)
+                        # if reply is None:
+                        #     reply = "对不起，我不太懂，我还需要学习~"
 
         return reply
 
