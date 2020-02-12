@@ -70,9 +70,13 @@ class Violet:
                         self.debug = not self.debug
                         reply = "Debug模式已更换为：" + str(self.debug) + "!"
 
+                print(reply)
                 if reply is not None:
+                    print("mc")
                     reply = self.mc_system.reply_group_msg(context, at_content)
+                print(reply)
                 if reply is not None:
+                    print("ff")
                     reply = self.ff_ststem.reply_group_msg(context, at_content)
 
         return reply
