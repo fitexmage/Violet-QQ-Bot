@@ -66,12 +66,16 @@ class Violet:
                         reply = "我也爱你呀~"
                     else:
                         reply = "我不是那么随便的人~"
-                elif at_content == "连接ff14":
-                    backinfo = os.system('ping -c 1 -W 1 %s' % ff14_ip)
-                    if "1 packets received" in backinfo:
-                        reply = "服务器连接良好"
+                elif regex_match('连接.+', at_content):
+                    name = re.match('连接(.+)', at_content).group(1)
+                    if name in ip_dict:
+                        backinfo = os.system('ping -c 1 -W 1 %s' % ip_dict[name])
+                        if "1 packets received" in backinfo:
+                            reply = "服务器连接良好"
+                        else:
+                            reply = "服务器连接失败"
                     else:
-                        reply = "服务器连接失败"
+                        reply = "未记录此服务器信息！"
                 elif at_content == "debug":
                     if qq_number == partner_QQ_number:
                         self.debug = not self.debug
