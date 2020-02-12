@@ -15,11 +15,11 @@ def get_driver(head=False):  # 得到驱动器
         driver = webdriver.Chrome()
         return driver
     else:
+        desired_capabilities = DesiredCapabilities.CHROME
+        desired_capabilities["pageLoadStrategy"] = "none"
         options = webdriver.ChromeOptions()
         options.add_argument('--no-sandbox')
         options.add_argument('--headless')
-        desired_capabilities = DesiredCapabilities.CHROME
-        desired_capabilities["pageLoadStrategy"] = "none"
         driver = webdriver.Chrome(options=options)
         return driver
 
@@ -113,7 +113,6 @@ def crawler_result(url):
 
 
 def get_combat_data(command):
-    print(command)
     par_list = command.split(' ')
     if len(par_list) != 3:
         return None
@@ -124,19 +123,16 @@ def get_combat_data(command):
     if type != 'dps' and dungeon not in dungeon_dict or role not in role_dict:
         return None
 
-    print(dungeon)
     driver = get_driver(False)
     driver.get("https://cn.fflogs.com/zone/statistics/{}&dpstype=adps&class=Global&spec={}&dataset=100"
                .format(dungeon_dict[dungeon][1], role_dict[role][1]))
+
+    time.sleep(3)
 
     rect = driver.find_element_by_id('highcharts-0')\
         .find_element_by_class_name('highcharts-series-group')\
         .find_element_by_class_name('highcharts-series')\
         .find_elements_by_tag_name('rect')
-
-    time.sleep(1)
-
-    print("test")
 
     reply = '{} {}(adps)'.format(dungeon_dict[dungeon][0], role_dict[role][0])
     for i in range(len(rect)):
