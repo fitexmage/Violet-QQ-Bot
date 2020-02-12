@@ -56,9 +56,9 @@ class Violet:
                 print(at_content)
                 if self.debug:
                     print("Context: " + at_content)
-                if message in {"mc", "MC", "影之乡", "硬纸箱"}:
+                if at_content in {"mc", "MC", "影之乡", "硬纸箱"}:
                     reply = self.mc_system.reply_intro()
-                elif message in {"最终幻想14", "ff14"}:
+                elif at_content in {"最终幻想14", "ff14"}:
                     reply = self.ff_ststem.reply_intro()
                 elif regex_match("你是谁", at_content):
                     reply = "我是小紫呀~"
