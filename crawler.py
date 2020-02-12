@@ -127,7 +127,7 @@ def get_combat_data(command):
     driver.get("https://cn.fflogs.com/zone/statistics/{}&dpstype=adps&class=Global&spec={}&dataset=100"
                .format(dungeon_dict[dungeon][1], role_dict[role][1]))
 
-    time.sleep(3)
+    time.sleep(5)
 
     rect = driver.find_element_by_id('highcharts-0')\
         .find_element_by_class_name('highcharts-series-group')\
