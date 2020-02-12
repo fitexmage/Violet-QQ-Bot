@@ -1,4 +1,4 @@
-from const import *
+from config import *
 
 import re
 
