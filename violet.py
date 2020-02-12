@@ -89,7 +89,7 @@ class Violet:
                             "3. 获取其他玩家的游戏名。（@我并发送\"xxxxxx（QQ号）是谁\"）\n" \
                             "3. 获取服务器在线人数或不在线人数。（@我并发送\"在线人数\"或\"不在线人数\"）\n" \
                             "4. 获取服务器延迟。（@我并发送\"服务器延迟\"）\n" \
-                            "5. 回答有关MC的问题。（@我并发送任意问题）\n"
+                            # "5. 回答有关MC的问题。（@我并发送任意问题）\n"
 
                 elif regex_match("\\[CQ:at,qq=" + self_QQ_number + "\\].*", message):
                     at_content = re.match("^\\[CQ:at,qq=" + self_QQ_number + "\\](.*)", message).group(1).strip()
