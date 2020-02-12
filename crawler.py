@@ -123,6 +123,7 @@ def get_combat_data(command):
     if type != 'dps' and dungeon not in dungeon_dict or role not in role_dict:
         return None
 
+    print(dungeon)
     driver = get_driver(False)
     driver.get("https://cn.fflogs.com/zone/statistics/{}&dpstype=adps&class=Global&spec={}&dataset=100"
                .format(dungeon_dict[dungeon][1], role_dict[role][1]))
@@ -133,6 +134,8 @@ def get_combat_data(command):
         .find_elements_by_tag_name('rect')
 
     time.sleep(1)
+
+    print("test")
 
     reply = '{} {}(adps)'.format(dungeon_dict[dungeon][0], role_dict[role][0])
     for i in range(len(rect)):

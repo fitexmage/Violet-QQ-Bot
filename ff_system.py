@@ -26,6 +26,7 @@ class FF_System:
 
         if regex_match('^ff指令/.*', at_content):
             command = at_content.replace("ff指令/", "")
+            print(command)
             reply = get_combat_data(command)
 
         return reply
