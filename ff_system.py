@@ -27,5 +27,9 @@ class FF_System:
         if regex_match('^ff指令/.*', at_content):
             command = at_content.replace("ff指令/", "")
             reply = get_combat_data(command)
+        elif at_content == '/ghs':
+            reply = "下面是转自我的cp夏月熦风的话：搞搞搞，搞nmb"
+        elif at_content == '/占卜':
+            reply = "根据我的占卜，你今天也找不到cp呢~"
 
         return reply
