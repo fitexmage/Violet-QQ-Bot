@@ -50,16 +50,16 @@ class Violet:
         elif self.enable:
             if message == "小紫" or message == "@【影之接待】小紫" or message == "[CQ:at,qq=" + self_QQ_number + "] ":
                 reply = self.reply_intro()
-            elif message in {"mc", "MC", "影之乡", "硬纸箱"}:
-                reply = self.mc_system.reply_intro()
-            elif message in {"最终幻想14", "ff14"}:
-                reply = self.ff_ststem.reply_intro()
 
             elif regex_match("\\[CQ:at,qq=" + self_QQ_number + "\\].*", message):
                 at_content = re.match("^\\[CQ:at,qq=" + self_QQ_number + "\\](.*)", message).group(1).strip()
                 if self.debug:
                     print("Context: " + at_content)
-                if regex_match("你是谁", at_content):
+                if message in {"mc", "MC", "影之乡", "硬纸箱"}:
+                    reply = self.mc_system.reply_intro()
+                elif message in {"最终幻想14", "ff14"}:
+                    reply = self.ff_ststem.reply_intro()
+                elif regex_match("你是谁", at_content):
                     reply = "我是小紫呀~"
                 elif at_content == "我爱你":
                     if qq_number == partner_QQ_number:
