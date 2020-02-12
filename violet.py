@@ -70,7 +70,7 @@ class Violet:
                     name = re.match('连接(.+)', at_content).group(1)
                     if name in ip_dict:
                         backinfo = os.system('ping -c 1 -W 1 %s' % ip_dict[name])
-                        if "1 packets received" in backinfo:
+                        if backinfo == 0:
                             reply = "服务器连接良好"
                         else:
                             reply = "服务器连接失败"
