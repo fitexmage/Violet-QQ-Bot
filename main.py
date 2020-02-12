@@ -14,7 +14,7 @@ async def handle_private_msg(context):
         print(context)
 
     reply = violet.reply_private_msg(context)
-    if reply is not "":
+    if reply is not None:
         await bot.send(context, message=reply, at_sender=False, auto_escape=True)
 
 
@@ -24,7 +24,7 @@ async def handle_group_msg(context):
         print(context)
 
     reply = violet.reply_group_msg(context)
-    if reply is not "":
+    if reply is not None:
         await bot.send(context, message=reply, at_sender=False, auto_escape=True)
 
 
@@ -46,10 +46,10 @@ async def handle_group_decrease(context):
 
     if context['group_id'] == 298466962:
         qq_number = str(context['user_id'])
-        if qq_number in violet.player_qq_dict:
-            violet.rcon_command("wldel " + violet.player_qq_dict[qq_number])
-            violet.player_qq_dict.pop(qq_number)
-            violet.update_qq_dict()
+        if qq_number in violet.mc_system.player_qq_dict:
+            violet.mc_system.rcon_command("wldel " + violet.mc_system.player_qq_dict[qq_number])
+            violet.mc_system.player_qq_dict.pop(qq_number)
+            violet.mc_system.update_qq_dict()
 
 
 @bot.on_request('group')

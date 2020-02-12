@@ -1,6 +1,8 @@
 from config import *
 
 from selenium import webdriver
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.webdriver.common.action_chains import ActionChains
 import random
 import re
 import csv
@@ -16,9 +18,12 @@ def get_driver(head=False):  # 得到驱动器
         options = webdriver.ChromeOptions()
         options.add_argument('--no-sandbox')
         options.add_argument('--headless')
+        desired_capabilities = DesiredCapabilities.CHROME
+        desired_capabilities["pageLoadStrategy"] = "none"
         driver = webdriver.Chrome(options=options)
         return driver
 
+# For MC
 
 def get_new_url():
     data = []
@@ -105,3 +110,37 @@ def crawler_result(url):
     except:
         pass
     return None
+
+
+def get_combat_data(command):
+    par_list = command.split(' ')
+    if len(par_list) != 3:
+        return None
+    type = par_list[0]
+    dungeon = par_list[1]
+    role = par_list[2]
+
+    if type != 'dps' and dungeon not in dungeon_dict or role not in role_dict:
+        return None
+
+    driver = get_driver(False)
+    driver.get("https://cn.fflogs.com/zone/statistics/{}&dpstype=adps&class=Global&spec={}&dataset=100"
+               .format(dungeon_dict[dungeon][1], role_dict[role][1]))
+
+    rect = driver.find_element_by_id('highcharts-0')\
+        .find_element_by_class_name('highcharts-series-group')\
+        .find_element_by_class_name('highcharts-series')\
+        .find_elements_by_tag_name('rect')
+
+    time.sleep(1)
+
+    reply = '{} {}(adps)'.format(dungeon_dict[dungeon][0], role_dict[role][0])
+    for i in range(len(rect)):
+        driver.execute_script("var q=document.documentElement.scrollTop=300")
+        ActionChains(driver).move_to_element(rect[i]).perform()
+        data = driver.find_element_by_id('highcharts-0')\
+        .find_elements_by_class_name('highcharts-tooltip')[-1]\
+        .find_element_by_tag_name('b').text
+        reply += '\n{}：{}'.format(level_dict[i], data)
+
+    return reply
