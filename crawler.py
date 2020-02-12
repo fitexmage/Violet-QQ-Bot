@@ -113,7 +113,6 @@ def crawler_result(url):
 
 
 def get_combat_data(command):
-    print(command)
     par_list = command.split(' ')
     if len(par_list) != 3:
         return None
