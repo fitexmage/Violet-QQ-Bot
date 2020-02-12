@@ -97,6 +97,3 @@ class Violet:
         self.enable = False
         reply = "小紫已关闭"
         return reply
-
-backinfo = os.system('ping -c 1 -W 1 %s' % ff14_ip)
-print(backinfo)
