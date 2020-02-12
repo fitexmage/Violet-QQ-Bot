@@ -3,6 +3,8 @@ from crawler import *
 from mc_system import MC_System
 from ff_system import FF_System
 
+import os
+
 class Violet:
     def __init__(self):
         self.enable = True
@@ -64,6 +66,12 @@ class Violet:
                         reply = "我也爱你呀~"
                     else:
                         reply = "我不是那么随便的人~"
+                elif at_content == "连接ff14":
+                    backinfo = os.system('ping -c 1 -W 1 %s' % ff14_ip)
+                    if "1 packets received" in backinfo:
+                        reply = "服务器连接良好"
+                    else:
+                        reply = "服务器连接失败"
                 elif at_content == "debug":
                     if qq_number == partner_QQ_number:
                         self.debug = not self.debug
@@ -85,3 +93,6 @@ class Violet:
         self.enable = False
         reply = "小紫已关闭"
         return reply
+
+backinfo = os.system('ping -c 1 -W 1 %s' % ff14_ip)
+print(backinfo)
