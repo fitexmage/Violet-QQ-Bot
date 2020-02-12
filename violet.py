@@ -53,6 +53,7 @@ class Violet:
 
             elif regex_match("\\[CQ:at,qq=" + self_QQ_number + "\\].*", message):
                 at_content = re.match("^\\[CQ:at,qq=" + self_QQ_number + "\\](.*)", message).group(1).strip()
+                print(at_content)
                 if self.debug:
                     print("Context: " + at_content)
                 if message in {"mc", "MC", "影之乡", "硬纸箱"}:
