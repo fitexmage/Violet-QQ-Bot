@@ -23,6 +23,7 @@ async def handle_group_msg(context):
     if violet.debug:
         print(context)
 
+    print(context)
     reply = violet.reply_group_msg(context)
     if reply is not None:
         await bot.send(context, message=reply, at_sender=False, auto_escape=True)

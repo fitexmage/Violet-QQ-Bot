@@ -73,7 +73,7 @@ class MC_System:
     def reply_group_msg(self, context, at_content):
         qq_number = str(context['sender']['user_id'])
 
-        reply = ""
+        reply = None
 
         if regex_match("我是谁", at_content):
             if qq_number in self.player_qq_dict:
