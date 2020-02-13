@@ -127,7 +127,7 @@ def crawl_combat_data(command):
     if dungeon not in dungeon_dict or role not in role_dict:
         return None
 
-    driver = get_driver(False, wait=True)
+    driver = get_driver(False, wait=False)
     url = "https://cn.fflogs.com/zone/statistics/{}&dpstype=adps&class=Global&spec={}&dataset=100"\
         .format(dungeon_dict[dungeon][1], role_dict[role][1])
     driver.get(url)
@@ -169,3 +169,4 @@ def crawl_item(item):
         else:
             reply = "没有找到符合条件的物品。"
     return reply
+print(crawl_combat_data("dps e3 黑魔"))
