@@ -13,13 +13,14 @@ import jieba
 import urllib.parse
 
 
-def get_driver(head=False):  # 得到驱动器
+def get_driver(head=False, wait=True):  # 得到驱动器
     if head:
         driver = webdriver.Chrome()
         return driver
     else:
-        desired_capabilities = DesiredCapabilities.CHROME
-        desired_capabilities["pageLoadStrategy"] = "none"
+        if not wait:
+            desired_capabilities = DesiredCapabilities.CHROME
+            desired_capabilities["pageLoadStrategy"] = "none"
         options = webdriver.ChromeOptions()
         options.add_argument('--no-sandbox')
         options.add_argument('--headless')
@@ -126,7 +127,7 @@ def crawl_combat_data(command):
     if dungeon not in dungeon_dict or role not in role_dict:
         return None
 
-    driver = get_driver(False)
+    driver = get_driver(False, wait=True)
     url = "https://cn.fflogs.com/zone/statistics/{}&dpstype=adps&class=Global&spec={}&dataset=100"\
         .format(dungeon_dict[dungeon][1], role_dict[role][1])
     driver.get(url)
@@ -161,7 +162,7 @@ def crawl_item(item):
         driver = get_driver(False)
         url = "https://ff14.huijiwiki.com/wiki/ItemSearch?name=" + item
         driver.get(url)
-        time.sleep(5)
+        time.sleep(1)
         content = driver.find_element_by_id('mw-content-text').find_element_by_class_name('mw-parser-output')
         if "没有找到符合条件的物品。" not in content.text:
             reply = content.find_elements_by_class_name('ff14-item-list--item')[0].find_element_by_tag_name('a').get_attribute('href')
