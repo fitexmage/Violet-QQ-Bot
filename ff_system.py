@@ -57,7 +57,7 @@ class FF_System:
                 if random.random() < 0.9:
                     num_1 = str(random.randint(1, 99))
                     num_2 = str(random.randint(1, 99))
-                    reply = "左边门成功的概率是{}, 右边门成功的概率是{}".format(num_1, num_2)
+                    reply = "左边门成功的概率是{}%, 右边门成功的概率是{}%".format(num_1, num_2)
                 else:
                     reply = "别想了，选哪边都没戏~"
         elif command == '占卜':
