@@ -154,7 +154,7 @@ def crawl_item(item):
     wb_data = requests.get(url)
     bs = BeautifulSoup(wb_data.text, "html.parser")
     content = bs.find(attrs={"class":"noarticletext"})
-    if "不经意间这个页面被吃掉了" not in content.text:
+    if content is None:
         reply = url
     else:
         driver = get_driver(False)
@@ -167,3 +167,4 @@ def crawl_item(item):
         else:
             reply = "没有找到符合条件的物品。"
     return reply
+print(crawl_item('獭獭'))
