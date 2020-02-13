@@ -86,7 +86,7 @@ def search_url(message):
     return None
 
 
-def crawler_result(url):
+def crawl_result(url):
     try:
         driver = get_driver(False)
         driver.get(url)
@@ -112,7 +112,7 @@ def crawler_result(url):
     return None
 
 
-def get_combat_data(command):
+def crawl_combat_data(command):
     par_list = command.split(' ')
     if len(par_list) != 3:
         return None
@@ -124,8 +124,9 @@ def get_combat_data(command):
         return None
 
     driver = get_driver(False)
-    driver.get("https://cn.fflogs.com/zone/statistics/{}&dpstype=adps&class=Global&spec={}&dataset=100"
-               .format(dungeon_dict[dungeon][1], role_dict[role][1]))
+    url = "https://cn.fflogs.com/zone/statistics/{}&dpstype=adps&class=Global&spec={}&dataset=100"\
+        .format(dungeon_dict[dungeon][1], role_dict[role][1])
+    driver.get(url)
 
     time.sleep(10)
 
@@ -143,4 +144,27 @@ def get_combat_data(command):
         .find_element_by_tag_name('b').text
         reply += '\n{}：{}'.format(level_dict[i], data)
 
+    return reply
+
+
+def crawl_item(item):
+    driver = get_driver(False)
+    url = "https://ff14.huijiwiki.com/wiki/物品:" + item
+    driver.get(url)
+    time.sleep(2)
+    content = driver.find_element_by_id('mw-content-text')
+    try:
+        content.find_element_by_class_name('noarticletext')
+    except:
+        reply = url
+        return reply
+
+    url = "https://ff14.huijiwiki.com/index.php?search=" + item
+    driver.get(url)
+    time.sleep(3)
+    content = driver.find_element_by_id('mw-content-text').find_element_by_class_name('mw-parser-output')
+    if "没有找到符合条件的物品。" not in content.text:
+        reply = content.find_elements_by_class_name('ff14-item-list--item')[0].find_element_by_tag_name('a').get_attribute('href')
+    else:
+        reply = "没有找到符合条件的物品。"
     return reply

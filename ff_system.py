@@ -1,6 +1,6 @@
 from config import *
 from util import *
-from crawler import get_combat_data
+from crawler import crawl_combat_data, crawl_item
 
 import random
 
@@ -37,7 +37,7 @@ class FF_System:
         reply = None
 
         if regex_match('^dps .+', command):
-            reply = get_combat_data(command)
+            reply = crawl_combat_data(command)
         elif regex_match('^dice.+', command):
             par_list = command.split(' ')
             num = str(random.randint(1, 99))
@@ -74,7 +74,12 @@ class FF_System:
                     "找CP：" + luck_parser(random.randint(0, 100), cp_luck) + "\n" \
                     "装修：" + luck_parser(random.randint(0, 100), decorate_luck) + "\n" \
                     "抢房：" + luck_parser(random.randint(0, 100), housing_luck)
-        elif command == '/ghs':
+        elif regex_match('^search .+', command):
+            par_list = command.split(' ')
+            item = par_list[1]
+            reply = crawl_item(item)
+
+        elif command == 'ghs':
             reply = "下面是转自我cp夏月熦风的话：搞搞搞，搞nmb"
 
         return reply
