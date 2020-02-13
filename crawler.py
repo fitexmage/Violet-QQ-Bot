@@ -169,4 +169,3 @@ def crawl_item(item):
         else:
             reply = "没有找到符合条件的物品。"
     return reply
-print(crawl_combat_data("dps e3 黑魔"))
