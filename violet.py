@@ -93,7 +93,7 @@ class Violet:
 
             elif regex_match('^/ff .+', message):
                 command = re.match('^/ff (.+)', message).group(1)
-                reply = self.mc_system.reply_group_cmd_msg(context, command)
+                reply = self.ff_ststem.reply_group_cmd_msg(context, command)
         return reply
 
     def start(self):
