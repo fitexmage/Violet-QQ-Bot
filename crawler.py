@@ -3,6 +3,8 @@ from config import *
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.common.action_chains import ActionChains
+import requests
+from bs4 import BeautifulSoup
 import random
 import re
 import csv
@@ -148,23 +150,20 @@ def crawl_combat_data(command):
 
 
 def crawl_item(item):
-    driver = get_driver(False)
     url = "https://ff14.huijiwiki.com/wiki/物品:" + item
-    driver.get(url)
-    time.sleep(2)
-    content = driver.find_element_by_id('mw-content-text')
-    try:
-        content.find_element_by_class_name('noarticletext')
-    except:
+    wb_data = requests.get(url)
+    bs = BeautifulSoup(wb_data.text, "html.parser")
+    content = bs.find(attrs={"class":"noarticletext"})
+    if "不经意间这个页面被吃掉了" not in content.text:
         reply = url
-        return reply
-
-    url = "https://ff14.huijiwiki.com/index.php?search=" + item
-    driver.get(url)
-    time.sleep(3)
-    content = driver.find_element_by_id('mw-content-text').find_element_by_class_name('mw-parser-output')
-    if "没有找到符合条件的物品。" not in content.text:
-        reply = content.find_elements_by_class_name('ff14-item-list--item')[0].find_element_by_tag_name('a').get_attribute('href')
     else:
-        reply = "没有找到符合条件的物品。"
+        driver = get_driver(False)
+        url = "https://ff14.huijiwiki.com/index.php?search=" + item
+        driver.get(url)
+        time.sleep(5)
+        content = driver.find_element_by_id('mw-content-text').find_element_by_class_name('mw-parser-output')
+        if "没有找到符合条件的物品。" not in content.text:
+            reply = content.find_elements_by_class_name('ff14-item-list--item')[0].find_element_by_tag_name('a').get_attribute('href')
+        else:
+            reply = "没有找到符合条件的物品。"
     return reply
