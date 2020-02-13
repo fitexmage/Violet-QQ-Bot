@@ -7,15 +7,10 @@ from mcrcon import MCRcon
 
 class MC_System:
     def __init__(self):
-        self.player_qq_dict = load_player_qq()
+        self.player_qq_dict = load_dict(player_qq_path)
 
         with open(rcon_password_path, "r") as f:
             self.rcon_password = f.readline()
-
-    def update_qq_dict(self):
-        with open(player_qq_path, 'w+') as f:
-            for qq in self.player_qq_dict:
-                f.write(qq + " " + self.player_qq_dict[qq] + "\n")
 
     def rcon_command(self, command):
         with MCRcon(host=server_host, password=self.rcon_password, port=rcon_port) as mcr:
@@ -25,11 +20,15 @@ class MC_System:
 
     def reply_intro(self):
         reply = "你好呀~我是腐竹的人工智能搭档小紫，目前我可以:\n" \
-                "1. 添加白名单。（私聊我\"白名单\"获取详情）\n" \
-                "2. 获取自己的游戏名。（@我并发送\"我是谁\"）\n" \
-                "3. 获取其他玩家的游戏名。（@我并发送\"xxxxxx（QQ号）是谁\"）\n" \
-                "3. 获取服务器在线人数或不在线人数。（@我并发送\"在线人数\"或\"不在线人数\"）\n" \
-                "4. 获取服务器延迟。（@我并发送\"服务器延迟\"）"
+                "私聊我：\n" \
+                "1. 白名单：添加白名单。\n" \
+                "在群里@我并发送：\n" \
+                "1. 我是谁：获取自己的游戏名。\n" \
+                "2. xxxxxx（QQ号）是谁：获取其他玩家的游戏名。\n" \
+                "3. 在线人数或不在线人数：获取服务器在线人数或不在线人数。\n" \
+                "4. 延迟：获取服务器延迟。\n" \
+                "在群里直接发送：\n" \
+                "1. /mc 占卜：让小紫为你占卜今日的mc游戏运势。"
         return reply
 
     def reply_private_msg(self, context):
@@ -46,7 +45,7 @@ class MC_System:
                     player_name = re.match("白名单 ([a-zA-Z0-9_?]{3,})$", message).group(1)
                     self.rcon_command("wladd " + player_name)
                     self.player_qq_dict[qq_number] = player_name
-                    self.update_qq_dict()
+                    update_dict(player_qq_path, self.player_qq_dict)
                     reply = "白名单添加成功！"
             else:
                 reply = "游戏名格式有误！"
@@ -70,7 +69,7 @@ class MC_System:
                 reply = "此人未获得白名单！"
         return reply
 
-    def reply_group_msg(self, context, at_content):
+    def reply_group_at_msg(self, context, at_content):
         qq_number = str(context['sender']['user_id'])
 
         reply = None
@@ -107,20 +106,15 @@ class MC_System:
         elif at_content == "服务器延迟":
             server = MinecraftServer.lookup(server_host + ":" + str(server_port))
             reply = "服务器延迟：" + str(server.ping()) + "ms"
-        elif regex_match('^mc指令/.*', at_content):
-            if qq_number == partner_QQ_number:
-                command = at_content.replace("/", "")
-                reply = self.rcon_command(command)
-            else:
-                reply = "这个指令只有我和腐竹可以用！"
 
-        # else:
-        # url = search_url(at_content)
-        # if url:
-        #     if self.debug:
-        #         print("URL: " + url)
-        #     reply = crawler_result(url)
-        # if reply is None:
-        #     reply = "对不起，我不太懂，我还需要学习~"
+        return reply
+
+    def reply_group_cmd_msg(self, context, command):
+        qq_number = str(context['sender']['user_id'])
+
+        if qq_number == partner_QQ_number:
+            reply = self.rcon_command(command)
+        else:
+            reply = "这个指令只有我和腐竹可以用！"
 
         return reply

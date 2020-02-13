@@ -1,4 +1,4 @@
-player_qq_path = "data/qq.txt"
+player_qq_path = "data/mc_qq.json"
 rcon_password_path = "data/rcon_password.txt"
 raw_url_path = "data/url.csv"
 new_url_path = "data/new_url.csv"
@@ -16,8 +16,9 @@ rcon_port = 25575
 question_set = ["Mod讨论", "游戏技巧", "编程开发", "联机教程", "Mod教程", "Mod问答", "联机问答", "原版问答", "矿工茶馆"]
 
 ########################
+ff_luck_path = "data/ff_luck.json"
 
-ip_dict = {'ff14': '116.211.8.38', '最终幻想14': '116.211.8.38'}
+ip_dict = {'ff14': ('最终幻想14', '116.211.8.38'), '最终幻想14': ('最终幻想14', '116.211.8.38')}
 
 dungeon_dict = {'e1': ('普通至尊伊甸', '29#boss=65&difficulty=100'),
                 'e2': ('普通虚空行者', '29#boss=66&difficulty=100'),

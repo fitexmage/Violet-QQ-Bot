@@ -15,8 +15,8 @@ class Violet:
 
     def reply_intro(self):
         reply = "你好呀~我是某人的人工智能搭档小紫，目前我的辅助范围有:\n" \
-                "1. MC影之乡服务器。（@我并发送\"MC\"或\"影之乡\"获取详情）\n" \
-                "2. 最终幻想14。（@我并发送\"最终幻想14\"或\"ff14\"获取详情）"
+                "1. MC影之乡服务器。（@我并发送\"MC\"获取详情）\n" \
+                "2. 最终幻想14。（@我并发送\"ff14\"获取详情）"
         return reply
 
     def reply_private_msg(self, context):
@@ -42,9 +42,9 @@ class Violet:
 
         reply = None
 
-        if message == "小紫 启" or message == "启" and qq_number == partner_QQ_number:
+        if message == "小紫 启" and qq_number == partner_QQ_number:
             reply = self.start()
-        elif message == "小紫 散" or message == "散" and qq_number == partner_QQ_number:
+        elif message == "小紫 散" and qq_number == partner_QQ_number:
             reply = self.close()
 
         elif self.enable:
@@ -70,11 +70,11 @@ class Violet:
                 elif regex_match('连接.+', at_content):
                     name = re.match('连接(.+)', at_content).group(1)
                     if name in ip_dict:
-                        backinfo = os.system('ping -c 1 -W 1 %s' % ip_dict[name])
+                        backinfo = os.system('ping -c 1 -W 1 %s' % ip_dict[name][1])
                         if backinfo == 0:
-                            reply = "服务器连接良好"
+                            reply = ip_dict[name][0] + "服务器连接良好"
                         else:
-                            reply = "服务器连接失败"
+                            reply = ip_dict[name][0] + "服务器连接失败"
                     else:
                         reply = "未记录此服务器信息！"
                 elif at_content == "debug":
@@ -83,10 +83,17 @@ class Violet:
                         reply = "Debug模式已更换为：" + str(self.debug) + "!"
 
                 if reply is None:
-                    reply = self.mc_system.reply_group_msg(context, at_content)
+                    reply = self.mc_system.reply_group_at_msg(context, at_content)
                 if reply is None:
-                    reply = self.ff_ststem.reply_group_msg(context, at_content)
+                    reply = self.ff_ststem.reply_group_at_msg(context, at_content)
 
+            elif regex_match('^/mc .+', message):
+                command = re.match('^/mc (.+)', message).group(1)
+                reply = self.mc_system.reply_group_cmd_msg(context, command)
+
+            elif regex_match('^/ff .+', message):
+                command = re.match('^/ff (.+)', message).group(1)
+                reply = self.mc_system.reply_group_cmd_msg(context, command)
         return reply
 
     def start(self):

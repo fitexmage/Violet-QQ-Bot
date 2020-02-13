@@ -116,11 +116,11 @@ def get_combat_data(command):
     par_list = command.split(' ')
     if len(par_list) != 3:
         return None
-    type = par_list[0]
+
     dungeon = par_list[1]
     role = par_list[2]
 
-    if type != 'dps' and dungeon not in dungeon_dict or role not in role_dict:
+    if dungeon not in dungeon_dict or role not in role_dict:
         return None
 
     driver = get_driver(False)
