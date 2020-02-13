@@ -10,6 +10,7 @@ import re
 import csv
 import time
 import jieba
+import urllib.parse
 
 
 def get_driver(head=False):  # 得到驱动器
@@ -150,15 +151,15 @@ def crawl_combat_data(command):
 
 
 def crawl_item(item):
-    url = "https://ff14.huijiwiki.com/wiki/物品:" + item
+    url = "https://ff14.huijiwiki.com/wiki/" + urllib.parse.quote("物品") + ":" + urllib.parse.quote(item)
     wb_data = requests.get(url)
     bs = BeautifulSoup(wb_data.text, "html.parser")
     content = bs.find(attrs={"class":"noarticletext"})
     if content is None:
-        reply = url
+        reply = urllib.parse.quote(url)
     else:
         driver = get_driver(False)
-        url = "https://ff14.huijiwiki.com/index.php?search=" + item
+        url = "https://ff14.huijiwiki.com/wiki/ItemSearch?name=" + item
         driver.get(url)
         time.sleep(5)
         content = driver.find_element_by_id('mw-content-text').find_element_by_class_name('mw-parser-output')
@@ -167,4 +168,3 @@ def crawl_item(item):
         else:
             reply = "没有找到符合条件的物品。"
     return reply
-print(crawl_item('獭獭'))
