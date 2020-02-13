@@ -25,19 +25,19 @@ def update_dict(path, dict):
         json.dump(dict, f)
 
 
-def luck_parser(num, dict):
+def luck_parser(num, list):
     if num <= 10:
-        return str(num) + "%，" + dict[0]
+        return str(num) + "%，" + list[0]
     elif num <= 25:
-        return str(num) + "%，" + dict[1]
+        return str(num) + "%，" + list[1]
     elif num <= 50:
-        return str(num) + "%，" + dict[2]
+        return str(num) + "%，" + list[2]
     elif num <= 75:
-        return str(num) + "%，" + dict[3]
+        return str(num) + "%，" + list[3]
     elif num <= 90:
-        return str(num) + "%，" + dict[4]
+        return str(num) + "%，" + list[4]
     elif num <= 100:
-        return str(num) + "%，" + dict[5]
+        return str(num) + "%，" + list[5]
 
 
 dungeon_luck = ["队友全是没看过攻略的初见豆芽，2小时都过不了一个本",

@@ -63,17 +63,17 @@ class FF_System:
         elif command == '占卜':
             reply = "下面是小紫采用人工智能秘术所做出的占卜：\n" \
                     "1. 战斗运势：\n" \
-                    "打本：" + dungeon_luck(random.randint(0, 100)) + "\n" \
-                    "野外BOSS：" + boss_luck(random.randint(0, 100)) + "\n" \
+                    "打本：" + luck_parser(random.randint(0, 100), dungeon_luck) + "\n" \
+                    "野外BOSS：" + luck_parser(random.randint(0, 100), boss_luck) + "\n" \
                     "2. 财富运势：\n" \
-                    "挖宝：" + treature_luck(random.randint(0, 100)) + "\n" \
-                    "打工：" + work_luck(random.randint(0, 100)) + "\n" \
-                    "生产采集：" + noncombat_luck(random.randint(0, 100)) + "\n" \
+                    "挖宝：" + luck_parser(random.randint(0, 100), treature_luck) + "\n" \
+                    "打工：" + luck_parser(random.randint(0, 100), work_luck) + "\n" \
+                    "生产采集：" + luck_parser(random.randint(0, 100), noncombat_luck) + "\n" \
                     "3. 交际运势：\n" \
-                    "交友：" + friend_luck(random.randint(0, 100)) + "\n" \
-                    "找CP：" + cp_luck(random.randint(0, 100)) + "\n" \
-                    "装修：" + decorate_luck(random.randint(0, 100)) + "\n" \
-                    "抢房：" + housing_luck(random.randint(0, 100))
+                    "交友：" + luck_parser(random.randint(0, 100), friend_luck) + "\n" \
+                    "找CP：" + luck_parser(random.randint(0, 100), cp_luck) + "\n" \
+                    "装修：" + luck_parser(random.randint(0, 100), decorate_luck) + "\n" \
+                    "抢房：" + luck_parser(random.randint(0, 100), housing_luck)
         elif command == '/ghs':
             reply = "下面是转自我cp夏月熦风的话：搞搞搞，搞nmb"
 
