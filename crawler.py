@@ -156,7 +156,7 @@ def crawl_item(item):
     bs = BeautifulSoup(wb_data.text, "html.parser")
     content = bs.find(attrs={"class":"noarticletext"})
     if content is None:
-        reply = urllib.parse.quote(url)
+        reply = url
     else:
         driver = get_driver(False)
         url = "https://ff14.huijiwiki.com/wiki/ItemSearch?name=" + item
