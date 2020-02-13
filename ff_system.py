@@ -60,7 +60,7 @@ class FF_System:
                     reply = "左边门成功的概率是{}, 右边门成功的概率是{}".format(num_1, num_2)
                 else:
                     reply = "别想了，选哪边都没戏~"
-        elif command == '/占卜':
+        elif command == '占卜':
             reply = "下面是小紫采用人工智能秘术所做出的占卜：\n" \
                     "1. 战斗运势：\n" \
                     "打本：" + dungeon_luck(random.randint(0, 100)) + "\n" \
