@@ -3,6 +3,8 @@ from util import *
 from crawler import crawl_combat_data, crawl_item
 
 import random
+import datetime
+
 
 class FF_System:
     def __init__(self):
@@ -61,19 +63,25 @@ class FF_System:
                 else:
                     reply = "别想了，选哪边都没戏~"
         elif command == '占卜':
-            reply = "下面是小紫采用人工智能秘术所做出的占卜：\n" \
-                    "1. 战斗运势：\n" \
-                    "打本：" + luck_parser(random.randint(0, 100), dungeon_luck) + "\n" \
-                    "野外BOSS：" + luck_parser(random.randint(0, 100), boss_luck) + "\n" \
-                    "2. 财富运势：\n" \
-                    "挖宝：" + luck_parser(random.randint(0, 100), treature_luck) + "\n" \
-                    "打工：" + luck_parser(random.randint(0, 100), work_luck) + "\n" \
-                    "生产采集：" + luck_parser(random.randint(0, 100), noncombat_luck) + "\n" \
-                    "3. 交际运势：\n" \
-                    "交友：" + luck_parser(random.randint(0, 100), friend_luck) + "\n" \
-                    "找CP：" + luck_parser(random.randint(0, 100), cp_luck) + "\n" \
-                    "装修：" + luck_parser(random.randint(0, 100), decorate_luck) + "\n" \
-                    "抢房：" + luck_parser(random.randint(0, 100), housing_luck)
+            date = str(datetime.date.today())
+            if qq_number not in self.luck_dict or self.luck_dict[qq_number] != date:
+                reply = "下面是小紫采用人工智能秘术所做出的占卜：\n" \
+                        "1. 战斗运势：\n" \
+                        "打本：" + luck_parser(random.randint(0, 100), dungeon_luck) + "\n" \
+                        "野外BOSS：" + luck_parser(random.randint(0, 100), boss_luck) + "\n" \
+                        "2. 财富运势：\n" \
+                        "挖宝：" + luck_parser(random.randint(0, 100), treature_luck) + "\n" \
+                        "打工：" + luck_parser(random.randint(0, 100), work_luck) + "\n" \
+                        "生产采集：" + luck_parser(random.randint(0, 100), noncombat_luck) + "\n" \
+                        "3. 交际运势：\n" \
+                        "交友：" + luck_parser(random.randint(0, 100), friend_luck) + "\n" \
+                        "找CP：" + luck_parser(random.randint(0, 100), cp_luck) + "\n" \
+                        "装修：" + luck_parser(random.randint(0, 100), decorate_luck) + "\n" \
+                        "抢房：" + luck_parser(random.randint(0, 100), housing_luck)
+                self.luck_dict[qq_number] = date
+                update_dict(ff_luck_path, self.luck_dict)
+            else:
+                reply = "你今天已经占卜过啦，请明天再来！"
         elif regex_match('^search .+', command):
             par_list = command.split(' ')
             item = par_list[1]
