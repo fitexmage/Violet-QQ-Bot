@@ -31,6 +31,9 @@ class FF_System:
 
         reply = None
 
+        if at_content in {"最终幻想14", "ff14"}:
+            reply = self.reply_intro()
+
         return reply
 
     def reply_group_cmd_msg(self, context, command):
@@ -38,8 +41,12 @@ class FF_System:
 
         reply = None
 
-        if regex_match('^dps .+', command):
+        if command == 'help':
+            reply = self.reply_intro()
+
+        elif regex_match('^dps .+', command):
             reply = crawl_combat_data(command)
+
         elif regex_match('^dice.+', command):
             par_list = command.split(' ')
             num = str(random.randint(1, 99))
@@ -53,6 +60,7 @@ class FF_System:
             elif len(par_list) == 3:
                 if par_list[1] in {"需求", "贪婪"}:
                     reply = '你在{}条件下对"{}"掷出了{}点'.format(par_list[1], par_list[2], num)
+
         elif regex_match('^gate .+', command):
             par_list = command.split(' ')
             if par_list[1] in {'1', '2', '3', '4', '5', '6', '7'}:
@@ -62,6 +70,7 @@ class FF_System:
                     reply = "左边门成功的概率是{}%, 右边门成功的概率是{}%".format(num_1, num_2)
                 else:
                     reply = "别想了，选哪边都没戏~"
+
         elif command == '占卜':
             date = str(datetime.date.today())
             if qq_number not in self.luck_dict or self.luck_dict[qq_number] != date:
@@ -88,9 +97,7 @@ class FF_System:
             item = par_list[1]
             reply = crawl_item(item)
 
-        elif command == '匹配群员':
-            pass
         elif command == 'ghs':
-            reply = "群里的群员都可以搞~"
+            reply = "群里的群员都可以搞哟~"
 
         return reply

@@ -15,8 +15,8 @@ class Violet:
 
     def reply_intro(self):
         reply = "你好呀~我是某人的人工智能搭档小紫，目前我的辅助范围有:\n" \
-                "1. MC影之乡服务器。（@我并发送\"MC\"获取详情）\n" \
-                "2. 最终幻想14。（@我并发送\"ff14\"获取详情）"
+                "1. MC影之乡服务器。（发送\"/mc help\"获取详情）\n" \
+                "2. 最终幻想14。（发送\"/ff help\"获取详情）"
         return reply
 
     def reply_private_msg(self, context):
@@ -55,10 +55,6 @@ class Violet:
                 at_content = re.match("^\\[CQ:at,qq=" + self_QQ_number + "\\](.*)", message).group(1).strip()
                 if self.debug:
                     print("Context: " + at_content)
-                if at_content in {"mc", "MC", "影之乡", "硬纸箱"}:
-                    reply = self.mc_system.reply_intro()
-                elif at_content in {"最终幻想14", "ff14"}:
-                    reply = self.ff_ststem.reply_intro()
                 elif regex_match("你是谁", at_content):
                     reply = "我是小紫呀~"
                 elif at_content == "我爱你":

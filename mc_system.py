@@ -74,7 +74,9 @@ class MC_System:
 
         reply = None
 
-        if regex_match("我是谁", at_content):
+        if at_content in {"mc", "MC", "影之乡", "硬纸箱"}:
+            reply = self.reply_intro()
+        elif regex_match("我是谁", at_content):
             if qq_number in self.player_qq_dict:
                 reply = "你是" + self.player_qq_dict[qq_number] + "！"
             else:
@@ -112,7 +114,9 @@ class MC_System:
     def reply_group_cmd_msg(self, context, command):
         qq_number = str(context['sender']['user_id'])
 
-        if qq_number == partner_QQ_number:
+        if command == 'help':
+            reply = self.reply_intro()
+        elif qq_number == partner_QQ_number:
             reply = self.rcon_command(command)
         else:
             reply = "这个指令只有我和腐竹可以用！"
