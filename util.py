@@ -32,8 +32,8 @@ def get_gaussian():
         r = -5
     elif r > 5:
         r = 5
-    r += 5
-    r *= 10
+    r = (r + 5) * 10
+    r = round(r, 1)
     return r
 
 
