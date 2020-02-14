@@ -165,7 +165,7 @@ def crawl_item(item):
         time.sleep(1)
         content = driver.find_element_by_id('mw-content-text').find_element_by_class_name('mw-parser-output')
         if "没有找到符合条件的物品。" not in content.text:
-            reply = content.find_elements_by_class_name('ff14-item-list--item')[0].find_element_by_tag_name('a').get_attribute('href')
+            reply = url
         else:
             reply = "没有找到符合条件的物品。"
     return reply

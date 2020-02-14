@@ -82,12 +82,15 @@ class FF_System:
                 update_dict(ff_luck_path, self.luck_dict)
             else:
                 reply = "你今天已经占卜过啦，请明天再来！"
+
         elif regex_match('^search .+', command):
             par_list = command.split(' ')
             item = par_list[1]
             reply = crawl_item(item)
 
+        elif command == '匹配群员':
+
         elif command == 'ghs':
-            reply = "下面是转自我cp夏月熦风的话：搞搞搞，搞nmb"
+            reply = ""
 
         return reply
