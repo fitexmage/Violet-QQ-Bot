@@ -89,8 +89,8 @@ class FF_System:
             reply = crawl_item(item)
 
         elif command == '匹配群员':
-
+            pass
         elif command == 'ghs':
-            reply = ""
+            reply = "群里的群员都可以搞~"
 
         return reply
