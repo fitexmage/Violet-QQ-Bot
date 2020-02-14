@@ -37,6 +37,7 @@ class Violet:
         return reply
 
     def reply_group_msg(self, context):
+        print(context)
         message = context['message']
         qq_number = str(context['sender']['user_id'])
 
