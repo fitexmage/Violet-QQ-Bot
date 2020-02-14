@@ -160,7 +160,7 @@ def crawl_item(item):
         reply = url
     else:
         driver = get_driver(False)
-        url = "https://ff14.huijiwiki.com/wiki/ItemSearch?name=" + item
+        url = "https://ff14.huijiwiki.com/wiki/ItemSearch?name=" + urllib.parse.quote(item)
         driver.get(url)
         time.sleep(1)
         content = driver.find_element_by_id('mw-content-text').find_element_by_class_name('mw-parser-output')
