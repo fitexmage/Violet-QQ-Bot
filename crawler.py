@@ -160,7 +160,7 @@ def crawl_item(item):
     bs = BeautifulSoup(wb_data.text, "html.parser")
     content = bs.find(attrs={"class":"noarticletext"})
     if content is None:\
-        reply = "找到物品{}啦！它的链接在这里：".format(item, url)
+        reply = "找到物品{}啦！它的链接在这里：{}".format(item, url)
     else:
         driver = get_driver(False)
         url = "https://ff14.huijiwiki.com/wiki/ItemSearch?name=" + urllib.parse.quote(item)
@@ -168,7 +168,7 @@ def crawl_item(item):
         time.sleep(1)
         content = driver.find_element_by_id('mw-content-text').find_element_by_class_name('mw-parser-output')
         if "没有找到符合条件的物品。" not in content.text:
-            reply = "没有找到叫{}的物品，不过与它相关的搜索结果在这里：".format(item, url)
+            reply = "没有找到叫{}的物品，不过与它相关的搜索结果在这里：{}".format(item, url)
         else:
             reply = "没有找到符合条件的物品。"
     return reply
