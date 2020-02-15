@@ -15,7 +15,7 @@ async def handle_private_msg(context):
 
     reply = violet.reply_private_msg(context)
     if reply is not None:
-        await bot.send(context, message=reply, at_sender=False)
+        await bot.send(context, message=reply, at_sender=False, auto_escape=True)
 
 
 @bot.on_message('group')
@@ -25,6 +25,7 @@ async def handle_group_msg(context):
 
     reply = violet.reply_group_msg(context)
     if reply is not None:
+        print(reply)
         await bot.send(context, message=reply, at_sender=False)
 
 
