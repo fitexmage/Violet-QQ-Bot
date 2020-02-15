@@ -14,6 +14,7 @@ class FF_System:
 
     def reply_intro(self):
         reply = "你好呀~我是夏月熦风的人工智能cp小紫，目前我可以:\n" \
+                "*在群里直接发送：\n" \
                 "1. /ff dps：DPS排名。（/ff dps e3s 黑魔）\n" \
                 "2. /ff dice：掷骰子。（/ff dice 需求 黑豆柴）\n" \
                 "3. /ff gate：挖宝选门。（/ff gate 1）\n" \

@@ -119,18 +119,27 @@ def crawl_result(url):
 
 def crawl_combat_data(command):
     par_list = command.split(' ')
-    if len(par_list) != 3:
+
+    if len(par_list) == 3:
+        server = 'www'
+    elif len(par_list) == 4:
+        if par_list[3] == '国服':
+            server = 'cn'
+        else:
+            server = 'www'
+    else:
         return None
 
     dungeon = par_list[1]
     role = par_list[2]
 
+
     if dungeon not in DUNGEON_DICT or role not in ROLE_DICT:
         return None
 
     driver = get_driver(False, wait=False)
-    url = "https://cn.fflogs.com/zone/statistics/{}&dpstype=adps&class=Global&spec={}&dataset=100"\
-        .format(DUNGEON_DICT[dungeon]['attr'], ROLE_DICT[role]['attr'])
+    url = "https://{}.fflogs.com/zone/statistics/{}&dpstype=adps&class=Global&spec={}&dataset=100"\
+        .format(server, DUNGEON_DICT[dungeon]['attr'], ROLE_DICT[role]['attr'])
     driver.get(url)
 
     time.sleep(10)
@@ -140,7 +149,12 @@ def crawl_combat_data(command):
         .find_element_by_class_name('highcharts-series')\
         .find_elements_by_tag_name('rect')
 
-    reply = '{} {}(adps)'.format(DUNGEON_DICT[dungeon]['name'], ROLE_DICT[role]['name'])
+    if server == 'cn':
+        server = "国服"
+    else:
+        server = "国际服"
+        
+    reply = '{} {} {}(adps)'.format(DUNGEON_DICT[dungeon]['name'], ROLE_DICT[role]['name'], server)
     for i in range(len(rect)):
         driver.execute_script("var q=document.documentElement.scrollTop=300")
         ActionChains(driver).move_to_element(rect[i]).perform()
