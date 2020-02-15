@@ -26,7 +26,7 @@ async def handle_group_msg(context):
     reply = violet.reply_group_msg(context)
     if reply is not None:
         print(reply)
-        await bot.send(context, message=reply, at_sender=False)
+        await bot.send(context, message=reply, at_sender=False, auto_escape=False)
 
 
 @bot.on_notice('group_increase')
