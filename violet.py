@@ -43,40 +43,40 @@ class Violet:
 
         reply = None
 
-        if message == "小紫 启" and qq_number == partner_QQ_number:
+        if message == "小紫 启" and qq_number == PARTNER_QQ_NUMBER:
             reply = self.start()
-        elif message == "小紫 散" and qq_number == partner_QQ_number:
+        elif message == "小紫 散" and qq_number == PARTNER_QQ_NUMBER:
             reply = self.close()
 
         elif self.enable:
-            if message == "小紫" or message == "@【影之接待】小紫" or message == "[CQ:at,qq=" + self_QQ_number + "] ":
+            if message == "小紫" or message == "@【影之接待】小紫" or message == "[CQ:at,qq=" + SELF_QQ_NUMBER + "] ":
                 reply = self.reply_intro()
 
-            elif regex_match("\\[CQ:at,qq=" + self_QQ_number + "\\].*", message):
-                at_content = re.match("^\\[CQ:at,qq=" + self_QQ_number + "\\](.*)", message).group(1).strip()
+            elif regex_match("\\[CQ:at,qq=" + SELF_QQ_NUMBER + "\\].*", message):
+                at_content = re.match("^\\[CQ:at,qq=" + SELF_QQ_NUMBER + "\\](.*)", message).group(1).strip()
                 if self.debug:
                     print("Context: " + at_content)
                 elif regex_match("你是谁", at_content):
                     reply = "我是小紫呀~"
                 elif at_content == "我爱你":
-                    if qq_number == partner_QQ_number:
+                    if qq_number == PARTNER_QQ_NUMBER:
                         reply = "我也爱你呀~"
                     else:
                         reply = "我不是那么随便的人~"
                 elif regex_match('连接.+', at_content):
                     name = re.match('连接(.+)', at_content).group(1)
-                    if name in ip_dict:
-                        backinfo = os.system('ping -c 1 -W 1 %s' % ip_dict[name][1])
+                    if name in IP_DICT:
+                        backinfo = os.system('ping -c 1 -W 1 %s' % IP_DICT[name]['ip'])
                         if backinfo == 0:
-                            reply = ip_dict[name][0] + "服务器连接良好"
+                            reply = IP_DICT[name]['name'] + "服务器连接良好"
                         else:
-                            reply = ip_dict[name][0] + "服务器连接失败"
+                            reply = IP_DICT[name]['name'] + "服务器连接失败"
                     else:
                         reply = "未记录此服务器信息！"
                 elif at_content == "服务器时间":
                     reply = "现在的时间是：{}".format(str(datetime.datetime.now()).split('.')[0])
                 elif at_content == "debug":
-                    if qq_number == partner_QQ_number:
+                    if qq_number == PARTNER_QQ_NUMBER:
                         self.debug = not self.debug
                         reply = "Debug模式已更换为：{}！".format(str(self.debug))
 

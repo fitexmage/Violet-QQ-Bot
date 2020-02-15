@@ -9,14 +9,14 @@ import datetime
 
 class MC_System:
     def __init__(self):
-        self.player_qq_dict = load_dict(player_qq_path)
-        self.luck_dict = load_dict(mc_luck_path)
+        self.player_qq_dict = load_dict(PLAYER_QQ_PATH)
+        self.luck_dict = load_dict(MC_LUCK_PATH)
 
-        with open(rcon_password_path, "r") as f:
+        with open(RCON_PASSWORD_PATH, "r") as f:
             self.rcon_password = f.readline()
 
     def rcon_command(self, command):
-        with MCRcon(host=server_host, password=self.rcon_password, port=rcon_port) as mcr:
+        with MCRcon(host=SERVER_HOST, password=self.rcon_password, port=RCON_PORT) as mcr:
             text = mcr.command(command)
             text = re.sub('§.', "", text).strip()
             return text
@@ -48,7 +48,7 @@ class MC_System:
                     player_name = re.match("白名单 ([a-zA-Z0-9_?]{3,})$", message).group(1)
                     self.rcon_command("wladd " + player_name)
                     self.player_qq_dict[qq_number] = player_name
-                    update_dict(player_qq_path, self.player_qq_dict)
+                    update_dict(PLAYER_QQ_PATH, self.player_qq_dict)
                     reply = "白名单添加成功！"
             else:
                 reply = "游戏名格式有误！"
@@ -109,7 +109,7 @@ class MC_System:
             num_offline = num_player - num_online
             reply = "当前有" + str(num_offline) + "个玩家不在线，最大不在线人数为" + str(num_player) + "个玩家."
         elif at_content == "服务器延迟":
-            server = MinecraftServer.lookup(server_host + ":" + str(server_port))
+            server = MinecraftServer.lookup(SERVER_HOST + ":" + str(SERVER_PORT))
             reply = "服务器延迟：" + str(server.ping()) + "ms"
 
         return reply
@@ -135,7 +135,7 @@ class MC_System:
         #         update_dict(ff_luck_path, self.luck_dict)
         #     else:
         #         reply = "你今天已经占卜过啦，请明天再来！"
-        elif qq_number == partner_QQ_number:
+        elif qq_number == PARTNER_QQ_NUMBER:
             reply = self.rcon_command(command)
         else:
             reply = "这个指令只有我和腐竹可以用！"

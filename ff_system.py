@@ -10,7 +10,7 @@ import json
 
 class FF_System:
     def __init__(self):
-        self.luck_dict = load_dict(ff_luck_path)
+        self.luck_dict = load_dict(FF_LUCK_PATH)
 
     def reply_intro(self):
         reply = "你好呀~我是夏月熦风的人工智能cp小紫，目前我可以:\n" \
@@ -92,7 +92,7 @@ class FF_System:
                         "装修：" + luck_parser(get_gaussian(), decorate_luck) + "\n" \
                         "抢房：" + luck_parser(get_gaussian(), housing_luck)
                 self.luck_dict[qq_number] = date
-                update_dict(ff_luck_path, self.luck_dict)
+                update_dict(FF_LUCK_PATH, self.luck_dict)
             else:
                 reply = "你今天已经占卜过啦，请明天再来！"
 

@@ -11,6 +11,7 @@ import csv
 import time
 import jieba
 import urllib.parse
+import json
 
 
 def get_driver(head=False, wait=True):  # 得到驱动器
@@ -31,7 +32,7 @@ def get_driver(head=False, wait=True):  # 得到驱动器
 
 def get_new_url():
     data = []
-    with open(raw_url_path) as f:
+    with open(RAW_URL_PATH) as f:
         count = 1
         reader = csv.reader(f)
         for row in reader:
@@ -54,7 +55,7 @@ def get_new_url():
 
 def load_stopwords():
     stopwords_set = set()
-    with open(stopwords_path) as f:
+    with open(STOPWORDS_PATH) as f:
         words = f.read().splitlines()
     for word in words:
         stopwords_set.add(word)
@@ -71,7 +72,7 @@ def search_url(message):
             new_list.append(word)
 
     result_list = []
-    with open(new_url_path) as f:
+    with open(NEW_URL_PATH) as f:
         reader = csv.reader(f)
         for row in reader:
             if len(row) == 4 and row[3] in question_set:
@@ -124,12 +125,12 @@ def crawl_combat_data(command):
     dungeon = par_list[1]
     role = par_list[2]
 
-    if dungeon not in dungeon_dict or role not in role_dict:
+    if dungeon not in DUNGEON_DICT or role not in ROLE_DICT:
         return None
 
     driver = get_driver(False, wait=False)
     url = "https://cn.fflogs.com/zone/statistics/{}&dpstype=adps&class=Global&spec={}&dataset=100"\
-        .format(dungeon_dict[dungeon][1], role_dict[role][1])
+        .format(DUNGEON_DICT[dungeon]['attr'], ROLE_DICT[role]['attr'])
     driver.get(url)
 
     time.sleep(10)
@@ -139,27 +140,27 @@ def crawl_combat_data(command):
         .find_element_by_class_name('highcharts-series')\
         .find_elements_by_tag_name('rect')
 
-    reply = '{} {}(adps)'.format(dungeon_dict[dungeon][0], role_dict[role][0])
+    reply = '{} {}(adps)'.format(DUNGEON_DICT[dungeon]['name'], ROLE_DICT[role]['name'])
     for i in range(len(rect)):
         driver.execute_script("var q=document.documentElement.scrollTop=300")
         ActionChains(driver).move_to_element(rect[i]).perform()
         data = driver.find_element_by_id('highcharts-0')\
         .find_elements_by_class_name('highcharts-tooltip')[-1]\
         .find_element_by_tag_name('b').text
-        reply += '\n{}：{}'.format(level_dict[i], data)
+        reply += '\n{}：{}'.format(LEVEL_DICT[i], data)
 
     return reply
 
 
 def crawl_item(item):
-    if len(item) > 50:
+    if len(item) > 30:
         reply = "你确定有这么长名字的物品吗……"
         return reply
-    url = "https://ff14.huijiwiki.com/wiki/" + urllib.parse.quote("物品") + ":" + urllib.parse.quote(item)
+    url = "https://ff14.huijiwiki.com/wiki/{}:{}".format(urllib.parse.quote("物品"), urllib.parse.quote(item))
     wb_data = requests.get(url)
     bs = BeautifulSoup(wb_data.text, "html.parser")
     content = bs.find(attrs={"class":"noarticletext"})
-    if content is None:\
+    if content is None:
         reply = '找到物品"{}"啦！它的链接在这里：{}'.format(item, url)
     else:
         driver = get_driver(False)
@@ -170,5 +171,5 @@ def crawl_item(item):
         if "没有找到符合条件的物品。" not in content.text:
             reply = '没有找到叫"{}"的物品，与它相关的搜索结果在这里：{}'.format(item, url)
         else:
-            reply = "没有找到符合条件的物品。"
+            reply = '没有找到于"{}"相关的物品。'.format(item)
     return reply
