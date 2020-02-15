@@ -4,6 +4,8 @@ from crawler import crawl_combat_data, crawl_item
 
 import random
 import datetime
+import requests
+import json
 
 
 class FF_System:
@@ -12,10 +14,12 @@ class FF_System:
 
     def reply_intro(self):
         reply = "你好呀~我是夏月熦风的人工智能cp小紫，目前我可以:\n" \
-                "1. /ff dps：DPS排名。（/dps e3s 黑魔）\n" \
-                "2. /ff 占卜：让小紫为你占卜今日的ff14游戏运势。\n" \
-                "3. /ff dice：掷骰子（/dice 需求 黑豆柴）。\n" \
-                "4. /ff gate：挖宝选门。（/gate 1）"
+                "1. /ff dps：DPS排名。（/ff dps e3s 黑魔）\n" \
+                "2. /ff dice：掷骰子。（/ff dice 需求 黑豆柴）\n" \
+                "3. /ff gate：挖宝选门。（/ff gate 1）\n" \
+                "4. /ff 占卜：让小紫为你占卜今日的ff14游戏运势。\n" \
+                "5. /ff search：搜索游戏内的物品。（/ff search 黑豆柴）\n" \
+                "6. /ff nuannuan：查看每周暖暖攻略。"
         return reply
 
     def reply_private_msg(self, context):
@@ -96,6 +100,15 @@ class FF_System:
             par_list = command.split(' ')
             item = par_list[1]
             reply = crawl_item(item)
+
+        elif command == 'nuannuan':
+            url = 'http://nuannuan.yorushika.co:5000/'
+            r = requests.get(url=url, timeout=5)
+            data = json.loads(r.text)
+            if data['success']:
+                reply = data['content']
+            else:
+                reply = "暖暖崩了，请稍候再试~"
 
         elif command == 'ghs':
             reply = "群里的群员都可以搞哟~"
