@@ -5,7 +5,7 @@ new_url_path = "data/new_url.csv"
 stopwords_path = "data/stopwords.txt"
 mc_luck_path = "data/mc_luck.json"
 
-HOST = "172.17.67.53"  # '192.168.1.3' '172.17.67.53'
+HOST = "127.0.0.1"  # '192.168.1.3' '172.17.67.53'
 PORT = 8080
 self_QQ_number = "2511310647"
 partner_QQ_number = "424506920"
