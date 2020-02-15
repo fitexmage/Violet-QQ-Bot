@@ -4,10 +4,13 @@ from util import *
 from mcstatus import MinecraftServer
 from mcrcon import MCRcon
 
+import datetime
+
 
 class MC_System:
     def __init__(self):
         self.player_qq_dict = load_dict(player_qq_path)
+        self.luck_dict = load_dict(mc_luck_path)
 
         with open(rcon_password_path, "r") as f:
             self.rcon_password = f.readline()
@@ -116,6 +119,22 @@ class MC_System:
 
         if command == 'help':
             reply = self.reply_intro()
+        # elif command == '占卜':
+        #     date = str(datetime.date.today())
+        #     if qq_number not in self.luck_dict or self.luck_dict[qq_number] != date:
+        #         reply = "下面是小紫采用人工智能秘术所做出的占卜：\n" \
+        #                 "1. 战斗运势：\n" \
+        #                 "打怪：" + luck_parser(get_gaussian(), dungeon_luck) + "\n" \
+        #                 "打BOSS：" + luck_parser(get_gaussian(), boss_luck) + "\n\n" \
+        #                 "挖矿：" + luck_parser(get_gaussian(), treature_luck) + "\n" \
+        #                 "制作：" + luck_parser(get_gaussian(), treature_luck) + "\n" \
+        #                 "交友：" + luck_parser(get_gaussian(), friend_luck) + "\n" \
+        #                 "财产安全：" + luck_parser(get_gaussian(), friend_luck) + "\n" \
+        #                 "建筑：" + luck_parser(get_gaussian(), decorate_luck)
+        #         self.luck_dict[qq_number] = date
+        #         update_dict(ff_luck_path, self.luck_dict)
+        #     else:
+        #         reply = "你今天已经占卜过啦，请明天再来！"
         elif qq_number == partner_QQ_number:
             reply = self.rcon_command(command)
         else:

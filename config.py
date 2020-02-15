@@ -3,6 +3,7 @@ rcon_password_path = "data/rcon_password.txt"
 raw_url_path = "data/url.csv"
 new_url_path = "data/new_url.csv"
 stopwords_path = "data/stopwords.txt"
+mc_luck_path = "data/mc_luck.json"
 
 HOST = "172.17.67.53"  # '192.168.1.3' '172.17.67.53'
 PORT = 8080
