@@ -74,11 +74,11 @@ class Violet:
                     else:
                         reply = "未记录此服务器信息！"
                 elif at_content == "服务器时间":
-                    reply = "现在的时间是：" + str(datetime.date.today()) + str(datetime.time())
+                    reply = "现在的时间是：{}".format(str(datetime.datetime.now()).split('.')[0])
                 elif at_content == "debug":
                     if qq_number == partner_QQ_number:
                         self.debug = not self.debug
-                        reply = "Debug模式已更换为：" + str(self.debug) + "!"
+                        reply = "Debug模式已更换为：{}！".format(str(self.debug))
 
                 if reply is None:
                     reply = self.mc_system.reply_group_at_msg(context, at_content)
