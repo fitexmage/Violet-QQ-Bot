@@ -5,7 +5,7 @@ new_url_path = "data/new_url.csv"
 stopwords_path = "data/stopwords.txt"
 mc_luck_path = "data/mc_luck.json"
 
-HOST = "172.17.67.53"  # '192.168.1.3' '172.17.67.53'
+HOST = "127.0.0.1"  # '192.168.1.3' '172.17.67.53'
 PORT = 8080
 self_QQ_number = "2511310647"
 partner_QQ_number = "424506920"
@@ -19,7 +19,8 @@ question_set = ["Mod讨论", "游戏技巧", "编程开发", "联机教程", "Mo
 ########################
 ff_luck_path = "data/ff_luck.json"
 
-ip_dict = {'ff14': ('最终幻想14', '116.211.8.38'), '最终幻想14': ('最终幻想14', '116.211.8.38')}
+ip_dict = {'ff14': ('最终幻想14', '116.211.8.38'),
+           '最终幻想14': ('最终幻想14', '116.211.8.38')}
 
 dungeon_dict = {'e1': ('普通至尊伊甸', '29#boss=65&difficulty=100'),
                 'e2': ('普通虚空行者', '29#boss=66&difficulty=100'),
