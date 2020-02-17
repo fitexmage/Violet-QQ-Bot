@@ -179,7 +179,10 @@ def crawl_item(item):
     bs = BeautifulSoup(wb_data.text, "html.parser")
     content = bs.find(attrs={"class":"noarticletext"})
     if content is None:
-        reply = '找到物品"{}"啦！它的链接在这里：[CQ:share,url={},title={}]'.format(item, url, item)
+        content = bs.find(attrs={"class": "ff14-content-box-block"})
+        image = bs.find(attrs={"property": "og:image"})['content']
+        cq = "[CQ:share,url={},title={},image={}]".format(url, item, content, image)
+        reply = '找到物品"{}"啦！它的链接在这里：{}'.format(item, cq)
     else:
         driver = get_driver(False)
         url = WIKI_URL + "ItemSearch?name=" + urllib.parse.quote(item)
@@ -191,7 +194,8 @@ def crawl_item(item):
             reply = "服务器繁忙，请稍候再试！"
             return reply
         if "没有找到符合条件的物品。" not in content.text:
-            reply = '没有找到叫"{}"的物品，与它相关的搜索结果在这里：[CQ:share,url={},title={}]'.format(item, url, item + "的搜索结果")
+            cq = "[CQ:share,url={},title={}]".format(url, item + "的搜索结果")
+            reply = '没有找到叫"{}"的物品，与它相关的搜索结果在这里：{}'.format(item, cq)
         else:
             reply = '没有找到于"{}"相关的物品。'.format(item)
     return reply
