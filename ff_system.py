@@ -116,5 +116,5 @@ class FF_System:
                 reply = "没有找到这个渔场，是不是哪里打错了呀~"
         elif command == 'ghs':
             reply = "群里的群员都可以搞哟~"
-
+        print(reply)
         return reply
