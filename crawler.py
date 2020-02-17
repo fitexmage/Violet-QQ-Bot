@@ -179,9 +179,9 @@ def crawl_item(item):
     bs = BeautifulSoup(wb_data.text, "html.parser")
     content = bs.find(attrs={"class":"noarticletext"})
     if content is None:
-        content = bs.find(attrs={"class": "ff14-content-box-block"})
+        content = bs.find(attrs={"class": "ff14-content-box-block"}).text
         image = bs.find(attrs={"property": "og:image"})['content']
-        cq = "[CQ:share,url={},title={},image={}]".format(url, item, content, image)
+        cq = "[CQ:share,url={},title={},content={},image={}]".format(url, item, content, image)
         reply = '找到物品"{}"啦！它的链接在这里：{}'.format(item, cq)
     else:
         driver = get_driver(False)
