@@ -9,6 +9,8 @@ class Violet:
     def __init__(self):
         self.enable = True
         self.debug = False
+        self.cur_lat = random.uniform(-90, 90)
+        self.cur_lon = random.uniform(-90, 90)
 
         self.mc_system = MC_System()
         self.ff_ststem = FF_System()
@@ -76,8 +78,9 @@ class Violet:
                 elif at_content == "服务器时间":
                     reply = "现在的时间是：{}".format(str(time_now()).split('.')[0])
                 elif re.match('你在哪', at_content):
-                    lat = str(round(random.uniform(-90, 90), 6))
-                    lon = str(round(random.uniform(-180, 180), 6))
+                    self.cur_lat, self.cur_lon = move_on_earth(self.cur_lat, self.cur_lon)
+                    lat = str(round(self.cur_lat, 6))
+                    lon = str(round(self.cur_lon, 6))
                     reply = ["[CQ:location,lat={},lon={}]".format(lat, lon), "来找我玩呀~"]
                 elif at_content == "debug":
                     if qq_number == PARTNER_QQ_NUMBER:

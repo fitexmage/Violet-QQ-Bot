@@ -68,3 +68,18 @@ def done_today(dict, qq_number):
 
 def generate_image_cq(path):
     return "[CQ:image,file={}]".format(path)
+
+
+def move_on_earth(lat, lon):
+    lat += random.uniform(-0.5, 0.5)
+    lon += random.uniform(-0.5, 0.5)
+    if lat > 90:
+        lat = 180 - lat
+    elif lat < -90:
+        lat = -180 - lat
+
+    if lat > 180:
+        lat = lat - 360
+    elif lat < -180:
+        lat = lat + 360
+    return lat, lon
