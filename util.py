@@ -71,8 +71,8 @@ def generate_image_cq(path):
 
 
 def move_on_earth(lat, lon):
-    lat += random.uniform(-0.5, 0.5)
-    lon += random.uniform(-0.5, 0.5)
+    lat += random.uniform(-2, 2)
+    lon += random.uniform(-2, 2)
     if lat > 90:
         lat = 180 - lat
     elif lat < -90:
