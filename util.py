@@ -38,7 +38,7 @@ def get_gaussian():
     return r
 
 
-def luck_parser(num, list):
+def luck_parser(num):
     if num <= 7:
         i = 0
     elif num <= 20:
@@ -51,8 +51,8 @@ def luck_parser(num, list):
         i = 4
     else:
         i = 5
-    
-    return str(num) + "%\n" + list[i]
+
+    return str(num) + "%"
 
 
 def time_now():
