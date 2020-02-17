@@ -121,19 +121,6 @@ class MC_System:
             reply = self.reply_intro()
         # elif command == '占卜':
         #     if not done_today(self.luck_dict, qq_number):
-        #         reply = "下面是采用人工智能秘术做出的占卜：\n" \
-        #                 "1. 战斗运势：\n" \
-        #                 "打怪：" + luck_parser(get_gaussian(), dungeon_luck) + "\n" \
-        #                 "打BOSS：" + luck_parser(get_gaussian(), boss_luck) + "\n\n" \
-        #                 "挖矿：" + luck_parser(get_gaussian(), treature_luck) + "\n" \
-        #                 "制作：" + luck_parser(get_gaussian(), treature_luck) + "\n" \
-        #                 "交友：" + luck_parser(get_gaussian(), friend_luck) + "\n" \
-        #                 "财产安全：" + luck_parser(get_gaussian(), friend_luck) + "\n" \
-        #                 "建筑：" + luck_parser(get_gaussian(), decorate_luck)
-        #         self.luck_dict[qq_number] = str(now_time().date())
-        #         update_dict(ff_luck_path, self.luck_dict)
-        #     else:
-        #         reply = "你今天已经占卜过啦，请明天再来！"
         elif qq_number == PARTNER_QQ_NUMBER:
             reply = self.rcon_command(command)
         else:

@@ -64,3 +64,7 @@ def done_today(dict, qq_number):
     if qq_number not in dict or dict[qq_number] != date:
         return False
     return True
+
+
+def generate_image_cq(path):
+    return "[CQ:image,file={}]".format(path)

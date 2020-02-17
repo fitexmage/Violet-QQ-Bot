@@ -1,6 +1,6 @@
 from config import *
 from util import *
-from crawler import crawl_combat_data, crawl_item
+from crawler import crawl_combat_data, crawl_item, crawl_nuannuan
 
 import random
 import requests
@@ -92,8 +92,7 @@ class FF_System:
                         "战斗运势：" + luck_parser(get_gaussian()) + "\n" \
                         "财富运势：" + luck_parser(get_gaussian()) + "\n" \
                         "交际运势：" + luck_parser(get_gaussian()) + "\n" \
-                        "宜：" + good_to_do + "\n" \
-                        "忌：" + bad_to_do
+                        "宜：{}  忌：{}".format(good_to_do, bad_to_do) + "\n"
                 self.luck_dict[qq_number] = str(time_now().date())
                 update_dict(FF_LUCK_PATH, self.luck_dict)
             else:
@@ -105,13 +104,16 @@ class FF_System:
             reply = crawl_item(item)
 
         elif command == 'nuannuan':
-            url = 'http://nuannuan.yorushika.co:5000/'
-            r = requests.get(url=url, timeout=5)
-            data = json.loads(r.text)
-            if data['success']:
-                reply = data['content']
+            reply = crawl_nuannuan()
+
+        elif regex_match('^fish .+', command):
+            par_list = command.split(' ')
+            if os.path.exists('data/fish_map/{}.jpg'.format(par_list[1])):
+                reply = generate_image_cq('data/fish_map/{}.jpg'.format(par_list[1]))
+            elif par_list[1] in FISH_MAP_DICT:
+                reply = generate_image_cq('data/fish_map/' + FISH_MAP_DICT[par_list[1]])
             else:
-                reply = "暖暖崩了，请稍候再试~"
+                reply = "没有找到这个渔场，是不是哪里打错了呀~"
 
         elif command == 'ghs':
             reply = "群里的群员都可以搞哟~"

@@ -42,17 +42,18 @@ class Violet:
 
         reply = None
 
-        if message == "小紫 启" and qq_number == PARTNER_QQ_NUMBER:
-            reply = self.start()
-        elif message == "小紫 散" and qq_number == PARTNER_QQ_NUMBER:
-            reply = self.close()
+        if qq_number == PARTNER_QQ_NUMBER:
+            if message == "小紫 启":
+                reply = self.start()
+            elif message == "小紫 散":
+                reply = self.close()
 
         elif self.enable:
             if message == "小紫" or message == "@【影之接待】小紫" or message == "[CQ:at,qq=" + SELF_QQ_NUMBER + "] ":
                 reply = self.reply_intro()
 
-            elif regex_match("\\[CQ:at,qq=" + SELF_QQ_NUMBER + "\\].*", message):
-                at_content = re.match("^\\[CQ:at,qq=" + SELF_QQ_NUMBER + "\\](.*)", message).group(1).strip()
+            elif regex_match('\\[CQ:at,qq={}\\].*'.format(SELF_QQ_NUMBER), message):
+                at_content = re.match('\\[CQ:at,qq={}\\].*'.format(SELF_QQ_NUMBER), message).group(1).strip()
                 if self.debug:
                     print("Context: " + at_content)
                 elif regex_match("你是谁", at_content):
