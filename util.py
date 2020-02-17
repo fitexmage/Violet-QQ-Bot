@@ -4,6 +4,7 @@ import re
 import json
 import os
 import random
+import datetime
 
 
 def regex_match(pattern, message):
@@ -39,14 +40,27 @@ def get_gaussian():
 
 def luck_parser(num, list):
     if num <= 7:
-        return str(num) + "%，" + list[0]
+        i = 0
     elif num <= 20:
-        return str(num) + "%，" + list[1]
+        i = 1
     elif num <= 50:
-        return str(num) + "%，" + list[2]
+        i = 2
     elif num <= 80:
-        return str(num) + "%，" + list[3]
+        i = 3
     elif num <= 93:
-        return str(num) + "%，" + list[4]
-    elif num <= 100:
-        return str(num) + "%，" + list[5]
+        i = 4
+    else:
+        i = 5
+    
+    return str(num) + "%\n" + list[i]
+
+
+def time_now():
+    return datetime.datetime.now()
+
+
+def done_today(dict, qq_number):
+    date = str(time_now().date())
+    if qq_number not in dict or dict[qq_number] != date:
+        return False
+    return True

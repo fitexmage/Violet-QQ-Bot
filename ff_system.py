@@ -3,7 +3,6 @@ from util import *
 from crawler import crawl_combat_data, crawl_item
 
 import random
-import datetime
 import requests
 import json
 
@@ -77,22 +76,21 @@ class FF_System:
                     reply = "别想了，选哪边都没戏~"
 
         elif command == '占卜':
-            date = str(datetime.date.today())
-            if qq_number not in self.luck_dict or self.luck_dict[qq_number] != date:
-                reply = "下面是小紫采用人工智能秘术所做出的占卜：\n" \
-                        "1. 战斗运势：\n" \
+            if not done_today(self.luck_dict, qq_number):
+                reply = "下面是采用人工智能秘术做出的占卜：\n" \
+                        "*战斗运势：\n" \
                         "打本：" + luck_parser(get_gaussian(), dungeon_luck) + "\n" \
                         "野外BOSS：" + luck_parser(get_gaussian(), boss_luck) + "\n\n" \
-                        "2. 财富运势：\n" \
+                        "*财富运势：\n" \
                         "挖宝：" + luck_parser(get_gaussian(), treature_luck) + "\n" \
                         "打工：" + luck_parser(get_gaussian(), work_luck) + "\n" \
                         "生产采集：" + luck_parser(get_gaussian(), noncombat_luck) + "\n\n" \
-                        "3. 交际运势：\n" \
+                        "*交际运势：\n" \
                         "交友：" + luck_parser(get_gaussian(), friend_luck) + "\n" \
                         "找CP：" + luck_parser(get_gaussian(), cp_luck) + "\n" \
                         "装修：" + luck_parser(get_gaussian(), decorate_luck) + "\n" \
                         "抢房：" + luck_parser(get_gaussian(), housing_luck)
-                self.luck_dict[qq_number] = date
+                self.luck_dict[qq_number] = str(time_now().date())
                 update_dict(FF_LUCK_PATH, self.luck_dict)
             else:
                 reply = "你今天已经占卜过啦，请明天再来！"

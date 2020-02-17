@@ -4,7 +4,6 @@ from mc_system import MC_System
 from ff_system import FF_System
 
 import os
-import datetime
 
 class Violet:
     def __init__(self):
@@ -74,7 +73,7 @@ class Violet:
                     else:
                         reply = "未记录此服务器信息！"
                 elif at_content == "服务器时间":
-                    reply = "现在的时间是：{}".format(str(datetime.datetime.now()).split('.')[0])
+                    reply = "现在的时间是：{}".format(str(time_now()).split('.')[0])
                 elif at_content == "debug":
                     if qq_number == PARTNER_QQ_NUMBER:
                         self.debug = not self.debug

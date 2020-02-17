@@ -120,9 +120,8 @@ class MC_System:
         if command == 'help':
             reply = self.reply_intro()
         # elif command == '占卜':
-        #     date = str(datetime.date.today())
-        #     if qq_number not in self.luck_dict or self.luck_dict[qq_number] != date:
-        #         reply = "下面是小紫采用人工智能秘术所做出的占卜：\n" \
+        #     if not done_today(self.luck_dict, qq_number):
+        #         reply = "下面是采用人工智能秘术做出的占卜：\n" \
         #                 "1. 战斗运势：\n" \
         #                 "打怪：" + luck_parser(get_gaussian(), dungeon_luck) + "\n" \
         #                 "打BOSS：" + luck_parser(get_gaussian(), boss_luck) + "\n\n" \
@@ -131,7 +130,7 @@ class MC_System:
         #                 "交友：" + luck_parser(get_gaussian(), friend_luck) + "\n" \
         #                 "财产安全：" + luck_parser(get_gaussian(), friend_luck) + "\n" \
         #                 "建筑：" + luck_parser(get_gaussian(), decorate_luck)
-        #         self.luck_dict[qq_number] = date
+        #         self.luck_dict[qq_number] = str(now_time().date())
         #         update_dict(ff_luck_path, self.luck_dict)
         #     else:
         #         reply = "你今天已经占卜过啦，请明天再来！"
