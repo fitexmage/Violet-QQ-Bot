@@ -19,7 +19,8 @@ class FF_System:
                 "3. /ff gate：挖宝选门。（/ff gate 2）\n" \
                 "4. /ff 占卜：让小紫为你占卜今日的ff14游戏运势。\n" \
                 "5. /ff search：搜索游戏内的物品。（/ff search 黑豆柴）\n" \
-                "6. /ff nuannuan：查看每周暖暖攻略。"
+                "6. /ff nuannuan：查看每周暖暖攻略。\n" \
+                "7. /ff fish：查看渔场。（/ff fish 阿凯提卡大森林）"
         return reply
 
     def reply_private_msg(self, context):

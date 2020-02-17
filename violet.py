@@ -75,6 +75,10 @@ class Violet:
                         reply = "未记录此服务器信息！"
                 elif at_content == "服务器时间":
                     reply = "现在的时间是：{}".format(str(time_now()).split('.')[0])
+                elif re.match('你在哪', at_content):
+                    lat = str(round(random.uniform(-90, 90), 6))
+                    lon = str(round(random.uniform(-180, 180), 6))
+                    reply = "我目前在：\n" + "[CQ:location,lat={},lon={}]".format(lat, lon) + "\n来找我玩呀~"
                 elif at_content == "debug":
                     if qq_number == PARTNER_QQ_NUMBER:
                         self.debug = not self.debug
