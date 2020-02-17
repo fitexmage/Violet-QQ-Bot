@@ -78,7 +78,7 @@ class Violet:
                 elif re.match('你在哪', at_content):
                     lat = str(round(random.uniform(-90, 90), 6))
                     lon = str(round(random.uniform(-180, 180), 6))
-                    reply = "我目前在：\n" + "[CQ:location,lat={},lon={}]".format(lat, lon) + "\n来找我玩呀~"
+                    reply = ["[CQ:location,lat={},lon={}]".format(lat, lon), "来找我玩呀~"]
                 elif at_content == "debug":
                     if qq_number == PARTNER_QQ_NUMBER:
                         self.debug = not self.debug

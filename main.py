@@ -15,7 +15,11 @@ async def handle_private_msg(context):
 
     reply = violet.reply_private_msg(context)
     if reply is not None:
-        await bot.send(context, message=reply, at_sender=False, auto_escape=True)
+        if isinstance(reply, list):
+            for r in reply:
+                await bot.send(context, message=r, at_sender=False, auto_escape=True)
+        else:
+            await bot.send(context, message=reply, at_sender=False, auto_escape=True)
 
 
 @bot.on_message('group')
@@ -25,7 +29,11 @@ async def handle_group_msg(context):
 
     reply = violet.reply_group_msg(context)
     if reply is not None:
-        await bot.send(context, message=reply, at_sender=False, auto_escape=False)
+        if isinstance(reply, list):
+            for r in reply:
+                await bot.send(context, message=r, at_sender=False, auto_escape=False)
+        else:
+            await bot.send(context, message=reply, at_sender=False, auto_escape=False)
 
 
 @bot.on_notice('group_increase')
