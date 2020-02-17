@@ -48,7 +48,7 @@ class Violet:
             elif message == "小紫 散":
                 reply = self.close()
 
-        elif self.enable:
+        if self.enable:
             if message == "小紫" or message == "@【影之接待】小紫" or message == "[CQ:at,qq=" + SELF_QQ_NUMBER + "] ":
                 reply = self.reply_intro()
 
