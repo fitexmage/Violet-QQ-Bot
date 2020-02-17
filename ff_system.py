@@ -108,10 +108,10 @@ class FF_System:
 
         elif regex_match('^fish .+', command):
             par_list = command.split(' ')
-            if os.path.exists('file:///root/Violet-QQ-Bot/data/fish_map/{}.jpg'.format(par_list[1])):
-                reply = generate_image_cq('data/fish_map/{}.jpg'.format(par_list[1]))
+            if os.path.exists('data/fish_map/{}.jpg'.format(par_list[1])):
+                reply = generate_image_cq('file:///root/Violet-QQ-Bot/data/fish_map/{}.jpg'.format(par_list[1]))
             elif par_list[1] in FISH_MAP_DICT:
-                reply = generate_image_cq('data/fish_map/' + FISH_MAP_DICT[par_list[1]]['path'])
+                reply = generate_image_cq('file:///root/Violet-QQ-Bot/data/fish_map/' + FISH_MAP_DICT[par_list[1]]['path'])
             else:
                 reply = "没有找到这个渔场，是不是哪里打错了呀~"
         elif command == 'ghs':
