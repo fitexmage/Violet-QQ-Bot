@@ -56,7 +56,7 @@ def luck_parser(num):
 
 
 def time_now():
-    return datetime.datetime.now()
+    return datetime.datetime.now() + datetime.timedelta(hours=13)
 
 
 def done_today(dict, qq_number):
