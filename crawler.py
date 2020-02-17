@@ -181,21 +181,19 @@ def crawl_item(item):
     if content is None:
         content = bs.find(attrs={"class": "ff14-content-box-block"}).text[4:]
         image = bs.find(attrs={"property": "og:image"})['content']
-        cq = "[CQ:share,url={},title={},content={},image={}]".format(url, item, content, image)
-        reply = '找到物品"{}"啦！它的链接在这里：{}'.format(item, cq)
+        reply = "[CQ:share,url={},title={},content={},image={}]".format(url, item, content, image)
     else:
         driver = get_driver(False)
         url = WIKI_URL + "ItemSearch?name=" + urllib.parse.quote(item)
-        driver.get(url)
-        time.sleep(1)
         try:
+            driver.get(url)
+            time.sleep(1)
             content = driver.find_element_by_id('mw-content-text').find_element_by_class_name('mw-parser-output')
         except:
             reply = "服务器繁忙，请稍候再试！"
             return reply
         if "没有找到符合条件的物品。" not in content.text:
-            cq = "[CQ:share,url={},title={}]".format(url, item + "的搜索结果")
-            reply = '没有找到叫"{}"的物品，与它相关的搜索结果在这里：{}'.format(item, cq)
+            reply = '[CQ:share,url={},title="{}"的搜索结果]'.format(url, item)
         else:
             reply = '没有找到于"{}"相关的物品。'.format(item)
     return reply
