@@ -53,7 +53,7 @@ class Violet:
                 reply = self.reply_intro()
 
             elif regex_match('\\[CQ:at,qq={}\\].*'.format(SELF_QQ_NUMBER), message):
-                at_content = re.match('\\[CQ:at,qq={}\\].*'.format(SELF_QQ_NUMBER), message).group(1).strip()
+                at_content = re.match('\\[CQ:at,qq={}\\](.*)'.format(SELF_QQ_NUMBER), message).group(1).strip()
                 if self.debug:
                     print("Context: " + at_content)
                 elif regex_match("你是谁", at_content):
