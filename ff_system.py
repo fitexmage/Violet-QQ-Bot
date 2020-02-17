@@ -81,7 +81,6 @@ class FF_System:
                 luck_things.remove(good_to_do)
                 bad_to_do = random.choice(luck_things)
                 reply = "[CQ:at,qq=" + qq_number + "] \n" \
-                        "下面是采用人工智能秘术做出的占卜：\n" \
                         "战斗运势：" + luck_parser(get_gaussian()) + "\n" \
                         "财富运势：" + luck_parser(get_gaussian()) + "\n" \
                         "交际运势：" + luck_parser(get_gaussian()) + "\n" \
