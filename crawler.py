@@ -157,7 +157,7 @@ def crawl_combat_data(command):
         server = "国服"
     else:
         server = "国际服"
-        
+
     reply = '{} {} {}(adps)'.format(DUNGEON_DICT[dungeon]['name'], ROLE_DICT[role]['name'], server)
     for i in range(len(rect)):
         driver.execute_script("var q=document.documentElement.scrollTop=300")
@@ -192,10 +192,10 @@ def crawl_item(item):
         except:
             reply = "服务器繁忙，请稍候再试！"
             return reply
-        if "没有找到符合条件的物品。" not in content.text:
+        if "没有" not in content.text:
             reply = '[CQ:share,url={},title="{}"的搜索结果]'.format(url, item)
         else:
-            reply = '没有找到于"{}"相关的物品。'.format(item)
+            reply = '没有找到与"{}"相关的物品。'.format(item)
     return reply
 
 
