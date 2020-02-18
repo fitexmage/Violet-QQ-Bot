@@ -118,12 +118,10 @@ class Violet:
             if len(par_list) == 1:
                 reply = "请选择一位对手吧！"
             else:
-                self_qq = context['user_id']
+                self_qq = str(context['user_id'])
                 opponent_qq = par_list[1]
-                print(type(context['group_id']))
-                print(type(opponent_qq))
-                info = bot.get_group_member_info(group_id=context['group_id'], user_id=opponent_qq)
-
+                info = bot.get_group_member_info(group_id=str(context['group_id']), user_id=opponent_qq)
+                print(info)
 
 
         elif par_list[0] == 'mc' and len(par_list) > 1:
