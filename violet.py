@@ -92,7 +92,6 @@ class Violet:
         elif at_content == "服务器时间":
             reply = "现在的时间是：{}".format(str(time_now()).split('.')[0])
         elif re.match('你在哪', at_content):
-            print(self.cur_lat, self.cur_lon)
             self.cur_lat, self.cur_lon = move_on_earth(self.cur_lat, self.cur_lon)
             lat = str(round(self.cur_lat, 6))
             lon = str(round(self.cur_lon, 6))
@@ -118,10 +117,28 @@ class Violet:
             if len(par_list) == 1:
                 reply = "请选择一位对手吧！"
             else:
-                self_qq = str(context['user_id'])
-                opponent_qq = par_list[1]
-                res = await bot.get_group_member_info(group_id=context['group_id'], user_id=int(opponent_qq))
-                print(res)
+                self_qq = int(context['user_id'])
+                opponent_qq = int(par_list[1])
+                try:
+                    opponent_info = await bot.get_group_member_info(group_id=context['group_id'], user_id=opponent_qq)
+                    if opponent_info['role'] == "owner":
+                        await bot.set_group_ban(group_id=context['group_id'], user_id=self_qq, duration=15 * 60)
+                        reply = "竟敢挑战群主，你将受到天罚！"
+                    elif opponent_info['user_id'] == int(SELF_QQ_NUMBER):
+                        await bot.set_group_ban(group_id=context['group_id'], user_id=self_qq, duration=15 * 60)
+                        reply = "我定的规则，你觉得我会输吗~"
+                    elif opponent_info['role'] == "admin":
+                        await bot.set_group_ban(group_id=context['group_id'], user_id=self_qq, duration=15 * 60)
+                        reply = "竟敢挑战管理员，你将受到天罚！"
+                    elif random.random() < 0.5:
+                        await bot.set_group_ban(group_id=context['group_id'], user_id=self_qq, duration=10 * 60)
+                        reply = "你在决斗中失败了！"
+                    else:
+                        await bot.set_group_ban(group_id=context['group_id'], user_id=opponent_qq, duration=10 * 60)
+                        reply = "你的对手在决斗中失败了！"
+                except:
+                    reply = "群里貌似并没有这个人……"
+
 
         elif par_list[0] == 'mc' and len(par_list) > 1:
             reply = self.mc_system.reply_group_cmd_msg(context, par_list[1:])
