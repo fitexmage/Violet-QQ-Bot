@@ -119,6 +119,8 @@ class Violet:
             else:
                 self_qq = int(context['user_id'])
                 opponent_qq = int(par_list[1])
+                if self_qq == opponent_qq:
+                    reply = "自虐吗，口味真重……"
                 try:
                     self_info = await bot.get_group_member_info(group_id=context['group_id'], user_id=self_qq)
                     opponent_info = await bot.get_group_member_info(group_id=context['group_id'], user_id=opponent_qq)
