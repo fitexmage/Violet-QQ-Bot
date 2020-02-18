@@ -114,41 +114,42 @@ class Violet:
         reply = None
 
         if par_list[0] == 'duel':
-            if len(par_list) == 1:
+            if len(par_list) == 1 or par_list[1] == "":
                 reply = "请选择一位对手吧！"
             else:
                 self_qq = int(context['user_id'])
                 opponent_qq = int(par_list[1])
                 if self_qq == opponent_qq:
                     reply = "自虐吗，口味真重……"
-                try:
-                    self_info = await bot.get_group_member_info(group_id=context['group_id'], user_id=self_qq)
-                    opponent_info = await bot.get_group_member_info(group_id=context['group_id'], user_id=opponent_qq)
-                    if self_qq == int(PARTNER_QQ_NUMBER) and opponent_qq == int(SELF_QQ_NUMBER):
-                        reply = "不急，等晚上再一起玩~"
-                    elif self_info['role'] == 'admin' or self_info['role'] == 'owner':
-                        if opponent_info['role'] == "admin" or opponent_info['role'] == "owner":
-                            reply = "管理员之间的争斗，我管不了……"
+                else:
+                    try:
+                        self_info = await bot.get_group_member_info(group_id=context['group_id'], user_id=self_qq)
+                        opponent_info = await bot.get_group_member_info(group_id=context['group_id'], user_id=opponent_qq)
+                        if self_qq == int(PARTNER_QQ_NUMBER) and opponent_qq == int(SELF_QQ_NUMBER):
+                            reply = "不急，等晚上再一起玩~"
+                        elif self_info['role'] == 'admin' or self_info['role'] == 'owner':
+                            if opponent_info['role'] == "admin" or opponent_info['role'] == "owner":
+                                reply = "管理员之间的争斗，我管不了……"
+                            else:
+                                await bot.set_group_ban(group_id=context['group_id'], user_id=opponent_qq, duration=10 * 60)
+                                reply = "一股强大的力量袭来……"
+                        elif opponent_info['role'] == "owner":
+                            await bot.set_group_ban(group_id=context['group_id'], user_id=self_qq, duration=15 * 60)
+                            reply = "竟敢挑战群主，你将受到天罚！"
+                        elif opponent_info['user_id'] == int(SELF_QQ_NUMBER):
+                            await bot.set_group_ban(group_id=context['group_id'], user_id=self_qq, duration=15 * 60)
+                            reply = "我定的规则，你觉得我会输吗~"
+                        elif opponent_info['role'] == "admin":
+                            await bot.set_group_ban(group_id=context['group_id'], user_id=self_qq, duration=15 * 60)
+                            reply = "竟敢挑战管理员，你将受到天罚！"
+                        elif random.random() < 0.5:
+                            await bot.set_group_ban(group_id=context['group_id'], user_id=self_qq, duration=10 * 60)
+                            reply = "你在决斗中失败了！"
                         else:
                             await bot.set_group_ban(group_id=context['group_id'], user_id=opponent_qq, duration=10 * 60)
-                            reply = "一股强大的力量袭来……"
-                    elif opponent_info['role'] == "owner":
-                        await bot.set_group_ban(group_id=context['group_id'], user_id=self_qq, duration=15 * 60)
-                        reply = "竟敢挑战群主，你将受到天罚！"
-                    elif opponent_info['user_id'] == int(SELF_QQ_NUMBER):
-                        await bot.set_group_ban(group_id=context['group_id'], user_id=self_qq, duration=15 * 60)
-                        reply = "我定的规则，你觉得我会输吗~"
-                    elif opponent_info['role'] == "admin":
-                        await bot.set_group_ban(group_id=context['group_id'], user_id=self_qq, duration=15 * 60)
-                        reply = "竟敢挑战管理员，你将受到天罚！"
-                    elif random.random() < 0.5:
-                        await bot.set_group_ban(group_id=context['group_id'], user_id=self_qq, duration=10 * 60)
-                        reply = "你在决斗中失败了！"
-                    else:
-                        await bot.set_group_ban(group_id=context['group_id'], user_id=opponent_qq, duration=10 * 60)
-                        reply = "你的对手在决斗中失败了！"
-                except:
-                    reply = "群里貌似并没有这个人……"
+                            reply = "你的对手在决斗中失败了！"
+                    except:
+                        reply = "群里貌似并没有这个人……"
 
 
         elif par_list[0] == 'mc' and len(par_list) > 1:
