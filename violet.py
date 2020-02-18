@@ -38,7 +38,7 @@ class Violet:
 
         return reply
 
-    def reply_group_msg(self, bot, context):
+    def reply_group_msg(self, context):
         message = context['message']
         qq_number = str(context['sender']['user_id'])
 
@@ -61,7 +61,7 @@ class Violet:
                 reply = self.reply_group_at_msg(context, message, qq_number)
 
             elif regex_match('^/', message):
-                reply = await self.reply_group_cmd_msg(bot, context, message)
+                reply = self.reply_group_cmd_msg(context, message)
 
         return reply
 
@@ -108,7 +108,7 @@ class Violet:
             reply = self.ff_ststem.reply_group_at_msg(context, at_content)
         return reply
 
-    async def reply_group_cmd_msg(self, bot, context, message):
+    def reply_group_cmd_msg(self, context, message):
         command = message[1:]
         par_list = command.split(' ')
 
@@ -120,9 +120,6 @@ class Violet:
             else:
                 self_qq = str(context['user_id'])
                 opponent_qq = par_list[1]
-
-                info = await bot.get_group_member_info(group_id=context['group_id'], user_id=int(opponent_qq))
-                print(info)
 
 
         elif par_list[0] == 'mc' and len(par_list) > 1:
