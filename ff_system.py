@@ -72,7 +72,7 @@ class FF_System:
                 if random.random() < 0.9:
                     num_1 = str(random.randint(1, 99))
                     num_2 = str(random.randint(1, 99))
-                    reply = "左边门成功的概率是{}%, 右边门成功的概率是{}%".format(num_1, num_2)
+                    reply = "左边门成功的概率是{}%\n右边门成功的概率是{}%".format(num_1, num_2)
                 else:
                     reply = "别想了，选哪边都没戏~"
             if par_list[1] == '3':
@@ -80,7 +80,7 @@ class FF_System:
                     num_1 = str(random.randint(1, 99))
                     num_2 = str(random.randint(1, 99))
                     num_3 = str(random.randint(1, 99))
-                    reply = "左边门成功的概率是{}%，中间门成功的概率是{}%，右边门成功的概率是{}%".format(num_1, num_2, num_3)
+                    reply = "左边门成功的概率是{}%\n中间门成功的概率是{}%\n右边门成功的概率是{}%".format(num_1, num_2, num_3)
                 else:
                     reply = "别想了，选哪边都没戏~"
 
@@ -93,7 +93,7 @@ class FF_System:
                         "战斗运势：" + luck_parser(get_gaussian()) + "\n" \
                         "财富运势：" + luck_parser(get_gaussian()) + "\n" \
                         "交际运势：" + luck_parser(get_gaussian()) + "\n" \
-                        "宜：{}  忌：{}".format(good_to_do, bad_to_do) + "\n"
+                        "宜：{}  忌：{}".format(good_to_do, bad_to_do)
                 self.luck_dict[qq_number] = str(time_now().date())
                 update_dict(FF_LUCK_PATH, self.luck_dict)
             else:
@@ -115,6 +115,7 @@ class FF_System:
                 reply = generate_image_cq('file:///Z:\\home\\user\\coolq\\data\\image\\local\\fish_map\\' + FISH_MAP_DICT[par_list[1]]['path'])
             else:
                 reply = "没有找到这个渔场，是不是哪里打错了呀~"
+
         elif command == 'ghs':
             reply = "群里的群员都可以搞哟~"
         return reply
