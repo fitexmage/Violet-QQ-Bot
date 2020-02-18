@@ -17,6 +17,7 @@ async def handle_private_msg(context):
     if reply is not None:
         if isinstance(reply, list):
             for r in reply:
+                bot.get_group_member_info()
                 await bot.send(context, message=r, at_sender=False, auto_escape=True)
         else:
             await bot.send(context, message=reply, at_sender=False, auto_escape=True)
