@@ -120,10 +120,9 @@ class Violet:
             else:
                 self_qq = str(context['user_id'])
                 opponent_qq = par_list[1]
-                info = bot.get_group_member_info(group_id=context['group_id'], user_id=int(opponent_qq))
-                print(info.json())
-                print(info.group_id)
-                print(info['group_id'])
+                async with bot.get_group_member_info(group_id=context['group_id'], user_id=int(opponent_qq)) as response:
+                    res = response.json()
+                print(res)
 
 
         elif par_list[0] == 'mc' and len(par_list) > 1:
