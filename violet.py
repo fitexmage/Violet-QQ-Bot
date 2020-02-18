@@ -125,7 +125,7 @@ class Violet:
                         if opponent_qq == int(SELF_QQ_NUMBER):
                             reply = "不急，等晚上再一起玩~"
                         else:
-                            await bot.set_group_ban(group_id=context['group_id'], user_id=self_qq, duration=10 * 60)
+                            await bot.set_group_ban(group_id=context['group_id'], user_id=opponent_qq, duration=10 * 60)
                             reply = "一股强大的力量袭来……"
                     elif opponent_info['role'] == "owner":
                         await bot.set_group_ban(group_id=context['group_id'], user_id=self_qq, duration=15 * 60)
