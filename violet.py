@@ -61,7 +61,7 @@ class Violet:
                 reply = self.reply_group_at_msg(context, message, qq_number)
 
             elif regex_match('^/', message):
-                reply = self.reply_group_cmd_msg(bot, context, message)
+                reply = await self.reply_group_cmd_msg(bot, context, message)
 
         return reply
 
