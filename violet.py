@@ -122,7 +122,13 @@ class Violet:
                 opponent_qq = par_list[1]
                 print(context['group_id'])
                 print(opponent_qq)
-                print(bot.get_group_member_info(group_id=context['group_id'], user_id=opponent_qq))
+                info = await bot.get_group_member_info(group_id=context['group_id'], user_id=opponent_qq)
+                print(info['group_id'])
+                print(info['user_id'])
+                print(info['nickname'])
+                print(info['sex'])
+                print(info['age'])
+                print(info['area'])
 
 
         elif par_list[0] == 'mc' and len(par_list) > 1:
