@@ -121,7 +121,13 @@ class Violet:
                 opponent_qq = int(par_list[1])
                 try:
                     opponent_info = await bot.get_group_member_info(group_id=context['group_id'], user_id=opponent_qq)
-                    if opponent_info['role'] == "owner":
+                    if self_qq == int(PARTNER_QQ_NUMBER):
+                        if opponent_qq == int(SELF_QQ_NUMBER):
+                            reply = "不急，等晚上再一起玩~"
+                        else:
+                            await bot.set_group_ban(group_id=context['group_id'], user_id=self_qq, duration=10 * 60)
+                            reply = "一股强大的力量袭来……"
+                    elif opponent_info['role'] == "owner":
                         await bot.set_group_ban(group_id=context['group_id'], user_id=self_qq, duration=15 * 60)
                         reply = "竟敢挑战群主，你将受到天罚！"
                     elif opponent_info['user_id'] == int(SELF_QQ_NUMBER):
