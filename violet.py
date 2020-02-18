@@ -121,7 +121,7 @@ class Violet:
                 self_qq = str(context['user_id'])
                 opponent_qq = par_list[1]
                 info = bot.get_group_member_info(group_id=str(context['group_id']), user_id=opponent_qq)
-                print(info)
+                print(info['group_id'])
 
 
         elif par_list[0] == 'mc' and len(par_list) > 1:
