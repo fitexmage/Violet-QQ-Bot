@@ -108,8 +108,8 @@ class Violet:
             reply = self.ff_ststem.reply_group_at_msg(context, at_content)
         return reply
 
-    def reply_group_cmd_msg(self, bot, context):
-        command = context[1:]
+    def reply_group_cmd_msg(self, bot, context, message):
+        command = message[1:]
         par_list = command.split(' ')
 
         reply = None
@@ -121,7 +121,7 @@ class Violet:
                 self_qq = context['user_id']
                 opponent_qq = par_list[1]
                 print(bot.get_group_member_info(context['group_id'], opponent_qq))
-                
+
 
         elif par_list[0] == 'mc' and len(par_list) > 1:
             reply = self.mc_system.reply_group_cmd_msg(context, par_list[1:])
