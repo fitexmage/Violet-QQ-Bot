@@ -114,15 +114,15 @@ class MC_System:
 
         return reply
 
-    def reply_group_cmd_msg(self, context, command):
+    def reply_group_cmd_msg(self, context, par_list):
         qq_number = str(context['sender']['user_id'])
 
-        if command == 'help':
+        if par_list[0] == 'help':
             reply = self.reply_intro()
         # elif command == '占卜':
         #     if not done_today(self.luck_dict, qq_number):
         elif qq_number == PARTNER_QQ_NUMBER:
-            reply = self.rcon_command(command)
+            reply = self.rcon_command(' '.join(par_list))
         else:
             reply = "这个指令只有我和腐竹可以用！"
 

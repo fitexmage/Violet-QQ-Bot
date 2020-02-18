@@ -27,7 +27,7 @@ async def handle_group_msg(context):
     if violet.debug:
         print(context)
 
-    reply = violet.reply_group_msg(context)
+    reply = violet.reply_group_msg(bot, context)
     if reply is not None:
         if isinstance(reply, list):
             for r in reply:

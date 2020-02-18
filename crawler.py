@@ -117,9 +117,7 @@ def get_driver(head=False, wait=True):  # 得到驱动器
 #     return None
 
 
-def crawl_combat_data(command):
-    par_list = command.split(' ')
-
+def crawl_combat_data(par_list):
     if len(par_list) == 3:
         server = 'www'
     elif len(par_list) == 4:
@@ -132,7 +130,6 @@ def crawl_combat_data(command):
 
     dungeon = par_list[1]
     role = par_list[2]
-
 
     if dungeon not in DUNGEON_DICT or role not in ROLE_DICT:
         return None

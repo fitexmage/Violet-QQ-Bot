@@ -38,7 +38,7 @@ class Violet:
 
         return reply
 
-    def reply_group_msg(self, context):
+    def reply_group_msg(self, bot, context):
         message = context['message']
         qq_number = str(context['sender']['user_id'])
 
@@ -58,51 +58,76 @@ class Violet:
                 reply = self.reply_intro()
 
             elif regex_match('\\[CQ:at,qq={}\\].*'.format(SELF_QQ_NUMBER), message):
-                at_content = re.match('\\[CQ:at,qq={}\\](.*)'.format(SELF_QQ_NUMBER), message).group(1).strip()
-                if self.debug:
-                    print("Context: " + at_content)
-                elif regex_match("你是谁", at_content):
-                    reply = "我是小紫呀~"
-                elif at_content == "我爱你":
-                    if qq_number == PARTNER_QQ_NUMBER:
-                        reply = "我也爱你呀~"
-                    else:
-                        reply = "我不是那么随便的人~"
-                elif regex_match('连接.+', at_content):
-                    name = re.match('连接(.+)', at_content).group(1)
-                    if name in IP_DICT:
-                        backinfo = os.system('ping -c 1 -W 1 %s' % IP_DICT[name]['ip'])
-                        if backinfo == 0:
-                            reply = IP_DICT[name]['name'] + "服务器连接良好"
-                        else:
-                            reply = IP_DICT[name]['name'] + "服务器连接失败"
-                    else:
-                        reply = "未记录此服务器信息！"
-                elif at_content == "服务器时间":
-                    reply = "现在的时间是：{}".format(str(time_now()).split('.')[0])
-                elif re.match('你在哪', at_content):
-                    print(self.cur_lat, self.cur_lon)
-                    self.cur_lat, self.cur_lon = move_on_earth(self.cur_lat, self.cur_lon)
-                    lat = str(round(self.cur_lat, 6))
-                    lon = str(round(self.cur_lon, 6))
-                    reply = ["[CQ:location,lat={},lon={}]".format(lat, lon), "来找我玩呀~"]
-                elif at_content == "debug":
-                    if qq_number == PARTNER_QQ_NUMBER:
-                        self.debug = not self.debug
-                        reply = "Debug模式已更换为：{}！".format(str(self.debug))
+                reply = self.reply_group_at_msg(context, message, qq_number)
 
-                if reply is None:
-                    reply = self.mc_system.reply_group_at_msg(context, at_content)
-                if reply is None:
-                    reply = self.ff_ststem.reply_group_at_msg(context, at_content)
+            elif regex_match('^/', message):
+                reply = self.reply_group_cmd_msg(bot, context, message)
 
-            elif regex_match('^/mc .+', message):
-                command = re.match('^/mc (.+)', message).group(1)
-                reply = self.mc_system.reply_group_cmd_msg(context, command)
+        return reply
 
-            elif regex_match('^/ff .+', message):
-                command = re.match('^/ff (.+)', message).group(1)
-                reply = self.ff_ststem.reply_group_cmd_msg(context, command)
+    def reply_group_at_msg(self, context, message, qq_number):
+        at_content = re.match('\\[CQ:at,qq={}\\](.*)'.format(SELF_QQ_NUMBER), message).group(1).strip()
+
+        reply = None
+
+        if self.debug:
+            print("Context: " + at_content)
+        elif regex_match("你是谁", at_content):
+            reply = "我是小紫呀~"
+        elif at_content == "我爱你":
+            if qq_number == PARTNER_QQ_NUMBER:
+                reply = "我也爱你呀~"
+            else:
+                reply = "我不是那么随便的人~"
+        elif regex_match('连接.+', at_content):
+            name = re.match('连接(.+)', at_content).group(1)
+            if name in IP_DICT:
+                backinfo = os.system('ping -c 1 -W 1 %s' % IP_DICT[name]['ip'])
+                if backinfo == 0:
+                    reply = IP_DICT[name]['name'] + "服务器连接良好"
+                else:
+                    reply = IP_DICT[name]['name'] + "服务器连接失败"
+            else:
+                reply = "未记录此服务器信息！"
+        elif at_content == "服务器时间":
+            reply = "现在的时间是：{}".format(str(time_now()).split('.')[0])
+        elif re.match('你在哪', at_content):
+            print(self.cur_lat, self.cur_lon)
+            self.cur_lat, self.cur_lon = move_on_earth(self.cur_lat, self.cur_lon)
+            lat = str(round(self.cur_lat, 6))
+            lon = str(round(self.cur_lon, 6))
+            reply = ["[CQ:location,lat={},lon={}]".format(lat, lon), "来找我玩呀~"]
+        elif at_content == "debug":
+            if qq_number == PARTNER_QQ_NUMBER:
+                self.debug = not self.debug
+                reply = "Debug模式已更换为：{}！".format(str(self.debug))
+
+        if reply is None:
+            reply = self.mc_system.reply_group_at_msg(context, at_content)
+        if reply is None:
+            reply = self.ff_ststem.reply_group_at_msg(context, at_content)
+        return reply
+
+    def reply_group_cmd_msg(self, bot, context):
+        command = context[1:]
+        par_list = command.split(' ')
+
+        reply = None
+
+        if par_list[0] == 'duel':
+            if len(par_list) == 1:
+                reply = "请选择一位对手吧！"
+            else:
+                self_qq = context['user_id']
+                opponent_qq = par_list[1]
+                print(bot.get_group_member_info(context['group_id'], opponent_qq))
+                
+
+        elif par_list[0] == 'mc' and len(par_list) > 1:
+            reply = self.mc_system.reply_group_cmd_msg(context, par_list[1:])
+
+        elif par_list[0] == 'ff' and len(par_list) > 1:
+            reply = self.ff_ststem.reply_group_cmd_msg(context, par_list[1:])
         return reply
 
     def start(self):

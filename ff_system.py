@@ -20,7 +20,7 @@ class FF_System:
                 "4. /ff 占卜：让小紫为你占卜今日的ff14游戏运势。\n" \
                 "5. /ff search：搜索游戏内的物品。（/ff search 黑豆柴）\n" \
                 "6. /ff nuannuan：查看每周暖暖攻略。\n" \
-                "7. /ff fish：查看渔场。（/ff fish 阿凯提卡大森林）"
+                "7. /ff fish：查看渔场。（/ff fish 雷克兰德）"
         return reply
 
     def reply_private_msg(self, context):
@@ -41,19 +41,20 @@ class FF_System:
 
         return reply
 
-    def reply_group_cmd_msg(self, context, command):
+    def reply_group_cmd_msg(self, context, par_list):
         qq_number = str(context['sender']['user_id'])
 
         reply = None
 
-        if command == 'help':
+        func = par_list[0]
+
+        if func == 'help':
             reply = self.reply_intro()
 
-        elif regex_match('^dps .+', command):
-            reply = crawl_combat_data(command)
+        elif func == 'dps':
+            reply = crawl_combat_data(par_list)
 
-        elif regex_match('^dice.+', command):
-            par_list = command.split(' ')
+        elif func == 'dice':
             num = str(random.randint(1, 99))
             if len(par_list) == 1:
                 reply = '你在需求条件下掷出了{}点'.format(num)
@@ -66,8 +67,7 @@ class FF_System:
                 if par_list[1] in {"需求", "贪婪"}:
                     reply = '你在{}条件下对"{}"掷出了{}点'.format(par_list[1], par_list[2], num)
 
-        elif regex_match('^gate .+', command):
-            par_list = command.split(' ')
+        elif func == 'gate':
             if par_list[1] == '2':
                 if random.random() < 0.9:
                     num_1 = str(random.randint(1, 99))
@@ -84,7 +84,7 @@ class FF_System:
                 else:
                     reply = "别想了，选哪边都没戏~"
 
-        elif command == '占卜':
+        elif func == '占卜':
             if not done_today(self.luck_dict, qq_number):
                 good_to_do = random.choice(luck_things)
                 luck_things.remove(good_to_do)
@@ -99,16 +99,14 @@ class FF_System:
             else:
                 reply = "你今天已经占卜过啦，请明天再来！"
 
-        elif regex_match('^search .+', command):
-            par_list = command.split(' ')
+        elif func == 'search':
             item = par_list[1]
             reply = crawl_item(item)
 
-        elif command == 'nuannuan':
+        elif func == 'nuannuan':
             reply = crawl_nuannuan()
 
-        elif regex_match('^fish .+', command):
-            par_list = command.split(' ')
+        elif func == 'fish':
             if par_list[1] in FISH_POS:
                 reply = generate_image_cq('file:///Z:\\home\\user\\coolq\\data\\image\\local\\fish_map\\{}.jpg'.format(par_list[1]))
             elif par_list[1] in FISH_MAP_DICT:
@@ -116,7 +114,7 @@ class FF_System:
             else:
                 reply = "没有找到这个渔场，是不是哪里打错了呀~"
 
-        elif command == 'ghs':
+        elif func == 'ghs':
             reply = "群里的群员都可以搞哟~"
         return reply
 
