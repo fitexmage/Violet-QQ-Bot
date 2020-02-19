@@ -132,7 +132,7 @@ class Violet:
                 for qq in self.duel_dict:
                     if done_today(self.duel_dict[qq]['date']):
                         record_list.append((qq, self.duel_dict[qq]['win_times']))
-                record_list = record_list.sort(key=lambda k: k[1])[-1]
+                record_list = record_list.sort(key=lambda k: k[1])[::-1]
                 reply = "下面是今日的决斗榜，你今天上榜了嘛~\n"
                 for i in range(min(len(record_list), 5)):
                     reply += record_list[i][0] + '\n'
