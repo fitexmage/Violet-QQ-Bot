@@ -46,11 +46,11 @@ def cur_time():
     return datetime.datetime.now() + datetime.timedelta(hours=13)
 
 
-def done_today(dict, qq_number):
-    date = str(cur_time().date())
-    if qq_number not in dict or dict[qq_number] != date:
-        return False
-    return True
+def done_today(date):
+    cur_date = str(cur_time().date())
+    if date == cur_date:
+        return True
+    return False
 
 
 def generate_image_cq(path):
