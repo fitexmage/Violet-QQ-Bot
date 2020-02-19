@@ -130,7 +130,7 @@ class Violet:
             elif par_list[1] == "rank":
                 record_list = []
                 for qq in self.duel_dict:
-                    if done_today(self.duel_dict[qq]['date']):
+                    if done_today(self.duel_dict[qq]['date']) and self.duel_dict[qq]['win_times'] > 0:
                         record_list.append((qq, self.duel_dict[qq]['win_times']))
                 if len(record_list) == 0:
                     reply = "今天还没有人决斗过哦，过来试试吧~"
