@@ -36,7 +36,7 @@ class MC_System:
 
     def reply_private_msg(self, context):
         message = context['message']
-        qq_number = context['sender']['user_id']
+        qq_number = str(context['sender']['user_id'])
 
         reply = None
 
@@ -65,7 +65,7 @@ class MC_System:
                 reply = "你都没有白名单，我哪知道。。。"
 
         elif regex_match(".*[0-9]+.*是谁", message):
-            qq_number = int(re.search("[0-9]+", message).group(0))
+            qq_number = re.search("[0-9]+", message).group(0)
             if qq_number in self.player_qq_dict:
                 reply = "这位玩家是" + self.player_qq_dict[qq_number] + "！"
             else:
@@ -85,7 +85,7 @@ class MC_System:
             else:
                 reply = "你都没有白名单，我哪知道。。。"
         elif regex_match("[0-9]+.*是谁.*", at_content):
-            qq_number = int(re.search("[0-9]+", at_content).group(0))
+            qq_number = re.search("[0-9]+", at_content).group(0)
             if qq_number in self.player_qq_dict:
                 reply = "这位玩家是" + self.player_qq_dict[qq_number] + "！"
             else:
@@ -95,7 +95,7 @@ class MC_System:
             get_result = False
             for qq_number in self.player_qq_dict:
                 if self.player_qq_dict[qq_number] == id:
-                    reply = "这位玩家的QQ是" + str(qq_number) + "！"
+                    reply = "这位玩家的QQ是" + qq_number + "！"
                     get_result = True
                     break
             if not get_result:

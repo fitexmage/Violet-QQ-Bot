@@ -82,6 +82,7 @@ def get_name(info):
 
 def record_duel_info(dict, qq, win):
     cur_date = str(cur_time().date())
+    qq = str(qq)
     if qq not in dict:
         dict[qq] = {'date': cur_date, 'win_times': 0, 'lose_times': 0}
     elif dict[qq]['date'] != cur_date:

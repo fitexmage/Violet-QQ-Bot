@@ -42,7 +42,7 @@ class Violet:
 
     async def reply_group_msg(self, bot, context):
         message = context['message']
-        qq_number = context['sender']['user_id']
+        qq_number = str(context['sender']['user_id'])
 
         reply = None
 
@@ -56,10 +56,10 @@ class Violet:
                 reply = self.close()
 
         if self.enable:
-            if message == "小紫" or message == "@【影之接待】小紫" or message == "[CQ:at,qq=" + str(SELF_QQ_NUMBER) + "] ":
+            if message == "小紫" or message == "@【影之接待】小紫" or message == "[CQ:at,qq=" + SELF_QQ_NUMBER + "] ":
                 reply = self.reply_intro()
 
-            elif regex_match('\\[CQ:at,qq={}\\].*'.format(str(SELF_QQ_NUMBER)), message):
+            elif regex_match('\\[CQ:at,qq={}\\].*'.format(SELF_QQ_NUMBER), message):
                 reply = self.reply_group_at_msg(context, message, qq_number)
 
             elif regex_match('^/', message):
@@ -68,7 +68,7 @@ class Violet:
         return reply
 
     def reply_group_at_msg(self, context, message, qq_number):
-        at_content = re.match('\\[CQ:at,qq={}\\](.*)'.format(str(SELF_QQ_NUMBER)), message).group(1).strip()
+        at_content = re.match('\\[CQ:at,qq={}\\](.*)'.format(SELF_QQ_NUMBER), message).group(1).strip()
 
         reply = None
 
@@ -141,35 +141,34 @@ class Violet:
                         reply += "{}. {} {}胜\n".format(str(i+1), record_list[i][0], self.duel_dict[record_list[i][0]]['win_times'])
                     reply = reply.strip()
             else:
-                self_qq = context['user_id']
-                opponent_qq = int(par_list[1])
-                print(self_qq, type(self_qq))
-                print(opponent_qq, type(opponent_qq))
+                self_qq = str(context['user_id'])
+                opponent_qq = par_list[1]
+
                 if self_qq == opponent_qq:
                     reply = "你想自残吗……"
                 else:
                     try:
-                        self_info = await bot.get_group_member_info(group_id=context['group_id'], user_id=self_qq)
-                        opponent_info = await bot.get_group_member_info(group_id=context['group_id'], user_id=opponent_qq)
+                        self_info = await bot.get_group_member_info(group_id=int(context['group_id']), user_id=int(self_qq))
+                        opponent_info = await bot.get_group_member_info(group_id=int(context['group_id']), user_id=int(opponent_qq))
                         if self_qq == PARTNER_QQ_NUMBER and opponent_qq == SELF_QQ_NUMBER:
                             reply = "不急，等晚上再一起玩~"
                         elif self_info['role'] == 'admin' or self_info['role'] == 'owner':
                             if opponent_info['role'] == "admin" or opponent_info['role'] == "owner":
                                 reply = "管理员之间的争斗，我管不了……"
                             else:
-                                await bot.set_group_ban(group_id=context['group_id'], user_id=opponent_qq, duration=10 * 60)
+                                await bot.set_group_ban(group_id=context['group_id'], user_id=str(opponent_qq), duration=10 * 60)
                                 reply = "一股强大的力量袭来……"
                         elif opponent_info['role'] == "owner":
-                            await bot.set_group_ban(group_id=context['group_id'], user_id=self_qq, duration=15 * 60)
+                            await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=15 * 60)
                             reply = "竟敢挑战群主，你将受到天罚！"
-                        elif opponent_info['user_id'] == SELF_QQ_NUMBER:
-                            await bot.set_group_ban(group_id=context['group_id'], user_id=self_qq, duration=15 * 60)
+                        elif str(opponent_info['user_id']) == SELF_QQ_NUMBER:
+                            await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=15 * 60)
                             reply = "我定的规则，你觉得我会输吗~"
                         elif opponent_info['role'] == "admin":
-                            await bot.set_group_ban(group_id=context['group_id'], user_id=self_qq, duration=15 * 60)
+                            await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=15 * 60)
                             reply = "竟敢挑战管理员，你将受到天罚！"
                         elif random.random() < 0.5:
-                            await bot.set_group_ban(group_id=context['group_id'], user_id=self_qq, duration=10 * 60)
+                            await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=10 * 60)
                             self_name = get_name(self_info)
                             opponent_name = get_name(opponent_info)
                             reply = "{} VS {}\n你在决斗中失败了……".format(self_name, opponent_name)
@@ -177,7 +176,7 @@ class Violet:
                             record_duel_info(self.duel_dict, opponent_qq, True)
                             update_dict(DUEL_PATH, self.duel_dict)
                         else:
-                            await bot.set_group_ban(group_id=context['group_id'], user_id=opponent_qq, duration=10 * 60)
+                            await bot.set_group_ban(group_id=context['group_id'], user_id=str(opponent_qq), duration=10 * 60)
                             self_name = get_name(self_info)
                             opponent_name = get_name(opponent_info)
                             reply = "{} VS {}\n你在决斗中胜利了！".format(self_name, opponent_name)

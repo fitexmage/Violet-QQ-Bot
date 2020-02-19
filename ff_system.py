@@ -25,14 +25,14 @@ class FF_System:
 
     def reply_private_msg(self, context):
         message = context['message']
-        qq_number = context['sender']['user_id']
+        qq_number = str(context['sender']['user_id'])
 
         reply = None
 
         return reply
 
     def reply_group_at_msg(self, context, at_content):
-        qq_number = context['sender']['user_id']
+        qq_number = str(context['sender']['user_id'])
 
         reply = None
 
@@ -42,7 +42,7 @@ class FF_System:
         return reply
 
     def reply_group_cmd_msg(self, context, par_list):
-        qq_number = context['sender']['user_id']
+        qq_number = str(context['sender']['user_id'])
 
         reply = None
 
@@ -94,7 +94,7 @@ class FF_System:
                 wealth_luck = get_gaussian()
                 social_luck = get_gaussian()
 
-                reply = "[CQ:at,qq=" + str(qq_number) + "] \n" \
+                reply = "[CQ:at,qq=" + qq_number + "] \n" \
                         "战斗运势：" + luck_parser(combat_luck) + "\n" \
                         "财富运势：" + luck_parser(wealth_luck) + "\n" \
                         "交际运势：" + luck_parser(social_luck) + "\n" \
