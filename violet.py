@@ -138,7 +138,8 @@ class Violet:
                     record_list.sort(key=lambda k: k[1], reverse=True)
                     reply = "下面是今日的决斗榜，你今天上榜了嘛~\n"
                     for i in range(min(len(record_list), 5)):
-                        reply += record_list[i][0] + '\n'
+                        reply += "{}. {}\n".format(str(i), record_list[i][0])
+                    reply = reply.strip()
             else:
                 self_qq = context['user_id']
                 opponent_qq = int(par_list[1])
