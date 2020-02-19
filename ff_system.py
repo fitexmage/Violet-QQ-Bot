@@ -1,6 +1,6 @@
 from config import *
 from util import *
-from crawler import crawl_combat_data, crawl_item, crawl_nuannuan
+from crawler import crawl_dps, crawl_item, crawl_nuannuan
 
 import random
 import requests
@@ -52,7 +52,7 @@ class FF_System:
             reply = self.reply_intro()
 
         elif func == 'dps':
-            reply = crawl_combat_data(par_list)
+            reply = crawl_dps(par_list)
 
         elif func == 'dice':
             num = str(random.randint(1, 99))
@@ -88,12 +88,17 @@ class FF_System:
             if qq_number not in self.luck_dict or not done_today(self.luck_dict[qq_number]):
                 good_to_do = random.choice(luck_things)
                 luck_things.remove(good_to_do)
-                bad_to_do = random.choice(luck_things)
+                hard_to_do = random.choice(luck_things)
+
+                combat_luck = get_gaussian()
+                wealth_luck = get_gaussian()
+                social_luck = get_gaussian()
+
                 reply = "[CQ:at,qq=" + str(qq_number) + "] \n" \
-                        "战斗运势：" + luck_parser(get_gaussian()) + "\n" \
-                        "财富运势：" + luck_parser(get_gaussian()) + "\n" \
-                        "交际运势：" + luck_parser(get_gaussian()) + "\n" \
-                        "宜：{}  忌：{}".format(good_to_do, bad_to_do)
+                        "战斗运势：" + luck_parser(combat_luck) + "\n" \
+                        "财富运势：" + luck_parser(wealth_luck) + "\n" \
+                        "交际运势：" + luck_parser(social_luck) + "\n" \
+                        "宜：{}  忌：{}".format(good_to_do, hard_to_do)
                 self.luck_dict[qq_number] = str(cur_time().date())
                 update_dict(FF_LUCK_PATH, self.luck_dict)
             else:

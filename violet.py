@@ -136,13 +136,15 @@ class Violet:
                     reply = "今天还没有人决斗过哦，过来试试吧~"
                 else:
                     record_list.sort(key=lambda k: k[1], reverse=True)
-                    reply = "下面是今日的决斗榜，你今天上榜了嘛~\n"
+                    reply = "下面是今日的决斗榜，今天你上榜了嘛~\n"
                     for i in range(min(len(record_list), 5)):
                         reply += "{}. {} {}胜\n".format(str(i+1), record_list[i][0], self.duel_dict[record_list[i][0]]['win_times'])
                     reply = reply.strip()
             else:
                 self_qq = context['user_id']
                 opponent_qq = int(par_list[1])
+                print(self_qq, type(self_qq))
+                print(opponent_qq, type(opponent_qq))
                 if self_qq == opponent_qq:
                     reply = "你想自残吗……"
                 else:
@@ -171,8 +173,6 @@ class Violet:
                             self_name = get_name(self_info)
                             opponent_name = get_name(opponent_info)
                             reply = "{} VS {}\n你在决斗中失败了……".format(self_name, opponent_name)
-                            if self_qq not in self.duel_dict:
-                                self.duel_dict[self_qq] = {}
                             record_duel_info(self.duel_dict, self_qq, False)
                             record_duel_info(self.duel_dict, opponent_qq, True)
                             update_dict(DUEL_PATH, self.duel_dict)

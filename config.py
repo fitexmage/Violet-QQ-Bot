@@ -112,4 +112,4 @@ FISH_MAP_DICT = {'东拉': {'name': '东拉诺西亚', 'path': '东拉诺西亚.
                  }
 
 ##############################
-DUEL_PATH = "data/dual.json"
+DUEL_PATH = "data/duel.json"
