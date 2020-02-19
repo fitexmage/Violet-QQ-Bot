@@ -138,7 +138,7 @@ class Violet:
                     record_list.sort(key=lambda k: k[1], reverse=True)
                     reply = "下面是今日的决斗榜，你今天上榜了嘛~\n"
                     for i in range(min(len(record_list), 5)):
-                        reply += "{}. {}\n".format(str(i+1), record_list[i][0])
+                        reply += "{}. {} {}胜\n".format(str(i+1), record_list[i][0], self.duel_dict[record_list[i][0]]['win_times'])
                     reply = reply.strip()
             else:
                 self_qq = context['user_id']
