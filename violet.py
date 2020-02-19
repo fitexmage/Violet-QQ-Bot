@@ -135,7 +135,7 @@ class Violet:
                 if len(record_list) == 0:
                     reply = "今天还没有人决斗过哦，过来试试吧~"
                 else:
-                    record_list = record_list.sort(key=lambda k: k[1])[::-1]
+                    record_list.sort(key=lambda k: k[1], reverse=True)
                     reply = "下面是今日的决斗榜，你今天上榜了嘛~\n"
                     for i in range(min(len(record_list), 5)):
                         reply += record_list[i][0] + '\n'
