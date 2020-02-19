@@ -47,7 +47,7 @@ class Violet:
         reply = None
 
         if random.random() < 0.05:
-            reply = random.choice(["是的呀", "我也觉得是~", "没错", "哈哈哈"])
+            reply = random.choice(["是的呀", "我也觉得是~", "没错", "哈哈哈", "嗯嗯"])
 
         if qq_number == PARTNER_QQ_NUMBER:
             if message == "小紫 启":

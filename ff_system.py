@@ -85,7 +85,7 @@ class FF_System:
                     reply = "别想了，选哪边都没戏~"
 
         elif func == '占卜':
-            if qq_number in self.luck_dict and not done_today(self.luck_dict[qq_number]):
+            if qq_number not in self.luck_dict or not done_today(self.luck_dict[qq_number]):
                 good_to_do = random.choice(luck_things)
                 luck_things.remove(good_to_do)
                 bad_to_do = random.choice(luck_things)
