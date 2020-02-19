@@ -39,28 +39,15 @@ def get_gaussian():
 
 
 def luck_parser(num):
-    if num <= 7:
-        i = 0
-    elif num <= 20:
-        i = 1
-    elif num <= 50:
-        i = 2
-    elif num <= 80:
-        i = 3
-    elif num <= 93:
-        i = 4
-    else:
-        i = 5
-
     return str(num) + "%"
 
 
-def time_now():
+def cur_time():
     return datetime.datetime.now() + datetime.timedelta(hours=13)
 
 
 def done_today(dict, qq_number):
-    date = str(time_now().date())
+    date = str(cur_time().date())
     if qq_number not in dict or dict[qq_number] != date:
         return False
     return True
@@ -83,3 +70,23 @@ def move_on_earth(lat, lon):
     elif lat < -180:
         lat = lat + 360
     return lat, lon
+
+
+def get_name(info):
+    if info['card'] != '':
+        name = info['card']
+    else:
+        name = info['nickname']
+    return name
+
+
+def record_duel_info(dict, qq, win):
+    cur_date = str(cur_time().date())
+    if qq not in dict:
+        dict[qq] = {'date': cur_date, 'win_times': 0, 'lose_times': 0}
+    elif dict[qq]['date'] != cur_date:
+        dict[qq] = {'date': cur_date, 'win_times': 0, 'lose_times': 0}
+    if win:
+        dict[qq]['win_times'] += 1
+    else:
+        dict[qq]['lose_times'] += 1

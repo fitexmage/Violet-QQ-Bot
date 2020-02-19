@@ -25,14 +25,14 @@ class FF_System:
 
     def reply_private_msg(self, context):
         message = context['message']
-        qq_number = str(context['sender']['user_id'])
+        qq_number = context['sender']['user_id']
 
         reply = None
 
         return reply
 
     def reply_group_at_msg(self, context, at_content):
-        qq_number = str(context['sender']['user_id'])
+        qq_number = context['sender']['user_id']
 
         reply = None
 
@@ -42,7 +42,7 @@ class FF_System:
         return reply
 
     def reply_group_cmd_msg(self, context, par_list):
-        qq_number = str(context['sender']['user_id'])
+        qq_number = context['sender']['user_id']
 
         reply = None
 
@@ -89,12 +89,12 @@ class FF_System:
                 good_to_do = random.choice(luck_things)
                 luck_things.remove(good_to_do)
                 bad_to_do = random.choice(luck_things)
-                reply = "[CQ:at,qq=" + qq_number + "] \n" \
+                reply = "[CQ:at,qq=" + str(qq_number) + "] \n" \
                         "战斗运势：" + luck_parser(get_gaussian()) + "\n" \
                         "财富运势：" + luck_parser(get_gaussian()) + "\n" \
                         "交际运势：" + luck_parser(get_gaussian()) + "\n" \
                         "宜：{}  忌：{}".format(good_to_do, bad_to_do)
-                self.luck_dict[qq_number] = str(time_now().date())
+                self.luck_dict[qq_number] = str(cur_time().date())
                 update_dict(FF_LUCK_PATH, self.luck_dict)
             else:
                 reply = "你今天已经占卜过啦，请明天再来！"

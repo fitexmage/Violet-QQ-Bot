@@ -7,8 +7,8 @@ MC_LUCK_PATH = "data/mc_luck.json"
 
 HOST = "127.0.0.1"  # '192.168.1.3' '172.17.67.53'
 PORT = 8080
-SELF_QQ_NUMBER = "2511310647"
-PARTNER_QQ_NUMBER = "424506920"
+SELF_QQ_NUMBER = 2511310647
+PARTNER_QQ_NUMBER = 424506920
 
 SERVER_HOST = "42.51.173.5"
 SERVER_PORT = 25565
@@ -111,3 +111,5 @@ FISH_MAP_DICT = {'东拉': {'name': '东拉诺西亚', 'path': '东拉诺西亚.
                  '龙高': {'name': '龙堡参天高地', 'path': '龙堡参天高地.jpg'},
                  }
 
+##############################
+DUEL_PATH = "data/dual.json"

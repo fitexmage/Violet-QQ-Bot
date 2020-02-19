@@ -12,6 +12,8 @@ class Violet:
         self.cur_lat = random.uniform(-90, 90)
         self.cur_lon = random.uniform(-180, 180)
 
+        self.duel_dict = load_dict(DUEL_PATH)
+
         self.mc_system = MC_System()
         self.ff_ststem = FF_System()
 
@@ -40,7 +42,7 @@ class Violet:
 
     async def reply_group_msg(self, bot, context):
         message = context['message']
-        qq_number = str(context['sender']['user_id'])
+        qq_number = context['sender']['user_id']
 
         reply = None
 
@@ -54,10 +56,10 @@ class Violet:
                 reply = self.close()
 
         if self.enable:
-            if message == "小紫" or message == "@【影之接待】小紫" or message == "[CQ:at,qq=" + SELF_QQ_NUMBER + "] ":
+            if message == "小紫" or message == "@【影之接待】小紫" or message == "[CQ:at,qq=" + str(SELF_QQ_NUMBER) + "] ":
                 reply = self.reply_intro()
 
-            elif regex_match('\\[CQ:at,qq={}\\].*'.format(SELF_QQ_NUMBER), message):
+            elif regex_match('\\[CQ:at,qq={}\\].*'.format(str(SELF_QQ_NUMBER)), message):
                 reply = self.reply_group_at_msg(context, message, qq_number)
 
             elif regex_match('^/', message):
@@ -66,7 +68,7 @@ class Violet:
         return reply
 
     def reply_group_at_msg(self, context, message, qq_number):
-        at_content = re.match('\\[CQ:at,qq={}\\](.*)'.format(SELF_QQ_NUMBER), message).group(1).strip()
+        at_content = re.match('\\[CQ:at,qq={}\\](.*)'.format(str(SELF_QQ_NUMBER)), message).group(1).strip()
 
         reply = None
 
@@ -90,7 +92,7 @@ class Violet:
             else:
                 reply = "未记录此服务器信息！"
         elif at_content == "服务器时间":
-            reply = "现在的时间是：{}".format(str(time_now()).split('.')[0])
+            reply = "现在的时间是：{}".format(str(cur_time()).split('.')[0])
         elif re.match('你在哪', at_content):
             self.cur_lat, self.cur_lon = move_on_earth(self.cur_lat, self.cur_lon)
             lat = str(round(self.cur_lat, 6))
@@ -116,8 +118,17 @@ class Violet:
         if par_list[0] == 'duel':
             if len(par_list) == 1 or par_list[1] == "":
                 reply = "请选择一位对手吧！"
+            elif par_list[1] == "record":
+                self_qq = context['user_id']
+                if self_qq not in self.duel_dict or self.duel_dict[self_qq]['date'] != str(cur_time().date()):
+                    win_times = 0
+                    lose_times = 0
+                else:
+                    win_times = self.duel_dict[self_qq]['win_times']
+                    lose_times = self.duel_dict[self_qq]['lose_times']
+                reply = "你今日决斗的战绩为：{}胜，{}负~".format(win_times, lose_times)
             else:
-                self_qq = int(context['user_id'])
+                self_qq = context['user_id']
                 opponent_qq = int(par_list[1])
                 if self_qq == opponent_qq:
                     reply = "你想自残吗……"
@@ -125,7 +136,7 @@ class Violet:
                     try:
                         self_info = await bot.get_group_member_info(group_id=context['group_id'], user_id=self_qq)
                         opponent_info = await bot.get_group_member_info(group_id=context['group_id'], user_id=opponent_qq)
-                        if self_qq == int(PARTNER_QQ_NUMBER) and opponent_qq == int(SELF_QQ_NUMBER):
+                        if self_qq == PARTNER_QQ_NUMBER and opponent_qq == SELF_QQ_NUMBER:
                             reply = "不急，等晚上再一起玩~"
                         elif self_info['role'] == 'admin' or self_info['role'] == 'owner':
                             if opponent_info['role'] == "admin" or opponent_info['role'] == "owner":
@@ -136,7 +147,7 @@ class Violet:
                         elif opponent_info['role'] == "owner":
                             await bot.set_group_ban(group_id=context['group_id'], user_id=self_qq, duration=15 * 60)
                             reply = "竟敢挑战群主，你将受到天罚！"
-                        elif opponent_info['user_id'] == int(SELF_QQ_NUMBER):
+                        elif opponent_info['user_id'] == SELF_QQ_NUMBER:
                             await bot.set_group_ban(group_id=context['group_id'], user_id=self_qq, duration=15 * 60)
                             reply = "我定的规则，你觉得我会输吗~"
                         elif opponent_info['role'] == "admin":
@@ -144,10 +155,20 @@ class Violet:
                             reply = "竟敢挑战管理员，你将受到天罚！"
                         elif random.random() < 0.5:
                             await bot.set_group_ban(group_id=context['group_id'], user_id=self_qq, duration=10 * 60)
-                            reply = "你在决斗中失败了！"
+                            self_name = get_name(self_info)
+                            opponent_name = get_name(opponent_info)
+                            reply = "{} VS {}\n你在决斗中失败了！".format(self_name, opponent_name)
+                            if self_qq not in self.duel_dict:
+                                self.duel_dict[self_qq] = {}
+                            record_duel_info(self.duel_dict, self_qq, False)
+                            record_duel_info(self.duel_dict, opponent_qq, True)
                         else:
                             await bot.set_group_ban(group_id=context['group_id'], user_id=opponent_qq, duration=10 * 60)
-                            reply = "你的对手在决斗中失败了！"
+                            self_name = get_name(self_info)
+                            opponent_name = get_name(opponent_info)
+                            reply = "{} VS {}\n你的对手在决斗中失败了！".format(self_name, opponent_name)
+                            record_duel_info(self.duel_dict, self_qq, True)
+                            record_duel_info(self.duel_dict, opponent_qq, False)
                     except:
                         reply = "群里貌似并没有这个人……"
 
