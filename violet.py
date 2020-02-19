@@ -132,10 +132,13 @@ class Violet:
                 for qq in self.duel_dict:
                     if done_today(self.duel_dict[qq]['date']):
                         record_list.append((qq, self.duel_dict[qq]['win_times']))
-                record_list = record_list.sort(key=lambda k: k[1])[::-1]
-                reply = "下面是今日的决斗榜，你今天上榜了嘛~\n"
-                for i in range(min(len(record_list), 5)):
-                    reply += record_list[i][0] + '\n'
+                if len(record_list) == 0:
+                    reply = "今天还没有人决斗过哦，过来试试吧~"
+                else:
+                    record_list = record_list.sort(key=lambda k: k[1])[::-1]
+                    reply = "下面是今日的决斗榜，你今天上榜了嘛~\n"
+                    for i in range(min(len(record_list), 5)):
+                        reply += record_list[i][0] + '\n'
             else:
                 self_qq = context['user_id']
                 opponent_qq = int(par_list[1])
@@ -171,6 +174,7 @@ class Violet:
                                 self.duel_dict[self_qq] = {}
                             record_duel_info(self.duel_dict, self_qq, False)
                             record_duel_info(self.duel_dict, opponent_qq, True)
+                            update_dict(DUEL_PATH, self.duel_dict)
                         else:
                             await bot.set_group_ban(group_id=context['group_id'], user_id=opponent_qq, duration=10 * 60)
                             self_name = get_name(self_info)
@@ -178,6 +182,7 @@ class Violet:
                             reply = "{} VS {}\n你在决斗中胜利了！".format(self_name, opponent_name)
                             record_duel_info(self.duel_dict, self_qq, True)
                             record_duel_info(self.duel_dict, opponent_qq, False)
+                            update_dict(DUEL_PATH, self.duel_dict)
                     except:
                         reply = "群里貌似并没有这个人……"
 
