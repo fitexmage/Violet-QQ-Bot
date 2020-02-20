@@ -138,7 +138,7 @@ class Violet:
                     record_list.sort(key=lambda k: k[1], reverse=True)
                     reply = "下面是今日的决斗胜率榜，今天你上榜了嘛~\n"
                     for i in range(min(len(record_list), 5)):
-                        reply += "{}. {} {}%\n".format(str(i+1), record_list[i][0], round(record_list[i][1] * 100, 2))
+                        reply += "{}\t{}\t{}%\n".format(str(i+1), record_list[i][0], round(record_list[i][1] * 100, 2))
                     reply = reply.strip()
             else:
                 self_qq = str(context['user_id'])
@@ -179,7 +179,7 @@ class Violet:
                             await bot.set_group_ban(group_id=context['group_id'], user_id=str(opponent_qq), duration=10 * 60)
                             self_name = get_name(self_info)
                             opponent_name = get_name(opponent_info)
-                            reply = "{} VS {}\n你在决斗中胜利了！".format(self_name, opponent_name)
+                            reply = "{}\nVS\n{}\n你在决斗中胜利了！".format(self_name, opponent_name)
                             record_duel_info(self.duel_dict, self_qq, True)
                             record_duel_info(self.duel_dict, opponent_qq, False)
                             update_dict(DUEL_PATH, self.duel_dict)
