@@ -172,21 +172,22 @@ class Violet:
                             opponent_name = get_name(opponent_info)
                             self_point = random.randint(1, 99)
                             opponent_point = random.randint(1, 99)
-                            reply = "{}掷出了{}点\n{}掷出了{}点\n"
+                            reply = "{}掷出了{}点\n{}掷出了{}点\n"\
+                                .format(str(self_point), str(opponent_point), self_name, opponent_name)
                             if self_point < opponent_point:
-                                reply += "你在决斗中失败了……"\
-                                    .format(str(self_point), str(opponent_point), self_name, opponent_name)
+                                reply += "你在决斗中失败了……"
                                 await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=10 * 60)
                                 record_duel_info(self.duel_dict, self_qq, False)
                                 record_duel_info(self.duel_dict, opponent_qq, True)
+                                update_dict(DUEL_PATH, self.duel_dict)
                             elif self_point > opponent_point:
                                 reply += "你在决斗中胜利了！"
+                                await bot.set_group_ban(group_id=context['group_id'], user_id=str(opponent_qq), duration=10 * 60)
                                 record_duel_info(self.duel_dict, self_qq, True)
                                 record_duel_info(self.duel_dict, opponent_qq, False)
-                                await bot.set_group_ban(group_id=context['group_id'], user_id=str(opponent_qq), duration=10 * 60)
+                                update_dict(DUEL_PATH, self.duel_dict)
                             else:
                                 reply += "平局！"
-                            update_dict(DUEL_PATH, self.duel_dict)
                     except:
                         reply = "群里貌似并没有这个人……"
 
