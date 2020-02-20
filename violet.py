@@ -159,13 +159,13 @@ class Violet:
                                 await bot.set_group_ban(group_id=context['group_id'], user_id=str(opponent_qq), duration=10 * 60)
                                 reply = "一股强大的力量袭来……"
                         elif opponent_info['role'] == "owner":
-                            await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=15 * 60)
+                            await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=5 * 60)
                             reply = "竟敢挑战群主，你将受到天罚！"
                         elif str(opponent_info['user_id']) == SELF_QQ_NUMBER:
-                            await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=15 * 60)
+                            await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=5 * 60)
                             reply = "我定的规则，你觉得我会输吗~"
                         elif opponent_info['role'] == "admin":
-                            await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=15 * 60)
+                            await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=5 * 60)
                             reply = "竟敢挑战管理员，你将受到天罚！"
                         elif random.random() < 0.5:
                             await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=10 * 60)
