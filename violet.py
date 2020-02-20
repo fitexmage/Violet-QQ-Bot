@@ -173,7 +173,7 @@ class Violet:
                             self_point = random.randint(1, 99)
                             opponent_point = random.randint(1, 99)
                             reply = "{}掷出了{}点\n{}掷出了{}点\n"\
-                                .format(str(self_point), str(opponent_point), self_name, opponent_name)
+                                .format(self_name, opponent_name, str(self_point), str(opponent_point))
                             if self_point < opponent_point:
                                 reply += "你在决斗中失败了……"
                                 await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=10 * 60)
