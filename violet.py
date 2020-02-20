@@ -167,21 +167,25 @@ class Violet:
                         elif opponent_info['role'] == "admin":
                             await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=5 * 60)
                             reply = "竟敢挑战管理员，你将受到天罚！"
-                        elif random.random() < 0.5:
-                            await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=10 * 60)
-                            self_name = get_name(self_info)
-                            opponent_name = get_name(opponent_info)
-                            reply = "{} VS {}\n你在决斗中失败了……".format(self_name, opponent_name)
-                            record_duel_info(self.duel_dict, self_qq, False)
-                            record_duel_info(self.duel_dict, opponent_qq, True)
-                            update_dict(DUEL_PATH, self.duel_dict)
                         else:
-                            await bot.set_group_ban(group_id=context['group_id'], user_id=str(opponent_qq), duration=10 * 60)
                             self_name = get_name(self_info)
                             opponent_name = get_name(opponent_info)
-                            reply = "{}\nVS\n{}\n你在决斗中胜利了！".format(self_name, opponent_name)
-                            record_duel_info(self.duel_dict, self_qq, True)
-                            record_duel_info(self.duel_dict, opponent_qq, False)
+                            self_point = random.randint(1, 99)
+                            opponent_point = random.randint(1, 99)
+                            reply = "{}掷出了{}点\n{}掷出了{}点\n"
+                            if self_point < opponent_point:
+                                reply += "你在决斗中失败了……"\
+                                    .format(str(self_point), str(opponent_point), self_name, opponent_name)
+                                await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=10 * 60)
+                                record_duel_info(self.duel_dict, self_qq, False)
+                                record_duel_info(self.duel_dict, opponent_qq, True)
+                            elif self_point > opponent_point:
+                                reply += "你在决斗中胜利了！"
+                                record_duel_info(self.duel_dict, self_qq, True)
+                                record_duel_info(self.duel_dict, opponent_qq, False)
+                                await bot.set_group_ban(group_id=context['group_id'], user_id=str(opponent_qq), duration=10 * 60)
+                            else:
+                                reply += "平局！"
                             update_dict(DUEL_PATH, self.duel_dict)
                     except:
                         reply = "群里貌似并没有这个人……"
