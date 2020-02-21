@@ -131,14 +131,16 @@ class Violet:
                 record_list = []
                 for qq in self.duel_dict:
                     if done_today(self.duel_dict[qq]['date']) and self.duel_dict[qq]['win_times'] > 0:
-                        record_list.append((qq, self.duel_dict[qq]['win_times'] / (self.duel_dict[qq]['win_times'] + self.duel_dict[qq]['lose_times'])))
+                        record_list.append((qq, self.duel_dict[qq]['win_times'] * 2 - self.duel_dict[qq]['lose_times']))
                 if len(record_list) == 0:
                     reply = "今天还没有人决斗过哦，过来试试吧~"
                 else:
                     record_list.sort(key=lambda k: k[1], reverse=True)
                     reply = "下面是今日的决斗胜率榜，今天你上榜了嘛~\n"
                     for i in range(min(len(record_list), 5)):
-                        reply += "{}\t{}\t{}%\n".format(str(i+1), record_list[i][0], round(record_list[i][1] * 100, 2))
+                        rate = self.duel_dict[record_list[i][0]]['win_times'] / (self.duel_dict[record_list[i][0]]['win_times'] + self.duel_dict[record_list[i][0]]['lose_times'])
+                        reply += "{}.{}\t{}胜 胜率{}\n"\
+                            .format(str(i+1), record_list[i][0], self.duel_dict[record_list[i][0]]['win_times'], round(rate * 100, 2))
                     reply = reply.strip()
             else:
                 self_qq = str(context['user_id'])

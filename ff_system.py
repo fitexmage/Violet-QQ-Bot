@@ -105,8 +105,9 @@ class FF_System:
                 reply = "你今天已经占卜过啦，请明天再来！"
 
         elif func == 'search':
-            item = par_list[1]
-            reply = crawl_item(item)
+            if len(par_list) > 1:
+                item = par_list[1]
+                reply = crawl_item(item)
 
         elif func == 'nuannuan':
             reply = crawl_nuannuan()
