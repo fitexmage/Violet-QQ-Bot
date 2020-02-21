@@ -139,7 +139,7 @@ class Violet:
                     reply = "下面是今日的决斗胜率榜，今天你上榜了嘛~\n"
                     for i in range(min(len(record_list), 5)):
                         rate = self.duel_dict[record_list[i][0]]['win_times'] / (self.duel_dict[record_list[i][0]]['win_times'] + self.duel_dict[record_list[i][0]]['lose_times'])
-                        reply += "{}.{}\t{}胜 胜率{}\n"\
+                        reply += "{}.{} {}胜 胜率{}%\n"\
                             .format(str(i+1), record_list[i][0], self.duel_dict[record_list[i][0]]['win_times'], round(rate * 100, 2))
                     reply = reply.strip()
             else:
