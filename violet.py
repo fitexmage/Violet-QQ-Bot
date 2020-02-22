@@ -47,7 +47,7 @@ class Violet:
         reply = None
 
         if random.random() < 0.05:
-            reply = random.choice(["是的呀", "我也觉得是~", "没错", "哈哈哈", "嗯嗯"])
+            reply = random.choice(["是的呀", "我也觉得是~", "没错", "哈哈哈", "嗯嗯", "是啊", "当然是啦~"])
 
         if qq_number == PARTNER_QQ_NUMBER:
             if message == "小紫 启":
@@ -116,89 +116,103 @@ class Violet:
         reply = None
 
         if par_list[0] == 'duel':
-            if len(par_list) == 1 or par_list[1] == "":
-                reply = "请选择一位对手吧！"
-            elif par_list[1] == "record":
-                self_qq = context['user_id']
-                if self_qq not in self.duel_dict or not done_today(self.duel_dict[self_qq]['date']):
-                    win_times = 0
-                    lose_times = 0
-                else:
-                    win_times = self.duel_dict[self_qq]['win_times']
-                    lose_times = self.duel_dict[self_qq]['lose_times']
-                reply = "你今日决斗的战绩为：{}胜，{}负~".format(win_times, lose_times)
-            elif par_list[1] == "rank":
-                record_list = []
-                for qq in self.duel_dict:
-                    if done_today(self.duel_dict[qq]['date']) and self.duel_dict[qq]['win_times'] > 0:
-                        record_list.append((qq, self.duel_dict[qq]['win_times'] * 2 - self.duel_dict[qq]['lose_times']))
-                if len(record_list) == 0:
-                    reply = "今天还没有人决斗过哦，过来试试吧~"
-                else:
-                    record_list.sort(key=lambda k: k[1], reverse=True)
-                    reply = "下面是今日的决斗胜率榜，今天你上榜了嘛~\n"
-                    for i in range(min(len(record_list), 5)):
-                        rate = self.duel_dict[record_list[i][0]]['win_times'] / (self.duel_dict[record_list[i][0]]['win_times'] + self.duel_dict[record_list[i][0]]['lose_times'])
-                        reply += "{}.{} {}胜 胜率{}%\n"\
-                            .format(str(i+1), record_list[i][0], self.duel_dict[record_list[i][0]]['win_times'], round(rate * 100, 2))
-                    reply = reply.strip()
-            else:
-                self_qq = str(context['user_id'])
-                opponent_qq = par_list[1]
-
-                if self_qq == opponent_qq:
-                    reply = "你想自残吗……"
-                else:
-                    try:
-                        self_info = await bot.get_group_member_info(group_id=int(context['group_id']), user_id=int(self_qq))
-                        opponent_info = await bot.get_group_member_info(group_id=int(context['group_id']), user_id=int(opponent_qq))
-                        if self_qq == PARTNER_QQ_NUMBER and opponent_qq == SELF_QQ_NUMBER:
-                            reply = "不急，等晚上再一起玩~"
-                        elif self_info['role'] == 'admin' or self_info['role'] == 'owner':
-                            if opponent_info['role'] == "admin" or opponent_info['role'] == "owner":
-                                reply = "管理员之间的争斗，我管不了……"
-                            else:
-                                await bot.set_group_ban(group_id=context['group_id'], user_id=str(opponent_qq), duration=10 * 60)
-                                reply = "一股强大的力量袭来……"
-                        elif opponent_info['role'] == "owner":
-                            await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=5 * 60)
-                            reply = "竟敢挑战群主，你将受到天罚！"
-                        elif str(opponent_info['user_id']) == SELF_QQ_NUMBER:
-                            await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=5 * 60)
-                            reply = "我定的规则，你觉得我会输吗~"
-                        elif opponent_info['role'] == "admin":
-                            await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=5 * 60)
-                            reply = "竟敢挑战管理员，你将受到天罚！"
-                        else:
-                            self_name = get_name(self_info)
-                            opponent_name = get_name(opponent_info)
-                            self_point = random.randint(1, 99)
-                            opponent_point = random.randint(1, 99)
-                            reply = "{}掷出了{}点\n{}掷出了{}点\n"\
-                                .format(self_name, str(self_point), opponent_name, str(opponent_point))
-                            if self_point < opponent_point:
-                                reply += "你在决斗中失败了……"
-                                await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=10 * 60)
-                                record_duel_info(self.duel_dict, self_qq, False)
-                                record_duel_info(self.duel_dict, opponent_qq, True)
-                                update_dict(DUEL_PATH, self.duel_dict)
-                            elif self_point > opponent_point:
-                                reply += "你在决斗中胜利了！"
-                                await bot.set_group_ban(group_id=context['group_id'], user_id=str(opponent_qq), duration=10 * 60)
-                                record_duel_info(self.duel_dict, self_qq, True)
-                                record_duel_info(self.duel_dict, opponent_qq, False)
-                                update_dict(DUEL_PATH, self.duel_dict)
-                            else:
-                                reply += "平局！"
-                    except:
-                        reply = "群里貌似并没有这个人……"
-
+            reply = self.duel(bot, context, par_list)
 
         elif par_list[0] == 'mc' and len(par_list) > 1:
             reply = self.mc_system.reply_group_cmd_msg(context, par_list[1:])
 
         elif par_list[0] == 'ff' and len(par_list) > 1:
             reply = self.ff_ststem.reply_group_cmd_msg(context, par_list[1:])
+        return reply
+
+    def duel(self, bot, context, par_list):
+        if len(par_list) == 1 or par_list[1] == "":
+            reply = "请选择一位对手吧！"
+        elif par_list[1] == "record":
+            self_qq = context['user_id']
+            if self_qq not in self.duel_dict or not done_today(self.duel_dict[self_qq]['date']):
+                win_times = 0
+                lose_times = 0
+            else:
+                win_times = self.duel_dict[self_qq]['win_times']
+                lose_times = self.duel_dict[self_qq]['lose_times']
+            reply = "你今日决斗的战绩为：{}胜，{}负~".format(win_times, lose_times)
+        elif par_list[1] == "rank":
+            record_list = []
+            for qq in self.duel_dict:
+                if done_today(self.duel_dict[qq]['date']) and self.duel_dict[qq]['win_times'] >= self.duel_dict[qq]['lose_times']:
+                    record_list.append((qq, self.duel_dict[qq]['win_times'] * 2 - self.duel_dict[qq]['lose_times']))
+            if len(record_list) == 0:
+                reply = "今天还没有人决斗过哦，过来试试吧~"
+            else:
+                record_list.sort(key=lambda k: k[1], reverse=True)
+                reply = "下面是今日的决斗榜，今天你上榜了嘛~\n"
+                for i in range(min(len(record_list), 5)):
+                    rate = self.duel_dict[record_list[i][0]]['win_times'] / (
+                                self.duel_dict[record_list[i][0]]['win_times'] + self.duel_dict[record_list[i][0]][
+                            'lose_times'])
+                    reply += "{}.{} {}胜 胜率{}%\n" \
+                        .format(str(i + 1), record_list[i][0], self.duel_dict[record_list[i][0]]['win_times'],
+                                round(rate * 100, 2))
+                reply = reply.strip()
+        else:
+            self_qq = str(context['user_id'])
+            opponent_qq = par_list[1]
+
+            if self_qq == opponent_qq:
+                reply = "你想自残吗……"
+            else:
+                try:
+                    self_info = await bot.get_group_member_info(group_id=int(context['group_id']), user_id=int(self_qq))
+                    opponent_info = await bot.get_group_member_info(group_id=int(context['group_id']), user_id=int(opponent_qq))
+                    if self_qq == PARTNER_QQ_NUMBER and opponent_qq == SELF_QQ_NUMBER:
+                        reply = "不急，等晚上再一起玩~"
+                    elif self_info['role'] == 'admin' or self_info['role'] == 'owner':
+                        if opponent_info['role'] == "admin" or opponent_info['role'] == "owner":
+                            reply = "管理员之间的争斗，我管不了……"
+                        else:
+                            await bot.set_group_ban(group_id=context['group_id'], user_id=str(opponent_qq),
+                                                    duration=10 * 60)
+                            reply = "一股强大的力量袭来……"
+                    elif opponent_info['role'] == "owner":
+                        await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=5 * 60)
+                        reply = "竟敢挑战群主，你将受到天罚！"
+                    elif str(opponent_info['user_id']) == SELF_QQ_NUMBER:
+                        await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=5 * 60)
+                        reply = "我定的规则，你觉得我会输吗~"
+                    elif opponent_info['role'] == "admin":
+                        await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=5 * 60)
+                        reply = "竟敢挑战管理员，你将受到天罚！"
+                    else:
+                        self_name = get_name(self_info)
+                        opponent_name = get_name(opponent_info)
+                        self_point = random.randint(1, 99)
+                        opponent_point = random.randint(1, 99)
+                        reply = "{}掷出了{}点\n{}掷出了{}点\n" \
+                            .format(self_name, str(self_point), opponent_name, str(opponent_point))
+                        if self_point < opponent_point:
+                            reply += "你在决斗中失败了……"
+                            await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq),
+                                                    duration=10 * 60)
+                            record_duel_info(self.duel_dict, self_qq, False)
+                            record_duel_info(self.duel_dict, opponent_qq, True)
+                            if self.duel_dict[opponent_qq]['multi_kill'] in multi_kill:
+                                reply += "\n{}{}".format(opponent_name,
+                                                         multi_kill[self.duel_dict[opponent_qq]['multi_kill']])
+                            update_dict(DUEL_PATH, self.duel_dict)
+                        elif self_point > opponent_point:
+                            reply += "你在决斗中胜利了！"
+                            await bot.set_group_ban(group_id=context['group_id'], user_id=str(opponent_qq),
+                                                    duration=10 * 60)
+                            record_duel_info(self.duel_dict, self_qq, True)
+                            record_duel_info(self.duel_dict, opponent_qq, False)
+                            if self.duel_dict[self_qq]['multi_kill'] in multi_kill:
+                                reply += "\n{}{}".format(self_name, multi_kill[self.duel_dict[self_qq]['multi_kill']])
+                            update_dict(DUEL_PATH, self.duel_dict)
+                        else:
+                            reply += "平局！"
+                except:
+                    reply = "群里貌似并没有这个人……"
         return reply
 
     def start(self):
