@@ -116,7 +116,7 @@ class Violet:
         reply = None
 
         if par_list[0] == 'duel':
-            reply = self.duel(bot, context, par_list)
+            reply = await self.duel(bot, context, par_list)
 
         elif par_list[0] == 'mc' and len(par_list) > 1:
             reply = self.mc_system.reply_group_cmd_msg(context, par_list[1:])
@@ -125,7 +125,7 @@ class Violet:
             reply = self.ff_ststem.reply_group_cmd_msg(context, par_list[1:])
         return reply
 
-    def duel(self, bot, context, par_list):
+    async def duel(self, bot, context, par_list):
         if len(par_list) == 1 or par_list[1] == "":
             reply = "请选择一位对手吧！"
         elif par_list[1] == "record":
