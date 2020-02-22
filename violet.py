@@ -129,7 +129,7 @@ class Violet:
         if len(par_list) == 1 or par_list[1] == "":
             reply = "请选择一位对手吧！"
         elif par_list[1] == "record":
-            self_qq = context['user_id']
+            self_qq = str(context['user_id'])
             if self_qq not in self.duel_dict or not done_today(self.duel_dict[self_qq]['date']):
                 win_times = 0
                 lose_times = 0
@@ -171,17 +171,17 @@ class Violet:
                         if opponent_info['role'] == "admin" or opponent_info['role'] == "owner":
                             reply = "管理员之间的争斗，我管不了……"
                         else:
-                            await bot.set_group_ban(group_id=context['group_id'], user_id=str(opponent_qq),
+                            await bot.set_group_ban(group_id=context['group_id'], user_id=int(opponent_qq),
                                                     duration=10 * 60)
                             reply = "一股强大的力量袭来……"
                     elif opponent_info['role'] == "owner":
-                        await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=5 * 60)
+                        await bot.set_group_ban(group_id=context['group_id'], user_id=int(self_qq), duration=5 * 60)
                         reply = "竟敢挑战群主，你将受到天罚！"
                     elif str(opponent_info['user_id']) == SELF_QQ_NUMBER:
-                        await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=5 * 60)
+                        await bot.set_group_ban(group_id=context['group_id'], user_id=int(self_qq), duration=5 * 60)
                         reply = "我定的规则，你觉得我会输吗~"
                     elif opponent_info['role'] == "admin":
-                        await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq), duration=5 * 60)
+                        await bot.set_group_ban(group_id=context['group_id'], user_id=int(self_qq), duration=5 * 60)
                         reply = "竟敢挑战管理员，你将受到天罚！"
                     else:
                         self_name = get_name(self_info)
@@ -192,18 +192,26 @@ class Violet:
                             .format(self_name, str(self_point), opponent_name, str(opponent_point))
                         if self_point < opponent_point:
                             reply += "你在决斗中失败了……"
-                            await bot.set_group_ban(group_id=context['group_id'], user_id=str(self_qq),
-                                                    duration=10 * 60)
+                            if self.duel_dict[self_qq]['multi_kill'] in multi_kill:
+                                ban_time = (self.duel_dict[self_qq]['multi_kill'] - 3) * 5 + 10
+                            else:
+                                ban_time = 10
+                            await bot.set_group_ban(group_id=context['group_id'], user_id=self_qq, duration=ban_time * 60)
+
                             record_duel_info(self.duel_dict, self_qq, False)
                             record_duel_info(self.duel_dict, opponent_qq, True)
                             if self.duel_dict[opponent_qq]['multi_kill'] in multi_kill:
-                                reply += "\n{}{}".format(opponent_name,
-                                                         multi_kill[self.duel_dict[opponent_qq]['multi_kill']])
+                                reply += "\n{}{}".format(opponent_name, multi_kill[self.duel_dict[opponent_qq]['multi_kill']])
                             update_dict(DUEL_PATH, self.duel_dict)
+
                         elif self_point > opponent_point:
                             reply += "你在决斗中胜利了！"
-                            await bot.set_group_ban(group_id=context['group_id'], user_id=str(opponent_qq),
-                                                    duration=10 * 60)
+                            if self.duel_dict[opponent_qq]['multi_kill'] in multi_kill:
+                                ban_time = (self.duel_dict[opponent_qq]['multi_kill'] - 3) * 5 + 10
+                            else:
+                                ban_time = 10
+                            await bot.set_group_ban(group_id=context['group_id'], user_id=int(opponent_qq), duration=ban_time * 60)
+
                             record_duel_info(self.duel_dict, self_qq, True)
                             record_duel_info(self.duel_dict, opponent_qq, False)
                             if self.duel_dict[self_qq]['multi_kill'] in multi_kill:
