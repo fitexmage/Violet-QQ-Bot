@@ -198,11 +198,14 @@ class Violet:
                                 ban_time = 10
                             await bot.set_group_ban(group_id=context['group_id'], user_id=self_qq, duration=ban_time * 60)
 
+                            if self.duel_dict[self_qq]['multi_kill'] in multi_kill:
+                                reply += "\n{}被终结了！".format(self_name)
+
                             record_duel_info(self.duel_dict, self_qq, False)
                             record_duel_info(self.duel_dict, opponent_qq, True)
+                            update_dict(DUEL_PATH, self.duel_dict)
                             if self.duel_dict[opponent_qq]['multi_kill'] in multi_kill:
                                 reply += "\n{}{}".format(opponent_name, multi_kill[self.duel_dict[opponent_qq]['multi_kill']])
-                            update_dict(DUEL_PATH, self.duel_dict)
 
                         elif self_point > opponent_point:
                             reply += "你在决斗中胜利了！"
@@ -212,11 +215,15 @@ class Violet:
                                 ban_time = 10
                             await bot.set_group_ban(group_id=context['group_id'], user_id=int(opponent_qq), duration=ban_time * 60)
 
+                            if self.duel_dict[opponent_qq]['multi_kill'] in multi_kill:
+                                reply += "\n{}被终结了！".format(opponent_name)
+
                             record_duel_info(self.duel_dict, self_qq, True)
                             record_duel_info(self.duel_dict, opponent_qq, False)
+                            update_dict(DUEL_PATH, self.duel_dict)
                             if self.duel_dict[self_qq]['multi_kill'] in multi_kill:
                                 reply += "\n{}{}".format(self_name, multi_kill[self.duel_dict[self_qq]['multi_kill']])
-                            update_dict(DUEL_PATH, self.duel_dict)
+
                         else:
                             reply += "平局！"
                 except:
