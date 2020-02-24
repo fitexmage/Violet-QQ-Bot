@@ -56,7 +56,7 @@ async def duel(self, bot, context, par_list):
     self_qq = str(context['user_id'])
 
     if group_id not in self.duel_dict:
-        self.duel_dict['group_id'] = {}
+        self.duel_dict[group_id] = {}
 
     if len(par_list) == 1 or par_list[1] == "":
         reply = "请选择一位对手吧！"
@@ -140,40 +140,40 @@ async def duel_qq(self, bot, group_id, self_qq, opponent_qq):
                     .format(self_name, str(self_point), opponent_name, str(opponent_point))
                 if self_point < opponent_point:
                     reply += "你在决斗中失败了……"
-                    if self.duel_dict['group_id'][self_qq]['multi_kill'] in multi_kill:
-                        ban_time = (self.duel_dict['group_id'][self_qq]['multi_kill'] - 3) * 5 + 10
+                    if self.duel_dict[group_id][self_qq]['multi_kill'] in multi_kill:
+                        ban_time = (self.duel_dict[group_id][self_qq]['multi_kill'] - 3) * 5 + 10
                     else:
                         ban_time = 10
                     await bot.set_group_ban(group_id=int(group_id), user_id=int(self_qq), duration=ban_time * 60)
 
-                    if self.duel_dict['group_id'][self_qq]['multi_kill'] in multi_kill:
+                    if self.duel_dict[group_id][self_qq]['multi_kill'] in multi_kill:
                         reply += "\n{}被终结了！".format(self_name)
 
-                    record_duel_info(self.duel_dict['group_id'], self_qq, False)
-                    record_duel_info(self.duel_dict['group_id'], opponent_qq, True)
+                    record_duel_info(self.duel_dict[group_id], self_qq, False)
+                    record_duel_info(self.duel_dict[group_id], opponent_qq, True)
                     update_dict(DUEL_PATH, self.duel_dict)
-                    if self.duel_dict['group_id'][opponent_qq]['multi_kill'] in multi_kill:
+                    if self.duel_dict[group_id][opponent_qq]['multi_kill'] in multi_kill:
                         reply += "\n{}{}".format(opponent_name,
-                                                 multi_kill[self.duel_dict['group_id'][opponent_qq]['multi_kill']])
+                                                 multi_kill[self.duel_dict[group_id][opponent_qq]['multi_kill']])
 
                 elif self_point > opponent_point:
                     reply += "你在决斗中胜利了！"
-                    if self.duel_dict['group_id'][opponent_qq]['multi_kill'] in multi_kill:
-                        ban_time = (self.duel_dict['group_id'][opponent_qq]['multi_kill'] - 3) * 5 + 10
+                    if self.duel_dict[group_id][opponent_qq]['multi_kill'] in multi_kill:
+                        ban_time = (self.duel_dict[group_id][opponent_qq]['multi_kill'] - 3) * 5 + 10
                     else:
                         ban_time = 10
                     await bot.set_group_ban(group_id=int(group_id), user_id=int(opponent_qq),
                                             duration=ban_time * 60)
 
-                    if self.duel_dict['group_id'][opponent_qq]['multi_kill'] in multi_kill:
+                    if self.duel_dict[group_id][opponent_qq]['multi_kill'] in multi_kill:
                         reply += "\n{}被终结了！".format(opponent_name)
 
-                    record_duel_info(self.duel_dict['group_id'], self_qq, True)
-                    record_duel_info(self.duel_dict['group_id'], opponent_qq, False)
+                    record_duel_info(self.duel_dict[group_id], self_qq, True)
+                    record_duel_info(self.duel_dict[group_id], opponent_qq, False)
                     update_dict(DUEL_PATH, self.duel_dict)
-                    if self.duel_dict['group_id'][self_qq]['multi_kill'] in multi_kill:
+                    if self.duel_dict[group_id][self_qq]['multi_kill'] in multi_kill:
                         reply += "\n{}{}".format(self_name,
-                                                 multi_kill[self.duel_dict['group_id'][self_qq]['multi_kill']])
+                                                 multi_kill[self.duel_dict[group_id][self_qq]['multi_kill']])
 
                 else:
                     reply += "平局！"
