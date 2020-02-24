@@ -52,7 +52,7 @@ async def handle_group_decrease(context):
     if violet.debug:
         print(context)
 
-    if context['group_id'] == 298466962:
+    if context['group_id'] == int(SHADOWVILLAGE_QQ_NUMBER):
         qq_number = str(context['user_id'])
         if qq_number in violet.mc_system.player_qq_dict:
             violet.mc_system.rcon_command("wldel " + violet.mc_system.player_qq_dict[qq_number])
@@ -66,7 +66,7 @@ async def handle_group_request(context):
         print(context)
 
     if violet.enable:
-        if context['group_id'] == 298466962:
+        if context['group_id'] == int(SHADOWVILLAGE_QQ_NUMBER):
             comment = "问题：从哪里知道的影之乡？\n答案："
             answer = re.match(comment + "(.*)", context['comment']).group(1).lower()
 
