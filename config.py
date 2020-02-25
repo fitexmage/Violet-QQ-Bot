@@ -41,17 +41,22 @@ NUANNUAN_URL = "http://nuannuan.yorushika.co:5000/"
 
 FF_LUCK_PATH = "data/ff_luck.json"
 
-IP_DICT = {'ff14': {'name': '最终幻想14', 'ip': '116.211.8.38'},
-           '最终幻想14': {'name': '最终幻想14', 'ip': '116.211.8.38'}}
-
-DUNGEON_DICT = {'e1': {'name': '普通至尊伊甸', 'attr': '29#boss=65&difficulty=100'},
-                'e2': {'name': '普通虚空行者', 'attr': '29#boss=66&difficulty=100'},
-                'e3': {'name': '普通利威亚桑', 'attr': '29#boss=67&difficulty=100'},
-                'e4': {'name': '普通泰坦', 'attr': '29#boss=68&difficulty=100'},
-                'e1s': {'name': '零式虚空行者', 'attr': '29#boss=65&difficulty=101'},
-                'e2s': {'name': '零式虚空行者', 'attr': '29#boss=66&difficulty=101'},
-                'e3s': {'name': '零式利威亚桑', 'attr': '29#boss=67&difficulty=101'},
-                'e4s': {'name': '零式泰坦', 'attr': '29#boss=67&difficulty=101'}
+DUNGEON_DICT = {'e1': {'name': '普通 至尊伊甸', 'attr': '29#boss=65&difficulty=100'},
+                'e2': {'name': '普通 虚空行者', 'attr': '29#boss=66&difficulty=100'},
+                'e3': {'name': '普通 利威亚桑', 'attr': '29#boss=67&difficulty=100'},
+                'e4': {'name': '普通 泰坦', 'attr': '29#boss=69&difficulty=100'},
+                'e5': {'name': '普通 拉姆', 'attr': '33#boss=69&difficulty=100'},
+                'e6': {'name': '普通 伊弗利特和迦楼罗', 'attr': '33#boss=70&difficulty=100'},
+                'e7': {'name': '普通 黑暗之神', 'attr': '33#boss=71&difficulty=100'},
+                'e8': {'name': '普通 希瓦', 'attr': '33#boss=72&difficulty=100'},
+                'e1s': {'name': '零式 虚空行者', 'attr': '29#boss=65&difficulty=101'},
+                'e2s': {'name': '零式 虚空行者', 'attr': '29#boss=66&difficulty=101'},
+                'e3s': {'name': '零式 利威亚桑', 'attr': '29#boss=67&difficulty=101'},
+                'e4s': {'name': '零式 泰坦', 'attr': '29#boss=67&difficulty=101'},
+                'e5s': {'name': '零式 拉姆', 'attr': '33#boss=69&difficulty=101'},
+                'e6s': {'name': '零式 伊弗利特和迦楼罗', 'attr': '33#boss=70&difficulty=101'},
+                'e7s': {'name': '零式 黑暗之神', 'attr': '33#boss=71&difficulty=101'},
+                'e8s': {'name': '零式 希瓦', 'attr': '33#boss=72&difficulty=101'},
                 }
 
 ROLE_DICT = {'占星术士': {'name': '占星术士', 'attr': 'Astrologian'},

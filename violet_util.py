@@ -27,14 +27,11 @@ def i_love_u(qq_number):
 
 def connect_server(at_content):
     name = re.match('连接(.+)', at_content).group(1)
-    if name in IP_DICT:
-        backinfo = os.system('ping -c 1 -W 1 %s' % IP_DICT[name]['ip'])
-        if backinfo == 0:
-            reply = IP_DICT[name]['name'] + "服务器连接良好"
-        else:
-            reply = IP_DICT[name]['name'] + "服务器连接失败"
+    backinfo = os.system('ping -c 1 -W 1 ' + name)
+    if backinfo == 0:
+        reply = "服务器连接良好"
     else:
-        reply = "未记录此服务器信息！"
+        reply = "服务器连接失败"
     return reply
 
 
