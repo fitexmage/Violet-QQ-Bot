@@ -88,7 +88,7 @@ def house(par_list):
         return "格式错误！"
 
     pos = par_list[1]
-    idx = par_list[2]
+    idx = int(par_list[2])
     if pos in HOUSE_ALIAS_DICT:
         pos = HOUSE_ALIAS_DICT[pos]
     if pos in HOUSE_DICT:
