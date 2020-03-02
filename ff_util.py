@@ -55,7 +55,7 @@ def gate(par_list):
 
 def luck(self, qq_number):
     if qq_number not in self.luck_dict or not done_today(self.luck_dict[qq_number]):
-        good_to_do, hard_to_do = random.choices(luck_things, k=2)
+        good_to_do, hard_to_do = random.choices(LUCK_THINGS, k=2)
 
         combat_luck = get_gaussian()
         wealth_luck = get_gaussian()
