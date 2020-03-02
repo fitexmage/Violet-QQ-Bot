@@ -1,10 +1,14 @@
-from config import *
-
 import re
 import json
 import os
 import random
 import datetime
+
+
+def read_all_file():
+    with open('data/data.json', 'r') as f:
+        data = json.load(f)
+    return data
 
 
 def regex_match(pattern, message):

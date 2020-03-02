@@ -1,4 +1,5 @@
 from util import *
+from config import *
 
 from mcstatus import MinecraftServer
 from mcrcon import MCRcon

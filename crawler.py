@@ -165,7 +165,7 @@ def crawl_dps(par_list):
         data = driver.find_element_by_id('highcharts-0')\
         .find_elements_by_class_name('highcharts-tooltip')[-1]\
         .find_element_by_tag_name('b').text
-        reply += '\n{}：{}'.format(LEVEL_DICT[i], data)
+        reply += '\n{}：{}'.format(LEVEL_DICT[str(i)], data)
 
     return reply
 
