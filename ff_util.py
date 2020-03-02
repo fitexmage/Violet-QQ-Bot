@@ -88,20 +88,22 @@ def house(par_list):
         return "格式错误！"
 
     pos = par_list[1]
-    idx = int(par_list[2])
+    idx = par_list[2]
     if pos in HOUSE_ALIAS_DICT:
         pos = HOUSE_ALIAS_DICT[pos]
     if pos in HOUSE_DICT:
-        if re.match(r'[0-9]+', idx) and idx >= 1 and idx <= 60:
-            if idx in HOUSE_DICT[pos]:
-                grade = HOUSE_DICT[pos][idx]['grade']
-                size = HOUSE_DICT[pos][idx]['size']
-            else:
-                grade = HOUSE_DICT[pos][idx - 30]['grade']
-                size = HOUSE_DICT[pos][idx - 30]['size']
-            init_price = HOUSE_PRICE_INIT_DICT[size][grade]
-            end_price = HOUSE_PRICE_END_DICT[size][grade]
-            reply = "{} {}：\n类型：{} 尺寸：{}\n初始价格：{} 最低价格：{}".format(pos, idx, str(grade), size, init_price, end_price)
+        if re.match(r'[0-9]+', idx):
+            idx = int(idx)
+            if idx >= 1 and idx <= 60:
+                if idx in HOUSE_DICT[pos]:
+                    grade = HOUSE_DICT[pos][idx]['grade']
+                    size = HOUSE_DICT[pos][idx]['size']
+                else:
+                    grade = HOUSE_DICT[pos][idx - 30]['grade']
+                    size = HOUSE_DICT[pos][idx - 30]['size']
+                init_price = HOUSE_PRICE_INIT_DICT[size][grade]
+                end_price = HOUSE_PRICE_END_DICT[size][grade]
+                reply = "{} {}：\n类型：{} 尺寸：{}\n初始价格：{} 最低价格：{}".format(pos, idx, str(grade), size, init_price, end_price)
 
         else:
             reply = "房号必须是数字哟~"
