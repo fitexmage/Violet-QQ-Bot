@@ -84,8 +84,9 @@ def fish(par_list):
 
 
 def house(par_list):
+    reply = None
     if len(par_list) != 3:
-        return "格式错误！"
+        return reply
 
     pos = par_list[1]
     idx = par_list[2]
@@ -103,7 +104,7 @@ def house(par_list):
                     size = HOUSE_DICT[pos][idx - 30]['size']
                 init_price = HOUSE_PRICE_INIT_DICT[size][grade]
                 end_price = HOUSE_PRICE_END_DICT[size][grade]
-                reply = "{} {}：\n类型：{} 尺寸：{}\n初始价格：{} 最低价格：{}".format(pos, idx, str(grade), size, init_price, end_price)
+                reply = "{} {}\n类型：{}\n尺寸：{}\n初始价格：{}\n最低价格：{}".format(pos, idx, str(grade), size, init_price, end_price)
 
         else:
             reply = "房号必须是数字哟~"
