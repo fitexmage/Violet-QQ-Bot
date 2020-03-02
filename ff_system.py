@@ -33,6 +33,7 @@ class FF_System:
     def reply_group_cmd_msg(self, context, par_list):
         qq_number = str(context['sender']['user_id'])
         func = par_list[0]
+        # Don't remove the first parameter, cause some command only have the first one
 
         reply = None
 
@@ -54,5 +55,7 @@ class FF_System:
             reply = crawl_nuannuan()
         elif func == 'fish':
             reply = fish(par_list)
+        elif func == 'house':
+            reply = house(par_list)
         return reply
 

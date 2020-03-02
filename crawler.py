@@ -131,11 +131,14 @@ def crawl_dps(par_list):
     dungeon = par_list[1]
     role = par_list[2]
 
+    if role in ROLE_ALIAS_DICT:
+        role = ROLE_ALIAS_DICT[role]
+
     if dungeon not in DUNGEON_DICT or role not in ROLE_DICT:
         return None
 
-    driver = get_driver(False, wait=False)
-    url = "https://{}.fflogs.com/zone/statistics/{}&dpstype=adps&class=Global&spec={}&dataset=100"\
+    driver = get_driver(head=True, wait=False)
+    url = "https://{}.fflogs.com/zone/statistics/{}&dpstype=adps&class=Global&spec={}&dataset=100" \
         .format(server, DUNGEON_DICT[dungeon]['attr'], ROLE_DICT[role]['attr'])
     driver.get(url)
 
@@ -180,7 +183,7 @@ def crawl_item(item):
         image = bs.find(attrs={"property": "og:image"})['content']
         reply = "[CQ:share,url={},title={},content={},image={}]".format(url, item, content, image)
     else:
-        driver = get_driver(False)
+        driver = get_driver(head=False)
         url = WIKI_URL + "ItemSearch?name=" + urllib.parse.quote(item)
         try:
             driver.get(url)

@@ -40,9 +40,6 @@ class Violet:
 
         reply = None
 
-        if random.random() < 0.05:
-            reply = random.choice(["是的呀", "我也觉得是~", "没错", "哈哈哈", "嗯嗯", "是啊", "当然是啦~", '可以啊'])
-
         if qq_number == PARTNER_QQ_NUMBER:
             if message == "小紫 启":
                 reply = self.start()
@@ -50,6 +47,9 @@ class Violet:
                 reply = self.close()
 
         if self.enable:
+            if random.random() < 0.01:
+                reply = random.choice(["是的呀", "我也觉得是~", "没错", "哈哈哈", "嗯嗯", "是啊", "当然是啦~", '可以啊'])
+
             if message == "小紫" or message == "@【影之接待】小紫" or message == "[CQ:at,qq=" + SELF_QQ_NUMBER + "] ":
                 reply = reply_intro()
 
