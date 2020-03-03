@@ -13,14 +13,13 @@ async def handle_private_msg(context):
     if violet.debug:
         print(context)
 
-    if context['group_id'] == int(SHADOWVILLAGE_QQ_NUMBER):
-        reply = violet.reply_private_msg(context)
-        if reply is not None:
-            if isinstance(reply, list):
-                for r in reply:
-                    await bot.send(context, message=r, at_sender=False, auto_escape=True)
-            else:
-                await bot.send(context, message=reply, at_sender=False, auto_escape=True)
+    reply = violet.reply_private_msg(context)
+    if reply is not None:
+        if isinstance(reply, list):
+            for r in reply:
+                await bot.send(context, message=r, at_sender=False, auto_escape=True)
+        else:
+            await bot.send(context, message=reply, at_sender=False, auto_escape=True)
 
 
 @bot.on_message('group')

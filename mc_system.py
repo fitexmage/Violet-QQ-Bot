@@ -19,13 +19,10 @@ class MC_System:
 
         if regex_match("白名单 .+", message):
             reply = add_white_list(self, message, qq_number)
-
         elif "白名单" in message:
             reply = white_list_intro()
-
         elif regex_match("我是谁", message):
             reply = who_am_i(self, qq_number)
-
         elif regex_match(".*[0-9]+.*是谁", message):
             reply = who_is_qq(self, message)
         return reply
@@ -43,7 +40,6 @@ class MC_System:
             reply = who_is_qq(self, at_content)
         elif regex_match(".*是谁.*", at_content):
             reply = who_is_name(self, at_content)
-
         elif regex_match('在线', at_content):
             reply = rcon_command(self, "list")
         elif regex_match('不在线', at_content):

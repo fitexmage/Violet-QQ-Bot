@@ -47,15 +47,14 @@ class Violet:
                 reply = self.close()
 
         if self.enable:
-            if random.random() < 0.01:
-                reply = random.choice(["是的呀", "我也觉得是~", "没错", "哈哈哈", "嗯嗯", "是啊", "当然是啦~", '可以啊'])
-
             if message == "小紫" or message == "@【影之接待】小紫" or message == "[CQ:at,qq=" + SELF_QQ_NUMBER + "] ":
                 reply = reply_intro()
             elif regex_match('\\[CQ:at,qq={}\\].*'.format(SELF_QQ_NUMBER), message):
                 reply = self.reply_group_at_msg(context, message, qq_number)
             elif regex_match('^/', message):
                 reply = await self.reply_group_cmd_msg(bot, context, message)
+            elif random.random() < 0.03:
+                reply = crawl_baidu_answer(message)
 
         return reply
 

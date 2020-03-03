@@ -1,5 +1,6 @@
 from util import *
 from config import *
+from crawler import crawl_dps
 
 import random
 
@@ -14,6 +15,35 @@ def reply_intro():
             "6. /ff nuannuan：查看每周暖暖攻略。\n" \
             "7. /ff fish：查看渔场。（/ff fish 雷克兰德）\n" \
             "8. /ff house：查看房屋信息。（/ff house 白银乡 5）"
+    return reply
+
+
+def dps(par_list):
+    reply = None
+
+    if len(par_list) == 3:
+        server = 'www'
+    elif len(par_list) == 4:
+        if par_list[3] == '国服':
+            server = 'cn'
+        else:
+            server = 'www'
+    else:
+        return reply
+
+    dungeon = par_list[1]
+    role = par_list[2]
+
+    if dungeon in DUNGEON_ALIAS_DICT:
+        dungeon = DUNGEON_ALIAS_DICT[dungeon]
+
+    if role in ROLE_ALIAS_DICT:
+        role = ROLE_ALIAS_DICT[role]
+
+    if dungeon not in DUNGEON_DICT or role not in ROLE_DICT:
+        return reply
+
+    reply = crawl_dps(server, dungeon, role)
     return reply
 
 

@@ -117,38 +117,69 @@ def get_driver(head=False, wait=True):  # 得到驱动器
 #     return None
 
 
-def crawl_dps(par_list):
-    if len(par_list) == 3:
-        server = 'www'
-    elif len(par_list) == 4:
-        if par_list[3] == '国服':
-            server = 'cn'
-        else:
-            server = 'www'
-    else:
-        return None
+def get_real_answer(answer):  # 得到简化过的答案
+    answer_text = answer.split("答：\n")[-1]
+    answer_text.replace("请采纳", "")
+    answer_text.replace("查看原帖>>", "")
+    return answer_text
 
-    dungeon = par_list[1]
-    role = par_list[2]
 
-    if role in ROLE_ALIAS_DICT:
-        role = ROLE_ALIAS_DICT[role]
+def crawl_baidu_answer(content):
+    reply = None
 
-    if dungeon not in DUNGEON_DICT or role not in ROLE_DICT:
-        return None
+    if len(content) >= 30:
+        sent_list = re.split(r'[,.!?，。！？、]', content)
+        for sent in sent_list:
+            if len(sent) <= 30 and sent != "":
+                content = sent
+        if len(content) >= 30:
+            return reply
 
+    driver = get_driver(head=False, wait=True)
+    driver.get("https://zhidao.baidu.com/search?word={}".format(content))
+    body = driver.find_element_by_id('wgt-list')
+    answer_list = body.find_elements_by_class_name('dl')
+    answer_list = random.sample(answer_list, k=len(answer_list) * 2 // 3)
+
+    for answer in answer_list:
+        question = answer.find_element_by_class_name('ti').text
+        if content in question:
+            answer_text = answer.find_element_by_class_name('answer').text
+            answer_text = get_real_answer(answer_text)
+            if len(answer_text) >= 30:
+                sent_list = re.split(r'[,.!?，。！？、]', answer_text)
+                sent_list = random.sample(sent_list, k=3)
+                for sent in sent_list:
+                    if len(sent) <= 30 and sent != "":
+                        reply = sent
+                        break
+                if reply is None:
+                    continue
+                else:
+                    break
+            reply = answer_text
+            break
+
+    return reply
+
+
+def crawl_dps(server, dungeon, role):
     driver = get_driver(head=False, wait=False)
     url = "https://{}.fflogs.com/zone/statistics/{}&dpstype=adps&class=Global&spec={}&dataset=100" \
         .format(server, DUNGEON_DICT[dungeon]['attr'], ROLE_DICT[role]['attr'])
     driver.get(url)
 
-    time.sleep(10)
+    time.sleep(12)
 
     try:
         rect = driver.find_element_by_id('highcharts-0')\
             .find_element_by_class_name('highcharts-series-group')\
             .find_element_by_class_name('highcharts-series')\
             .find_elements_by_tag_name('rect')
+
+        if len(rect) == 0:
+            reply = "无数据！"
+            return reply
     except:
         reply = "服务器繁忙，请稍候再试！"
         return reply
