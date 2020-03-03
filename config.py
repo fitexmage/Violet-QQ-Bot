@@ -6,7 +6,7 @@ SELF_QQ_NUMBER = "2511310647"
 PARTNER_QQ_NUMBER = "424506920"
 SHADOWVILLAGE_QQ_NUMBER = "298466962"
 
-data = read_all_file()
+data = load_all_file()
 
 ################################################
 
@@ -27,7 +27,7 @@ SERVER_HOST = "42.51.173.5"
 SERVER_PORT = 25565
 RCON_PORT = 25575
 
-QUESTION_SET = ["Mod讨论", "游戏技巧", "编程开发", "联机教程", "Mod教程", "Mod问答", "联机问答", "原版问答", "矿工茶馆"]
+# QUESTION_SET = ["Mod讨论", "游戏技巧", "编程开发", "联机教程", "Mod教程", "Mod问答", "联机问答", "原版问答", "矿工茶馆"]
 
 ################################################
 WIKI_URL = "https://ff14.huijiwiki.com/wiki/"

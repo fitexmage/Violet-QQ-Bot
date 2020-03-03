@@ -98,7 +98,7 @@ class Violet:
         if par_list[0] == 'duel':
             reply = await duel(self, bot, context, par_list)
 
-        elif par_list[0] == 'mc' and len(par_list) > 1:
+        elif par_list[0] == 'mc' and len(par_list) > 1 and context['group_id'] == int(SHADOWVILLAGE_QQ_NUMBER):
             reply = self.mc_system.reply_group_cmd_msg(context, par_list[1:])
 
         elif par_list[0] == 'ff' and len(par_list) > 1:

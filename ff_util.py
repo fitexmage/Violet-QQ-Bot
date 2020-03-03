@@ -98,11 +98,11 @@ def house(par_list):
             idx = int(idx)
             if idx >= 1 and idx <= 60:
                 if idx in HOUSE_DICT[pos]:
-                    grade = HOUSE_DICT[pos][idx]['grade']
-                    size = HOUSE_DICT[pos][idx]['size']
+                    grade = HOUSE_DICT[pos][str(idx)]['grade']
+                    size = HOUSE_DICT[pos][str(idx)]['size']
                 else:
-                    grade = HOUSE_DICT[pos][idx - 30]['grade']
-                    size = HOUSE_DICT[pos][idx - 30]['size']
+                    grade = HOUSE_DICT[pos][str(idx - 30)]['grade']
+                    size = HOUSE_DICT[pos][str(idx - 30)]['size']
                 init_price = HOUSE_INIT_PRICE_DICT[size][grade]
                 end_price = HOUSE_END_PRICE_DICT[size][grade]
                 reply = "{} {}\n类型：{}\n尺寸：{}\n初始价格：{}\n最低价格：{}".format(pos, idx, str(grade), size, init_price, end_price)

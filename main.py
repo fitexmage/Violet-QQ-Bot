@@ -13,13 +13,14 @@ async def handle_private_msg(context):
     if violet.debug:
         print(context)
 
-    reply = violet.reply_private_msg(context)
-    if reply is not None:
-        if isinstance(reply, list):
-            for r in reply:
-                await bot.send(context, message=r, at_sender=False, auto_escape=True)
-        else:
-            await bot.send(context, message=reply, at_sender=False, auto_escape=True)
+    if context['group_id'] == int(SHADOWVILLAGE_QQ_NUMBER):
+        reply = violet.reply_private_msg(context)
+        if reply is not None:
+            if isinstance(reply, list):
+                for r in reply:
+                    await bot.send(context, message=r, at_sender=False, auto_escape=True)
+            else:
+                await bot.send(context, message=reply, at_sender=False, auto_escape=True)
 
 
 @bot.on_message('group')
@@ -41,7 +42,7 @@ async def handle_group_increase(context):
     if violet.debug:
         print(context)
 
-    if violet.enable:
+    if violet.enable and context['group_id'] == int(SHADOWVILLAGE_QQ_NUMBER):
         reply = "新人你好，我是人工智能小紫，欢迎加入影之乡服务器！\n现在为服务器大维护阶段，可从群文件下载番外周目进行体验，其他事宜请阅读群公告。"
         # reply = "新人你好，我是人工智能小紫，欢迎加入影之乡服务器！\n请在群共享中下载客户端，想要获取白名单请私聊我\"白名单\"，其他事宜请阅读群公告。"
         await bot.send(context, message=reply, at_sender=True, auto_escape=True)

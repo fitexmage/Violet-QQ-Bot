@@ -5,9 +5,10 @@ import random
 import datetime
 
 
-def read_all_file():
+def load_all_file():
     with open('data/data.json', 'r') as f:
         data = json.load(f)
+    print("All data loaded!")
     return data
 
 
