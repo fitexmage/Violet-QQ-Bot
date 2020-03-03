@@ -158,7 +158,7 @@ def crawl_dps(par_list):
     else:
         server = "国际服"
 
-    reply = '{} {} {}(adps)'.format(DUNGEON_DICT[dungeon]['name'], ROLE_DICT[role]['name'], server)
+    reply = '{} {} {}(adps)'.format(DUNGEON_DICT[dungeon]['name'], role, server)
     for i in range(len(rect)):
         driver.execute_script("var q=document.documentElement.scrollTop=300")
         ActionChains(driver).move_to_element(rect[i]).perform()
