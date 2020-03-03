@@ -55,7 +55,15 @@ def gate(par_list):
 
 def luck(self, qq_number):
     if qq_number not in self.luck_dict or not done_today(self.luck_dict[qq_number]):
-        good_to_do, hard_to_do = random.choices(LUCK_THINGS, k=2)
+        good_to_do, hard_to_do = random.sample(LUCK_THINGS, k=2)
+        if isinstance(good_to_do['good'], list):
+            good = random.choice(good_to_do['good'])
+        else:
+            good = good_to_do['good']
+        if isinstance(hard_to_do['bad'], list):
+            bad = random.choice(hard_to_do['bad'])
+        else:
+            bad = hard_to_do['bad']
 
         combat_luck = get_gaussian()
         wealth_luck = get_gaussian()
@@ -65,7 +73,8 @@ def luck(self, qq_number):
         reply += "战斗运势：{}\n".format(luck_parser(combat_luck))
         reply += "财富运势：{}\n".format(luck_parser(wealth_luck))
         reply += "交际运势：{}\n".format(luck_parser(social_luck))
-        reply += "宜：{}\n\t{}\n忌：{}\n\t{}".format(good_to_do['name'], good_to_do['good'], hard_to_do['name'], hard_to_do['bad'])
+
+        reply += "宜：{}\n    {}\n忌：{}\n    {}".format(good_to_do['name'], good, hard_to_do['name'], bad)
         self.luck_dict[qq_number] = str(cur_time().date())
         update_dict(FF_LUCK_PATH, self.luck_dict)
     else:
