@@ -114,7 +114,7 @@ def house(par_list):
                     size = HOUSE_DICT[pos][str(idx - 30)]['size']
                 init_price = HOUSE_INIT_PRICE_DICT[size][str(grade)]
                 end_price = HOUSE_END_PRICE_DICT[size][str(grade)]
-                reply = "{} {}\n类型：{}\n尺寸：{}\n初始价格：{}\n最低价格：{}".format(pos, idx, str(grade), size, init_price, end_price)
+                reply = "{}{}号\n类型：{}      尺寸：{}\n初始价格：{}\n最低价格：{}".format(pos, idx, str(grade), size, init_price, end_price)
 
         else:
             reply = "房号必须是数字哟~"
