@@ -32,6 +32,7 @@ RCON_PORT = 25575
 ################################################
 WIKI_URL = "https://ff14.huijiwiki.com/wiki/"
 NUANNUAN_URL = "http://nuannuan.yorushika.co:5000/"
+FFLOGS_URL = "https://www.fflogs.com"
 
 FF_LUCK_PATH = "data/ff_luck.json"
 FF_FISH_MAP_PATH = "file:///Z:\\home\\user\\coolq\\data\\image\\local\\fish_map\\"
@@ -40,7 +41,7 @@ DUNGEON_DICT = data['dungeon']
 DUNGEON_ALIAS_DICT = data['dungeon_alias']
 ROLE_DICT = data['role']
 ROLE_ALIAS_DICT = data['role_alias']
-LEVEL_DICT = data['dps_level']
+LEVEL_LIST = data['dps_level']
 LUCK_THINGS = data['luck_things']
 FISH_POS = data['fish_pos']
 FISH_POS_ALIAS_DICT = data['fish_pos_alias']

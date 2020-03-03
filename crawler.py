@@ -164,41 +164,27 @@ def crawl_baidu_answer(content):
 
 
 def crawl_dps(server, dungeon, role):
-    driver = get_driver(head=False, wait=False)
-    url = "https://{}.fflogs.com/zone/statistics/{}&dpstype=adps&class=Global&spec={}&dataset=100" \
-        .format(server, DUNGEON_DICT[dungeon]['attr'], ROLE_DICT[role]['attr'])
-    driver.get(url)
-
-    time.sleep(12)
-
-    try:
-        rect = driver.find_element_by_id('highcharts-0')\
-            .find_element_by_class_name('highcharts-series-group')\
-            .find_element_by_class_name('highcharts-series')\
-            .find_elements_by_tag_name('rect')
-
-        if len(rect) == 0:
-            reply = "无数据！"
-            return reply
-    except:
-        reply = "服务器繁忙，请稍候再试！"
-        return reply
-
-    if server == 'cn':
-        server = "国服"
+    if server == "国际服":
+        server= DUNGEON_DICT[dungeon]['global_server']
     else:
-        server = "国际服"
+        server= DUNGEON_DICT[dungeon]['cn_server']
 
-    reply = '{} {} {}(adps)'.format(DUNGEON_DICT[dungeon]['name'], role, server)
-    for i in range(len(rect)):
-        driver.execute_script("var q=document.documentElement.scrollTop=300")
-        ActionChains(driver).move_to_element(rect[i]).perform()
-        data = driver.find_element_by_id('highcharts-0')\
-        .find_elements_by_class_name('highcharts-tooltip')[-1]\
-        .find_element_by_tag_name('b').text
-        reply += '\n{}：{}'.format(LEVEL_DICT[str(i)], data)
+    fflogs_url = "https://www.fflogs.com/zone/statistics/table/{}/dps/{}/{}/8/{}/100/1000/7/0/Global/{}/All/0/normalized/single/0/-1/?keystone=15&dpstype=adps" \
+        .format(DUNGEON_DICT[dungeon]['quest'], DUNGEON_DICT[dungeon]['id'], DUNGEON_DICT[dungeon]['difficulty'], server, ROLE_DICT[role]['attr'])
 
-    return reply
+    s = requests.Session()
+    s.headers.update({'referer': FFLOGS_URL})
+    r = s.get(url=fflogs_url, timeout=5)
+
+    dps_list = []
+    for level in LEVEL_LIST:
+        if level == "100":
+            str = ("series" + r".data.push\(([0-9]+(\.[0-9])*)")
+        else:
+            str = ("series%s" % (level) + r".data.push\(([0-9]+(\.[0-9])*)")
+        dps = re.compile(str).findall(r.text)[-1][0]
+        dps_list.append(dps)
+    return dps_list
 
 
 def crawl_item(item):

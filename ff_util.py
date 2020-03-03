@@ -21,18 +21,15 @@ def reply_intro():
 def dps(par_list):
     reply = None
 
-    if len(par_list) == 3:
-        server = 'www'
-    elif len(par_list) == 4:
-        if par_list[3] == '国服':
-            server = 'cn'
-        else:
-            server = 'www'
-    else:
-        return reply
-
     dungeon = par_list[1]
     role = par_list[2]
+
+    if len(par_list) == 3:
+        server = "国际服"
+    elif len(par_list) == 4:
+        server = par_list[3]
+    else:
+        return reply
 
     if dungeon in DUNGEON_ALIAS_DICT:
         dungeon = DUNGEON_ALIAS_DICT[dungeon]
@@ -43,7 +40,11 @@ def dps(par_list):
     if dungeon not in DUNGEON_DICT or role not in ROLE_DICT:
         return reply
 
-    reply = crawl_dps(server, dungeon, role)
+    dps_list = crawl_dps(server, dungeon, role)
+
+    reply = '{} {} {}(adps)'.format(DUNGEON_DICT[dungeon]['name'], role, server)
+    for i in range(len(LEVEL_LIST)):
+        reply += '\n{}%：{}'.format(LEVEL_LIST[i], dps_list[i])
     return reply
 
 

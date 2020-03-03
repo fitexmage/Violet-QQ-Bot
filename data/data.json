@@ -13,88 +13,172 @@
   },
   "dungeon": {
     "缇坦妮雅": {
+      "id": "1045",
       "name": "缇坦妮雅",
-      "attr": "28/#boss=1045"
+      "quest": "28",
+      "difficulty": "100",
+      "global_server": 3,
+      "cn_server": 5
     },
     "无瑕灵君": {
+      "id": "1046",
       "name": "无瑕灵君",
-      "attr": "28/#boss=1046"
+      "quest": "28",
+      "difficulty": "100",
+      "global_server": 3,
+      "cn_server": 5
     },
     "哈迪斯": {
+      "id": "1049",
       "name": "哈迪斯",
-      "attr": "28/#boss=1049"
+      "quest": "28",
+      "difficulty": "100",
+      "global_server": 3,
+      "cn_server": 5
     },
     "红玉神兵1": {
+      "id": "1051",
       "name": "红玉神兵1",
-      "attr": "28/#boss=1051"
+      "quest": "28",
+      "difficulty": "100",
+      "global_server": 3,
+      "cn_server": 5
     },
     "红玉神兵2": {
+      "id": "1052",
       "name": "红玉神兵2",
-      "attr": "28/#boss=1052"
+      "quest": "28",
+      "difficulty": "100",
+      "global_server": 3,
+      "cn_server": 5
     },
     "e1": {
+      "id": "65",
       "name": "普通 至尊伊甸",
-      "attr": "29/#boss=65&difficulty=100"
+      "quest": "29",
+      "difficulty": "100",
+      "global_server": 3,
+      "cn_server": 5
     },
     "e2": {
+      "id": "66",
       "name": "普通 虚空行者",
-      "attr": "29/#boss=66&difficulty=100"
+      "quest": "29",
+      "difficulty": "100",
+      "global_server": 3,
+      "cn_server": 5
     },
     "e3": {
+      "id": "67",
       "name": "普通 利威亚桑",
-      "attr": "29/#boss=67&difficulty=100"
+      "quest": "29",
+      "difficulty": "100",
+      "global_server": 3,
+      "cn_server": 5
     },
     "e4": {
+      "id": "68",
       "name": "普通 泰坦",
-      "attr": "29/#boss=69&difficulty=100"
+      "quest": "29",
+      "difficulty": "100",
+      "global_server": 3,
+      "cn_server": 5
     },
     "e5": {
+      "id": "69",
       "name": "普通 拉姆",
-      "attr": "33/#boss=69&difficulty=100"
+      "quest": "33",
+      "difficulty": "100",
+      "global_server": 1,
+      "cn_server": 5
     },
     "e6": {
+      "id": "70",
       "name": "普通 伊弗利特和迦楼罗",
-      "attr": "33/#boss=70&difficulty=100"
+      "quest": "33",
+      "difficulty": "100",
+      "global_server": 1,
+      "cn_server": 5
     },
     "e7": {
+      "id": "71",
       "name": "普通 暗之偶像",
-      "attr": "33/#boss=71&difficulty=100"
+      "quest": "33",
+      "difficulty": "100",
+      "global_server": 1,
+      "cn_server": 5
     },
     "e8": {
+      "id": "72",
       "name": "普通 希瓦",
-      "attr": "33/#boss=72&difficulty=100"
+      "quest": "33",
+      "difficulty": "100",
+      "global_server": 1,
+      "cn_server": 5
     },
     "e1s": {
+      "id": "65",
       "name": "零式 虚空行者",
-      "attr": "29/#boss=65&difficulty=101"
+      "quest": "29",
+      "difficulty": "101",
+      "global_server": 3,
+      "cn_server": 5
     },
     "e2s": {
+      "id": "66",
       "name": "零式 虚空行者",
-      "attr": "29/#boss=66&difficulty=101"
+      "quest": "29",
+      "difficulty": "101",
+      "global_server": 3,
+      "cn_server": 5
     },
     "e3s": {
+      "id": "67",
       "name": "零式 利威亚桑",
-      "attr": "29/#boss=67&difficulty=101"
+      "quest": "29",
+      "difficulty": "101",
+      "global_server": 3,
+      "cn_server": 5
     },
     "e4s": {
+      "id": "68",
       "name": "零式 泰坦",
-      "attr": "29/#boss=67&difficulty=101"
+      "quest": "29",
+      "difficulty": "101",
+      "global_server": 3,
+      "cn_server": 5
     },
     "e5s": {
+      "id": "69",
       "name": "零式 拉姆",
-      "attr": "33/#boss=69&difficulty=101"
+      "quest": "33",
+      "difficulty": "101",
+      "global_server": 1,
+      "cn_server": 5
     },
     "e6s": {
+      "id": "70",
       "name": "零式 伊弗利特和迦楼罗",
-      "attr": "33/#boss=70&difficulty=101"
+      "quest": "33",
+      "difficulty": "101",
+      "global_server": 1,
+      "cn_server": 5
     },
     "e7s": {
+      "id": "71",
       "name": "零式 暗之偶像",
-      "attr": "33/#boss=71&difficulty=101"
+      "quest": "33",
+      "difficulty": "101",
+      "global_server": 1,
+      "cn_server": 5
     },
     "e8s": {
+      "id": "72",
       "name": "零式 希瓦",
-      "attr": "33/#boss=72&difficulty=101"
+      "quest": "33",
+      "difficulty": "101",
+      "global_server": 1,
+      "cn_server": 5
     }
   },
   "dungeon_alias": {
@@ -168,15 +252,7 @@
     "召唤": "召唤师",
     "白魔": "白魔法师"
   },
-  "dps_level": {
-    "0": "100%",
-    "1": "99%",
-    "2": "95%",
-    "3": "75%",
-    "4": "50%",
-    "5": "25%",
-    "6": "10%"
-  },
+  "dps_level": ["100", "99", "95", "75", "50", "25", "10"],
   "luck_things": [
     {
       "name": "4人本",
