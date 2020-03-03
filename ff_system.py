@@ -40,7 +40,7 @@ class FF_System:
         if func == 'help':
             reply = reply_intro()
         elif func == 'dps':
-            reply = crawl_dps(par_list)
+            reply = dps(par_list)
         elif func == 'dice':
             reply = dice(par_list)
         elif func == 'gate':
