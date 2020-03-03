@@ -97,7 +97,7 @@ def house(par_list):
         if re.match(r'[0-9]+', idx):
             idx = int(idx)
             if idx >= 1 and idx <= 60:
-                if idx in HOUSE_DICT[pos]:
+                if str(idx) in HOUSE_DICT[pos]:
                     grade = HOUSE_DICT[pos][str(idx)]['grade']
                     size = HOUSE_DICT[pos][str(idx)]['size']
                 else:
