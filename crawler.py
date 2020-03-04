@@ -183,7 +183,7 @@ def crawl_dps(server, dungeon, role):
     for level in LEVEL_LIST:
         if level == "100":
             str = ("series" + r".data.push\(([0-9]+(\.[0-9])*)")
-            print(re.compile(str).findall(r.text))
+            # print(re.compile(str).findall(r.text))
         else:
             str = ("series%s" % (level) + r".data.push\(([0-9]+(\.[0-9])*)")
         dps = re.compile(str).findall(r.text)[-1][0]
