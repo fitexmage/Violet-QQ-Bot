@@ -174,18 +174,22 @@ def crawl_dps(server, dungeon, role):
 
     s = requests.Session()
     s.headers.update({'referer': FFLOGS_URL})
-    r = s.get(url=fflogs_url, timeout=5)
+    try:
+        r = s.get(url=fflogs_url, timeout=10)
+    except:
+        return []
 
     dps_list = []
     for level in LEVEL_LIST:
         if level == "100":
             str = ("series" + r".data.push\(([0-9]+(\.[0-9])*)")
+            print(re.compile(str).findall(r.text))
         else:
             str = ("series%s" % (level) + r".data.push\(([0-9]+(\.[0-9])*)")
         dps = re.compile(str).findall(r.text)[-1][0]
         dps_list.append(dps)
     return dps_list
-
+# print(crawl_dps("国服", "缇坦妮雅", "召唤师"))
 
 def crawl_item(item):
     if len(item) > 30:

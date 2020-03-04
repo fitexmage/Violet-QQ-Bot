@@ -41,10 +41,12 @@ def dps(par_list):
         return reply
 
     dps_list = crawl_dps(server, dungeon, role)
-
-    reply = '{} {} {}(adps)'.format(DUNGEON_DICT[dungeon]['name'], role, server)
-    for i in range(len(LEVEL_LIST)):
-        reply += '\n{}%：{}'.format(LEVEL_LIST[i], dps_list[i])
+    if len(dps_list) != 0:
+        reply = '{} {} {}(adps)'.format(DUNGEON_DICT[dungeon]['name'], role, server)
+        for i in range(len(LEVEL_LIST)):
+            reply += '\n{}%：{}'.format(LEVEL_LIST[i], dps_list[i])
+    else:
+        reply = "当前服务器繁忙，请稍候再试！"
     return reply
 
 
