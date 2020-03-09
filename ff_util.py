@@ -32,11 +32,11 @@ def dps(par_list):
     else:
         return reply
 
-    if dungeon in DPS_DUNGEON_ALIAS_DICT:
-        dungeon = DPS_DUNGEON_ALIAS_DICT[dungeon]
+    if dungeon in DPS_DUNGEON_NICKNAME_DICT:
+        dungeon = DPS_DUNGEON_NICKNAME_DICT[dungeon]
 
-    if role in ROLE_ALIAS_DICT:
-        role = ROLE_ALIAS_DICT[role]
+    if role in ROLE_NICKNAME_DICT:
+        role = ROLE_NICKNAME_DICT[role]
 
     if dungeon not in DPS_DUNGEON_DICT or role not in ROLE_DICT:
         return reply
@@ -119,8 +119,8 @@ def luck(self, qq_number):
 def dungeon(par_list):
     if len(par_list) > 1:
         dungeon_name = par_list[1]
-        if dungeon_name in SEARCH_DUNGEON_ALIAS_DICT:
-            dungeon_name = SEARCH_DUNGEON_ALIAS_DICT[dungeon_name]
+        if dungeon_name in SEARCH_DUNGEON_NICKNAME_DICT:
+            dungeon_name = SEARCH_DUNGEON_NICKNAME_DICT[dungeon_name]
         reply = crawl_dungeon(dungeon_name)
     else:
         reply = "请选择想要查询的副本！"
@@ -129,8 +129,8 @@ def dungeon(par_list):
 
 def fish(par_list):
     pos = par_list[1]
-    if pos in FISH_POS_ALIAS_DICT:
-        pos = FISH_POS_ALIAS_DICT[pos]
+    if pos in FISH_POS_NICKNAME_DICT:
+        pos = FISH_POS_NICKNAME_DICT[pos]
     if pos in FISH_POS:
         reply = generate_image_cq(FF_FISH_MAP_PATH + '{}.jpg'.format(pos))
     else:
@@ -145,8 +145,8 @@ def house(par_list):
 
     pos = par_list[1]
     idx = par_list[2]
-    if pos in HOUSE_ALIAS_DICT:
-        pos = HOUSE_ALIAS_DICT[pos]
+    if pos in HOUSE_NICKNAME_DICT:
+        pos = HOUSE_NICKNAME_DICT[pos]
     if pos in HOUSE_DICT:
         if re.match(r'[0-9]+', idx):
             idx = int(idx)

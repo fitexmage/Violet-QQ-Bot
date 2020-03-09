@@ -37,16 +37,53 @@ FFLOGS_URL = "https://www.fflogs.com"
 FF_LUCK_PATH = "data/ff_luck.json"
 FF_FISH_MAP_PATH = "file:///Z:\\home\\user\\coolq\\data\\image\\local\\fish_map\\"
 
+def load_dps_dungeon_nickname():
+    nickname_dict = {}
+
+    for dungeon in DPS_DUNGEON_DICT:
+        if 'nickname' in DPS_DUNGEON_DICT[dungeon]:
+            for nickname in DPS_DUNGEON_DICT[dungeon]['nickname']:
+                nickname_dict[nickname] = dungeon
+    return nickname_dict
+
+def load_role_nickname():
+    nickname_dict = {}
+
+    for role in ROLE_DICT:
+        if 'nickname' in ROLE_DICT[role]:
+            for nickname in ROLE_DICT[role]['nickname']:
+                nickname_dict[nickname] = role
+    return nickname_dict
+
+def load_search_dungeon_nickname():
+    nickname_dict = {}
+
+    for dungeon in SEARCH_DUNGEON_DICT:
+        for nickname in SEARCH_DUNGEON_DICT[dungeon]:
+            nickname_dict[nickname] = dungeon
+    return nickname_dict
+
+
+def load_fish_pos_nickname():
+    nickname_dict = {}
+
+    for place in FISH_POS:
+        for nickname in FISH_POS[place]:
+            nickname_dict[nickname] = place
+    return nickname_dict
+
+
 DPS_DUNGEON_DICT = data['dps_dungeon']
-DPS_DUNGEON_ALIAS_DICT = data['dps_dungeon_alias']
+DPS_DUNGEON_NICKNAME_DICT = load_dps_dungeon_nickname()
 ROLE_DICT = data['role']
-ROLE_ALIAS_DICT = data['role_alias']
-SEARCH_DUNGEON_ALIAS_DICT = data['search_dungeon_alias']
+ROLE_NICKNAME_DICT = load_role_nickname()
+SEARCH_DUNGEON_DICT = data['search_dungeon']
+SEARCH_DUNGEON_NICKNAME_DICT = load_search_dungeon_nickname()
 LEVEL_LIST = data['dps_level']
 LUCK_THINGS = data['luck_things']
-FISH_POS = data['fish_pos']
-FISH_POS_ALIAS_DICT = data['fish_pos_alias']
+FISH_POS = data['place']
+FISH_POS_NICKNAME_DICT = load_fish_pos_nickname()
 HOUSE_DICT = data['house']
-HOUSE_ALIAS_DICT = data['house_alias']
+HOUSE_NICKNAME_DICT = data['house_nickname']
 HOUSE_INIT_PRICE_DICT = data['house_init_price']
 HOUSE_END_PRICE_DICT = data['house_end_price']
