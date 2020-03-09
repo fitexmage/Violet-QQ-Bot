@@ -165,12 +165,12 @@ def crawl_baidu_answer(content):
 
 def crawl_dps(server, dungeon, role):
     if server == "国际服":
-        server= DUNGEON_DICT[dungeon]['global_server']
+        server= DPS_DUNGEON_DICT[dungeon]['global_server']
     else:
-        server= DUNGEON_DICT[dungeon]['cn_server']
+        server= DPS_DUNGEON_DICT[dungeon]['cn_server']
 
     fflogs_url = "https://www.fflogs.com/zone/statistics/table/{}/dps/{}/{}/8/{}/100/1000/7/0/Global/{}/All/0/normalized/single/0/-1/?keystone=15&dpstype=adps" \
-        .format(DUNGEON_DICT[dungeon]['quest'], DUNGEON_DICT[dungeon]['id'], DUNGEON_DICT[dungeon]['difficulty'], server, ROLE_DICT[role]['attr'])
+        .format(DPS_DUNGEON_DICT[dungeon]['quest'], DPS_DUNGEON_DICT[dungeon]['id'], DPS_DUNGEON_DICT[dungeon]['difficulty'], server, ROLE_DICT[role]['attr'])
 
     s = requests.Session()
     s.headers.update({'referer': FFLOGS_URL})

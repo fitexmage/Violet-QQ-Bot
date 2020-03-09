@@ -33,7 +33,7 @@ class MC_System:
         reply = None
 
         if at_content in {"mc", "MC", "影之乡", "硬纸箱"}:
-            reply = reply_intro()
+            reply = intro()
         elif regex_match("我是谁", at_content):
             reply = who_am_i(self, qq_number)
         elif regex_match("[0-9]+.*是谁.*", at_content):

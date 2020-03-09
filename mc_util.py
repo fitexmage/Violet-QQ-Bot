@@ -12,7 +12,7 @@ def rcon_command(self, command):
         return text
 
 
-def reply_intro():
+def intro():
     reply = "你好呀~我是腐竹的人工智能搭档小紫，目前我可以:\n" \
             "*私聊我：\n" \
             "1. 白名单：添加白名单。\n" \

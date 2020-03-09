@@ -48,7 +48,7 @@ class Violet:
 
         if self.enable:
             if message == "小紫" or message == "@【影之接待】小紫" or message == "[CQ:at,qq=" + SELF_QQ_NUMBER + "] ":
-                reply = reply_intro()
+                reply = intro()
             elif regex_match('\\[CQ:at,qq={}\\].*'.format(SELF_QQ_NUMBER), message):
                 reply = self.reply_group_at_msg(context, message, qq_number)
             elif regex_match('^/', message):

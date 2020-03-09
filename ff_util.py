@@ -1,10 +1,10 @@
 from util import *
 from config import *
-from crawler import crawl_dps
+from crawler import crawl_dps, crawl_dungeon
 
 import random
 
-def reply_intro():
+def intro():
     reply = "你好呀~我是夏月熦风的人工智能cp小紫，目前我可以:\n" \
             "*在群里直接发送：\n" \
             "1. /ff dps：DPS排名。（/ff dps e3s 黑魔）\n" \
@@ -32,18 +32,18 @@ def dps(par_list):
     else:
         return reply
 
-    if dungeon in DUNGEON_ALIAS_DICT:
-        dungeon = DUNGEON_ALIAS_DICT[dungeon]
+    if dungeon in DPS_DUNGEON_ALIAS_DICT:
+        dungeon = DPS_DUNGEON_ALIAS_DICT[dungeon]
 
     if role in ROLE_ALIAS_DICT:
         role = ROLE_ALIAS_DICT[role]
 
-    if dungeon not in DUNGEON_DICT or role not in ROLE_DICT:
+    if dungeon not in DPS_DUNGEON_DICT or role not in ROLE_DICT:
         return reply
 
     dps_list = crawl_dps(server, dungeon, role)
     if len(dps_list) != 0:
-        reply = '{} {} {}(adps)'.format(DUNGEON_DICT[dungeon]['name'], role, server)
+        reply = '{} {} {}(adps)'.format(DPS_DUNGEON_DICT[dungeon]['name'], role, server)
         for i in range(len(LEVEL_LIST)):
             reply += '\n{}%：{}'.format(LEVEL_LIST[i], dps_list[i])
     else:
@@ -113,6 +113,17 @@ def luck(self, qq_number):
         update_dict(FF_LUCK_PATH, self.luck_dict)
     else:
         reply = "你今天已经占卜过啦，请明天再来！"
+    return reply
+
+
+def dungeon(par_list):
+    if len(par_list) > 1:
+        dungeon_name = par_list[1]
+        if dungeon_name in SEARCH_DUNGEON_ALIAS_DICT:
+            dungeon_name = SEARCH_DUNGEON_ALIAS_DICT[dungeon_name]
+        reply = crawl_dungeon(dungeon_name)
+    else:
+        reply = "请选择想要查询的副本！"
     return reply
 
 

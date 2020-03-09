@@ -1,7 +1,7 @@
 from ff_util import *
 from config import *
 from util import *
-from crawler import crawl_item, crawl_nuannuan, crawl_dungeon
+from crawler import crawl_item, crawl_nuannuan
 
 
 class FF_System:
@@ -9,7 +9,7 @@ class FF_System:
         self.luck_dict = load_dict(FF_LUCK_PATH)
 
     def reply_intro(self):
-        reply = reply_intro()
+        reply = intro()
         return reply
 
     def reply_private_msg(self, context):
@@ -38,7 +38,7 @@ class FF_System:
         reply = None
 
         if func == 'help':
-            reply = reply_intro()
+            reply = intro()
         elif func == 'dps':
             reply = dps(par_list)
         elif func == 'dice':
@@ -52,9 +52,7 @@ class FF_System:
                 item = par_list[1]
                 reply = crawl_item(item)
         elif func == 'dungeon':
-            if len(par_list) > 1:
-                dungeon = par_list[1]
-                reply = crawl_dungeon(dungeon)
+            reply = dungeon(par_list)
         elif func == 'nuannuan':
             reply = crawl_nuannuan()
         elif func == 'fish':

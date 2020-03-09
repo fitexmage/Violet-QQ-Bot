@@ -37,10 +37,11 @@ FFLOGS_URL = "https://www.fflogs.com"
 FF_LUCK_PATH = "data/ff_luck.json"
 FF_FISH_MAP_PATH = "file:///Z:\\home\\user\\coolq\\data\\image\\local\\fish_map\\"
 
-DUNGEON_DICT = data['dungeon']
-DUNGEON_ALIAS_DICT = data['dungeon_alias']
+DPS_DUNGEON_DICT = data['dps_dungeon']
+DPS_DUNGEON_ALIAS_DICT = data['dps_dungeon_alias']
 ROLE_DICT = data['role']
 ROLE_ALIAS_DICT = data['role_alias']
+SEARCH_DUNGEON_ALIAS_DICT = data['search_dungeon_alias']
 LEVEL_LIST = data['dps_level']
 LUCK_THINGS = data['luck_things']
 FISH_POS = data['fish_pos']

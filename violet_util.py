@@ -5,7 +5,7 @@ import re
 import os
 
 
-def reply_intro():
+def intro():
     reply = "你好呀~我是某人的人工智能搭档小紫，目前我的辅助范围有:\n" \
             "1. MC影之乡服务器。（发送\"/mc help\"获取详情）\n" \
             "2. 最终幻想14。（发送\"/ff help\"获取详情）"
