@@ -223,6 +223,10 @@ def crawl_dungeon(dungeon):
     if len(dungeon) > 30:
         reply = "你确定有这么长名字的副本吗……"
         return reply
+    elif dungeon == '塔塔露歼殛战':
+        url = "https://www.baidu.com/s?wd=%E5%A4%A7%E8%83%83%E7%8E%8B%E6%AF%94%E8%B5%9B"
+        reply = "[CQ:share,url={},title={}]".format(url, dungeon)
+        return reply
     url = WIKI_URL + urllib.parse.quote(dungeon)
     wb_data = requests.get(url)
     bs = BeautifulSoup(wb_data.text, "html.parser")
@@ -231,7 +235,7 @@ def crawl_dungeon(dungeon):
         content = bs.find(attrs={'class': "ff14-content-box-block"})
         if content is None:
             content = ''
-            image = bs.find(attrs={'class': "resp-img"}).find('img')['src']
+            image = bs.find(attrs={'class': "image"}).find('img')['src']
         else:
             content = content.text[4:]
             image = bs.find(attrs={'class': "instance-infobox--banner"}).find('img')['src']
