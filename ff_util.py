@@ -11,10 +11,11 @@ def reply_intro():
             "2. /ff dice：掷骰子。（/ff dice 需求 黑豆柴）\n" \
             "3. /ff gate：挖宝选门。（/ff gate 2）\n" \
             "4. /ff 占卜：让小紫为你占卜今日的ff14游戏运势。\n" \
-            "5. /ff search：搜索游戏内的物品。（/ff search 黑豆柴）\n" \
-            "6. /ff nuannuan：查看每周暖暖攻略。\n" \
-            "7. /ff fish：查看渔场。（/ff fish 雷克兰德）\n" \
-            "8. /ff house：查看房屋信息。（/ff house 白银乡 5）"
+            "5. /ff item：搜索游戏内的物品。（/ff item 黑豆柴）\n" \
+            "6. /ff dungeon：搜索副本信息。（/ff dungeon 迦楼罗歼灭战）\n" \
+            "7. /ff nuannuan：查看每周暖暖攻略。\n" \
+            "8. /ff fish：查看渔场。（/ff fish 雷克兰德）\n" \
+            "9. /ff house：查看房屋信息。（/ff house 白银乡 5）"
     return reply
 
 

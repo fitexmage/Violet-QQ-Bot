@@ -1,7 +1,7 @@
 from ff_util import *
 from config import *
 from util import *
-from crawler import crawl_item, crawl_nuannuan
+from crawler import crawl_item, crawl_nuannuan, crawl_dungeon
 
 
 class FF_System:
@@ -47,10 +47,14 @@ class FF_System:
             reply = gate(par_list)
         elif func == '占卜':
             reply = luck(self, qq_number)
-        elif func == 'search':
+        elif func == 'item':
             if len(par_list) > 1:
                 item = par_list[1]
                 reply = crawl_item(item)
+        elif func == 'dungeon':
+            if len(par_list) > 1:
+                dungeon = par_list[1]
+                reply = crawl_dungeon(dungeon)
         elif func == 'nuannuan':
             reply = crawl_nuannuan()
         elif func == 'fish':

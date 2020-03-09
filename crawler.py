@@ -183,13 +183,12 @@ def crawl_dps(server, dungeon, role):
     for level in LEVEL_LIST:
         if level == "100":
             str = ("series" + r".data.push\(([0-9]+(\.[0-9])*)")
-            # print(re.compile(str).findall(r.text))
         else:
             str = ("series%s" % (level) + r".data.push\(([0-9]+(\.[0-9])*)")
         dps = re.compile(str).findall(r.text)[-1][0]
         dps_list.append(dps)
     return dps_list
-# print(crawl_dps("国服", "缇坦妮雅", "召唤师"))
+
 
 def crawl_item(item):
     if len(item) > 30:
@@ -217,6 +216,24 @@ def crawl_item(item):
             reply = '[CQ:share,url={},title="{}"的搜索结果]'.format(url, item)
         else:
             reply = '没有找到与"{}"相关的物品。'.format(item)
+    return reply
+
+
+def crawl_dungeon(dungeon):
+    if len(dungeon) > 30:
+        reply = "你确定有这么长名字的副本吗……"
+        return reply
+    url = WIKI_URL + urllib.parse.quote(dungeon)
+    wb_data = requests.get(url)
+    bs = BeautifulSoup(wb_data.text, "html.parser")
+    content = bs.find(attrs={"class": "noarticletext"})
+    print(bs)
+    if content is None:
+        content = bs.find(attrs={"class": "ff14-content-box-block"}).text[4:]
+        image = bs.find(attrs={"class": "instance-infobox--banner"}).find('img')['src']
+        reply = "[CQ:share,url={},title={},content={},image={}]".format(url, dungeon, content, image)
+    else:
+        reply = "副本名称错误！"
     return reply
 
 

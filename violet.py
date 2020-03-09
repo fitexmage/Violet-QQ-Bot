@@ -53,7 +53,7 @@ class Violet:
                 reply = self.reply_group_at_msg(context, message, qq_number)
             elif regex_match('^/', message):
                 reply = await self.reply_group_cmd_msg(bot, context, message)
-            elif random.random() < 0.03:
+            elif random.random() < 0.03 and context['group_id'] == int(SHADOWVILLAGE_QQ_NUMBER):
                 reply = crawl_baidu_answer(message)
 
         return reply
