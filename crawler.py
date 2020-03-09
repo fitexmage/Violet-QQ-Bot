@@ -197,9 +197,9 @@ def crawl_item(item):
     url = WIKI_URL + urllib.parse.quote("物品") + ":" + urllib.parse.quote(item)
     wb_data = requests.get(url)
     bs = BeautifulSoup(wb_data.text, "html.parser")
-    content = bs.find(attrs={"class":"noarticletext"})
+    content = bs.find(attrs={'class':"noarticletext"})
     if content is None:
-        content = bs.find(attrs={"class": "ff14-content-box-block"}).text[4:]
+        content = bs.find(attrs={'class': "ff14-content-box-block"}).text[4:]
         image = bs.find(attrs={"property": "og:image"})['content']
         reply = "[CQ:share,url={},title={},content={},image={}]".format(url, item, content, image)
     else:
@@ -226,10 +226,15 @@ def crawl_dungeon(dungeon):
     url = WIKI_URL + urllib.parse.quote(dungeon)
     wb_data = requests.get(url)
     bs = BeautifulSoup(wb_data.text, "html.parser")
-    content = bs.find(attrs={"class": "noarticletext"})
-    if content is None:
-        content = bs.find(attrs={"class": "ff14-content-box-block"}).text[4:]
-        image = bs.find(attrs={"class": "instance-infobox--banner"}).find('img')['src']
+    no_text = bs.find(attrs={'class': "noarticletext"})
+    if no_text is None:
+        content = bs.find(attrs={'class': "ff14-content-box-block"})
+        if content is None:
+            content = ''
+            image = bs.find(attrs={'class': "resp-img"}).find('img')['src']
+        else:
+            content = content.text[4:]
+            image = bs.find(attrs={'class': "instance-infobox--banner"}).find('img')['src']
         reply = "[CQ:share,url={},title={},content={},image={}]".format(url, dungeon, content, image)
     else:
         reply = "副本名称错误！"
