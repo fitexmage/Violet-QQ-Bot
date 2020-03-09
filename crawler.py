@@ -227,7 +227,6 @@ def crawl_dungeon(dungeon):
     wb_data = requests.get(url)
     bs = BeautifulSoup(wb_data.text, "html.parser")
     content = bs.find(attrs={"class": "noarticletext"})
-    print(bs)
     if content is None:
         content = bs.find(attrs={"class": "ff14-content-box-block"}).text[4:]
         image = bs.find(attrs={"class": "instance-infobox--banner"}).find('img')['src']
