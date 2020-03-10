@@ -76,16 +76,10 @@ class Violet:
             reply = server_time()
         elif re.match('你在哪', at_content):
             reply = where_r_u(self)
-        elif "是什么" in at_content or "是谁" in at_content or "是啥" in at_content:
+        elif "是什么" in at_content or "是谁" in at_content or "是啥" in at_content or "长啥样" in at_content:
             if check_ready(self.last_reply):
                 self.last_reply = cur_time()
                 reply = what_is(at_content)
-            else:
-                reply = "你发的太快啦！我处理不了这么多！"
-        elif "长啥样" in at_content:
-            if check_ready(self):
-                self.last_reply = cur_time()
-                reply = image_of(at_content)
             else:
                 reply = "你发的太快啦！我处理不了这么多！"
         elif at_content == "debug":
