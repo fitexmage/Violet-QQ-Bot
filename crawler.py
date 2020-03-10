@@ -186,7 +186,6 @@ def crawl_image(item):
         reply = "好像……没听说过这个"
         return reply
     image = random.choice(image_list).get_attribute('data-objurl')
-    print(image)
     return generate_image_cq(image)
 
 
