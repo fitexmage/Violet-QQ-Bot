@@ -160,22 +160,22 @@ def crawl_baidu_answer(content):
                     break
             reply = answer_text
             break
-
+    driver.quit()
     return reply
 
 
 def crawl_baike(item):
     driver = get_driver()
-    driver.get(BAIKE_URL + item)
     try:
-        content = driver.find_element_by_class_name('content-wrapper').find_element_by_class_name('lemma-summary')
+        driver.get(BAIKE_URL + item)
         time.sleep(1)
+        content = driver.find_element_by_class_name('content-wrapper').find_element_by_class_name('lemma-summary')
+        content = content.text.split('\n')[0]
+        reply = re.sub('\[.*\]', '', content)
     except:
         reply = "好像……没听说过这个"
-        return reply
-    content = content.text.split('\n')[0]
-    content = re.sub('\[.*\]', '', content)
-    return content
+    driver.quit()
+    return reply
 
 
 def crawl_image(item):
@@ -184,11 +184,12 @@ def crawl_image(item):
     try:
         image_list = driver.find_element_by_class_name('imglist').find_elements_by_class_name('imgitem')
         time.sleep(1)
+        image = random.choice(image_list).get_attribute('data-objurl')
+        reply = generate_image_cq(image)
     except:
         reply = "好像……没听说过这个"
-        return reply
-    image = random.choice(image_list).get_attribute('data-objurl')
-    return generate_image_cq(image)
+    driver.quit()
+    return
 
 
 def crawl_dps(server, dungeon, role):
@@ -237,13 +238,13 @@ def crawl_item(item):
             driver.get(url)
             time.sleep(1)
             content = driver.find_element_by_id('mw-content-text').find_element_by_class_name('mw-parser-output')
+            if "没有" not in content.text:
+                reply = '[CQ:share,url={},title="{}"的搜索结果]'.format(url, item)
+            else:
+                reply = '没有找到与"{}"相关的物品。'.format(item)
         except:
             reply = "服务器繁忙，请稍候再试！"
-            return reply
-        if "没有" not in content.text:
-            reply = '[CQ:share,url={},title="{}"的搜索结果]'.format(url, item)
-        else:
-            reply = '没有找到与"{}"相关的物品。'.format(item)
+        driver.quit()
     return reply
 
 
