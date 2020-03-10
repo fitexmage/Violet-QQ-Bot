@@ -27,6 +27,8 @@ def get_driver(head=False, wait=True):  # 得到驱动器
         driver = webdriver.Chrome(options=options)
         return driver
 
+driver = get_driver(head=False, wait=True)
+
 # For MC
 
 # def get_new_url():
@@ -134,7 +136,6 @@ def crawl_baidu_answer(content):
         if len(content) >= 30:
             return reply
 
-    driver = get_driver(head=False, wait=True)
     driver.get(ZHIDAO_URL + content)
     body = driver.find_element_by_id('wgt-list')
     answer_list = body.find_elements_by_class_name('dl')
@@ -163,7 +164,6 @@ def crawl_baidu_answer(content):
 
 
 def crawl_baike(item):
-    driver = get_driver(head=False, wait=True)
     driver.get(BAIKE_URL + item)
     try:
         content = driver.find_element_by_class_name('content-wrapper').find_element_by_class_name('lemma-summary')
@@ -177,7 +177,6 @@ def crawl_baike(item):
 
 
 def crawl_image(item):
-    driver = get_driver(head=False, wait=True)
     driver.get(IMAGE_URL + item)
     try:
         image_list = driver.find_element_by_class_name('imglist').find_elements_by_class_name('imgitem')
@@ -229,7 +228,6 @@ def crawl_item(item):
         image = bs.find(attrs={"property": "og:image"})['content']
         reply = "[CQ:share,url={},title={},content={},image={}]".format(url, item, content, image)
     else:
-        driver = get_driver(head=False)
         url = WIKI_URL + "ItemSearch?name=" + urllib.parse.quote(item)
         try:
             driver.get(url)
