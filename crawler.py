@@ -264,7 +264,10 @@ def crawl_dungeon(dungeon):
         content = bs.find(attrs={'class': "ff14-content-box-block"})
         if content is None:
             content = ''
-            image = bs.find(attrs={'class': "image"}).find('img')['src']
+            try:
+                image = bs.find(attrs={'class': "image"}).find('img')['src']
+            except:
+                image = ''
         else:
             content = content.text[4:]
             image = bs.find(attrs={'class': "instance-infobox--banner"}).find('img')['src']
