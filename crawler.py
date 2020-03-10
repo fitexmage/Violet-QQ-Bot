@@ -189,7 +189,7 @@ def crawl_image(item):
     except:
         reply = "好像……没听说过这个"
     driver.quit()
-    return
+    return reply
 
 
 def crawl_dps(server, dungeon, role):
