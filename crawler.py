@@ -167,6 +167,7 @@ def crawl_baike(item):
     driver.get(BAIKE_URL + item)
     try:
         content = driver.find_element_by_class_name('content-wrapper').find_element_by_class_name('lemma-summary')
+        time.sleep(1)
     except:
         reply = "好像……没听说过这个"
         return reply
@@ -180,10 +181,12 @@ def crawl_image(item):
     driver.get(IMAGE_URL + item)
     try:
         image_list = driver.find_element_by_class_name('imglist').find_elements_by_class_name('imgitem')
+        time.sleep(1)
     except:
         reply = "好像……没听说过这个"
         return reply
     image = random.choice(image_list).get_attribute('data-objurl')
+    print(image)
     return generate_image_cq(image)
 
 
