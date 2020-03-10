@@ -178,7 +178,11 @@ def crawl_baike(item):
 def crawl_image(item):
     driver = get_driver(head=False, wait=True)
     driver.get(IMAGE_URL + item)
-    image_list = driver.find_element_by_class_name('imglist').find_elements_by_class_name('imgitem')
+    try:
+        image_list = driver.find_element_by_class_name('imglist').find_elements_by_class_name('imgitem')
+    except:
+        reply = "好像……没听说过这个"
+        return reply
     image = random.choice(image_list).get_attribute('data-objurl')
     return generate_image_cq(image)
 
