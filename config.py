@@ -11,6 +11,9 @@ data = load_all_file()
 ################################################
 
 DUEL_PATH = "data/duel.json"
+ZHIDAO_URL = "https://zhidao.baidu.com/search?word="
+BAIKE_URL = "https://baike.baidu.com/item/"
+IMAGE_URL = "http://image.baidu.com/search/index?tn=baiduimage&fm=result&ie=utf-8&word="
 
 MULTI_KILL = data['multi_kill']
 
@@ -33,6 +36,7 @@ RCON_PORT = 25575
 WIKI_URL = "https://ff14.huijiwiki.com/wiki/"
 NUANNUAN_URL = "http://nuannuan.yorushika.co:5000/"
 FFLOGS_URL = "https://www.fflogs.com"
+HERO_LIST_URL = "http://act.ff.sdo.com/20180525HeroList/index200305.html"
 
 FF_LUCK_PATH = "data/ff_luck.json"
 FF_FISH_MAP_PATH = "file:///Z:\\home\\user\\coolq\\data\\image\\local\\fish_map\\"

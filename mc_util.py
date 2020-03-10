@@ -66,7 +66,7 @@ def who_is_qq(self, message):
 
 
 def who_is_name(self, at_content):
-    id = re.search("(.*)是谁", at_content).group(1)
+    id = re.search("(.+)是谁", at_content).group(1)
     get_result = False
     for qq_number in self.player_qq_dict:
         if self.player_qq_dict[qq_number] == id:

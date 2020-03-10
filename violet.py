@@ -53,7 +53,7 @@ class Violet:
                 reply = self.reply_group_at_msg(context, message, qq_number)
             elif regex_match('^/', message):
                 reply = await self.reply_group_cmd_msg(bot, context, message)
-            elif random.random() < 0.03 and context['group_id'] == int(SHADOWVILLAGE_QQ_NUMBER):
+            elif random.random() < 0.09 and context['group_id'] == int(SHADOWVILLAGE_QQ_NUMBER):
                 reply = crawl_baidu_answer(message)
 
         return reply
@@ -75,6 +75,18 @@ class Violet:
             reply = server_time()
         elif re.match('你在哪', at_content):
             reply = where_r_u(self)
+        elif re.match('.+是什么.*', at_content):
+            item = re.search('(.+)是什么.*', at_content).group(1)
+            reply = crawl_baike(item)
+        elif re.match('.+是谁.*', at_content):
+            item = re.search('(.+)是谁.*', at_content).group(1)
+            reply = crawl_baike(item)
+        elif re.match('.+是啥.*', at_content):
+            item = re.search('(.+)是啥.*', at_content).group(1)
+            reply = crawl_baike(item)
+        elif re.match('.+长啥样.*', at_content):
+            item = re.search('(.+)长啥样.*', at_content).group(1)
+            reply = crawl_image(item)
         elif at_content == "debug":
             if qq_number == PARTNER_QQ_NUMBER:
                 self.debug = not self.debug

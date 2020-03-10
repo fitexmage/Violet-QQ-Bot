@@ -2,7 +2,6 @@ from config import *
 
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from selenium.webdriver.common.action_chains import ActionChains
 import requests
 from bs4 import BeautifulSoup
 import random
@@ -136,7 +135,7 @@ def crawl_baidu_answer(content):
             return reply
 
     driver = get_driver(head=False, wait=True)
-    driver.get("https://zhidao.baidu.com/search?word={}".format(content))
+    driver.get(ZHIDAO_URL + content)
     body = driver.find_element_by_id('wgt-list')
     answer_list = body.find_elements_by_class_name('dl')
     answer_list = random.sample(answer_list, k=len(answer_list) * 2 // 3)
@@ -161,6 +160,27 @@ def crawl_baidu_answer(content):
             break
 
     return reply
+
+
+def crawl_baike(item):
+    driver = get_driver(head=False, wait=True)
+    driver.get(BAIKE_URL + item)
+    try:
+        content = driver.find_element_by_class_name('content-wrapper').find_element_by_class_name('lemma-summary')
+    except:
+        reply = "好像……没听说过这个"
+        return reply
+    content = content.text.split('\n')[0]
+    content = re.sub('\[.*\]', '', content)
+    return content
+
+
+def crawl_image(item):
+    driver = get_driver(head=False, wait=True)
+    driver.get(IMAGE_URL + item)
+    image_list = driver.find_element_by_class_name('imglist').find_elements_by_class_name('imgitem')
+    image = random.choice(image_list).get_attribute('data-objurl')
+    return generate_image_cq(image)
 
 
 def crawl_dps(server, dungeon, role):
