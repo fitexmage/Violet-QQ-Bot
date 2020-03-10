@@ -54,9 +54,6 @@ def what_is(at_content):
     if re.match('.+是什么.*', at_content):
         item = re.search('(.+)是什么.*', at_content).group(1)
         reply = crawl_baike(item)
-    elif re.match('.+是谁.*', at_content):
-        item = re.search('(.+)是谁.*', at_content).group(1)
-        reply = crawl_baike(item)
     elif re.match('.+是啥.*', at_content):
         item = re.search('(.+)是啥.*', at_content).group(1)
         reply = crawl_baike(item)

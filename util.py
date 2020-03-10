@@ -59,7 +59,7 @@ def done_today(date):
 
 
 def check_ready(last_reply):
-    if last_reply is not None and (cur_time() - last_reply).seconds < 10:
+    if last_reply is not None and (cur_time() - last_reply).seconds < 30:
         return False
     return True
 
