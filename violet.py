@@ -1,8 +1,8 @@
 from violet_util import *
 from util import *
-from crawler import *
 from mc_system import MC_System
 from ff_system import FF_System
+from crawler import crawl_zhidao
 
 
 class Violet:
@@ -11,6 +11,7 @@ class Violet:
         self.debug = False
         self.cur_lat = random.uniform(-90, 90)
         self.cur_lon = random.uniform(-180, 180)
+        self.last_reply = None
 
         self.duel_dict = load_dict(DUEL_PATH)
 
@@ -54,7 +55,7 @@ class Violet:
             elif regex_match('^/', message):
                 reply = await self.reply_group_cmd_msg(bot, context, message)
             elif random.random() < 0.09 and context['group_id'] == int(SHADOWVILLAGE_QQ_NUMBER):
-                reply = crawl_baidu_answer(message)
+                reply = crawl_zhidao(message)
 
         return reply
 
@@ -75,18 +76,18 @@ class Violet:
             reply = server_time()
         elif re.match('你在哪', at_content):
             reply = where_r_u(self)
-        elif re.match('.+是什么.*', at_content):
-            item = re.search('(.+)是什么.*', at_content).group(1)
-            reply = crawl_baike(item)
-        elif re.match('.+是谁.*', at_content):
-            item = re.search('(.+)是谁.*', at_content).group(1)
-            reply = crawl_baike(item)
-        elif re.match('.+是啥.*', at_content):
-            item = re.search('(.+)是啥.*', at_content).group(1)
-            reply = crawl_baike(item)
-        elif re.match('.+长啥样.*', at_content):
-            item = re.search('(.+)长啥样.*', at_content).group(1)
-            reply = crawl_image(item)
+        elif "是什么" in at_content or "是谁" in at_content or "是啥" in at_content:
+            if check_ready(self.last_reply):
+                self.last_reply = cur_time()
+                reply = what_is(at_content)
+            else:
+                reply = "你发的太快啦！我处理不了这么多！"
+        elif "长啥样" in at_content:
+            if check_ready(self):
+                self.last_reply = cur_time()
+                reply = image_of(at_content)
+            else:
+                reply = "你发的太快啦！我处理不了这么多！"
         elif at_content == "debug":
             if qq_number == PARTNER_QQ_NUMBER:
                 self.debug = not self.debug

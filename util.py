@@ -58,6 +58,12 @@ def done_today(date):
     return False
 
 
+def check_ready(last_reply):
+    if last_reply is not None and (cur_time() - last_reply).seconds < 10:
+        return False
+    return True
+
+
 def generate_image_cq(path):
     return "[CQ:image,file={}]".format(path)
 

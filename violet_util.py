@@ -3,6 +3,7 @@ from util import *
 
 import re
 import os
+from crawler import crawl_baike, crawl_image
 
 
 def intro():
@@ -45,6 +46,31 @@ def where_r_u(self):
     lat = str(round(self.cur_lat, 6))
     lon = str(round(self.cur_lon, 6))
     reply = ["[CQ:location,lat={},lon={}]".format(lat, lon), "来找我玩呀~"]
+    return reply
+
+
+def what_is(at_content):
+    reply = None
+    if re.match('.+是什么.*', at_content):
+        item = re.search('(.+)是什么.*', at_content).group(1)
+        reply = crawl_baike(item)
+    elif re.match('.+是谁.*', at_content):
+        item = re.search('(.+)是谁.*', at_content).group(1)
+        reply = crawl_baike(item)
+    elif re.match('.+是啥.*', at_content):
+        item = re.search('(.+)是啥.*', at_content).group(1)
+        reply = crawl_baike(item)
+    elif re.match('.+长啥样.*', at_content):
+        item = re.search('(.+)长啥样.*', at_content).group(1)
+        reply = crawl_image(item)
+    return reply
+
+
+def image_of(at_content):
+    reply = None
+    if re.match('.+长啥样.*', at_content):
+        item = re.search('(.+)长啥样.*', at_content).group(1)
+        reply = crawl_image(item)
     return reply
 
 

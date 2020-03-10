@@ -125,7 +125,7 @@ def get_real_answer(answer):  # 得到简化过的答案
     return answer_text
 
 
-def crawl_baidu_answer(content):
+def crawl_zhidao(content):
     reply = None
 
     if len(content) >= 30:
@@ -233,8 +233,8 @@ def crawl_item(item):
         reply = "[CQ:share,url={},title={},content={},image={}]".format(url, item, content, image)
     else:
         url = WIKI_URL + "ItemSearch?name=" + urllib.parse.quote(item)
+        driver = get_driver()
         try:
-            driver = get_driver()
             driver.get(url)
             time.sleep(1)
             content = driver.find_element_by_id('mw-content-text').find_element_by_class_name('mw-parser-output')
