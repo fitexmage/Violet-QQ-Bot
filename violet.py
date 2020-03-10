@@ -84,9 +84,9 @@ class Violet:
         elif re.match('.+是啥.*', at_content):
             item = re.search('(.+)是啥.*', at_content).group(1)
             reply = crawl_baike(item)
-        elif re.match('.+长啥样.*', at_content):
-            item = re.search('(.+)长啥样.*', at_content).group(1)
-            reply = crawl_image(item)
+        # elif re.match('.+长啥样.*', at_content):
+        #     item = re.search('(.+)长啥样.*', at_content).group(1)
+        #     reply = crawl_image(item)
         elif at_content == "debug":
             if qq_number == PARTNER_QQ_NUMBER:
                 self.debug = not self.debug
