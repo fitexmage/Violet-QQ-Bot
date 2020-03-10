@@ -24,7 +24,7 @@ def get_driver(head=False, wait=True):  # 得到驱动器
         options = webdriver.ChromeOptions()
         options.add_argument('--no-sandbox')
         options.add_argument('--headless')
-        prefs = {'profile.managed_default_content_settins_images': 2}
+        prefs = {"profile.managed_default_content_settings.images": 2}
         options.add_experimental_option('prefs', prefs)
         driver = webdriver.Chrome(options=options)
         return driver
