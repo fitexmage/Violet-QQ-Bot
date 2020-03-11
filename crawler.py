@@ -184,10 +184,16 @@ def crawl_image(item):
     driver = get_driver()
     try:
         driver.get(IMAGE_URL + item)
-        image_list = driver.find_element_by_class_name('imglist').find_elements_by_class_name('imgitem')
         time.sleep(1)
-        image = random.choice(image_list).get_attribute('data-objurl')
-        reply = generate_image_cq(image)
+        image_list = driver.find_element_by_class_name('imglist').find_elements_by_class_name('imgitem')
+        url_list = []
+        for image in image_list:
+            url = image.get_attribute('data-objurl')
+            if '.jpg' in url or '.jpeg' in url or '.png' in url or '.gif' in url:
+                url_list.append(url)
+
+        image_url = random.choice(url_list)
+        reply = generate_image_cq(image_url)
     except:
         reply = "好像……没听说过这个"
     driver.delete_all_cookies()
