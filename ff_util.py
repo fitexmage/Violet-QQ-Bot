@@ -129,9 +129,9 @@ def dungeon(par_list):
 
 def fish(par_list):
     pos = par_list[1]
-    if pos in FISH_POS_NICKNAME_DICT:
-        pos = FISH_POS_NICKNAME_DICT[pos]
-    if pos in FISH_POS:
+    if pos in PLACE_NICKNAME_DICT:
+        pos = PLACE_NICKNAME_DICT[pos]
+    if pos in PLACE:
         reply = generate_image_cq(FF_FISH_MAP_PATH + '{}.jpg'.format(pos))
     else:
         reply = "没有找到这个渔场，是不是哪里打错了呀~"

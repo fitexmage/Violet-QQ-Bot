@@ -4,10 +4,51 @@ import os
 import random
 import datetime
 
+def load_dps_dungeon_nickname(data):
+    nickname_dict = {}
+
+    for dungeon in data['dps_dungeon']:
+        if 'nickname' in data['dps_dungeon'][dungeon]:
+            for nickname in data['dps_dungeon'][dungeon]['nickname']:
+                nickname_dict[nickname] = dungeon
+    return nickname_dict
+
+
+def load_role_nickname(data):
+    nickname_dict = {}
+
+    for role in data['role']:
+        if 'nickname' in data['role'][role]:
+            for nickname in data['role'][role]['nickname']:
+                nickname_dict[nickname] = role
+    return nickname_dict
+
+
+def load_search_dungeon_nickname(data):
+    nickname_dict = {}
+
+    for dungeon in data['search_dungeon']:
+        for nickname in data['search_dungeon'][dungeon]:
+            nickname_dict[nickname] = dungeon
+    return nickname_dict
+
+
+def load_place_nickname(data):
+    nickname_dict = {}
+
+    for place in data['place']:
+        for nickname in data['place'][place]:
+            nickname_dict[nickname] = place
+    return nickname_dict
+
 
 def load_all_file():
     with open('data/data.json', 'r') as f:
         data = json.load(f)
+    data['dps_dungeon_nickname'] = load_dps_dungeon_nickname(data)
+    data['role_nickname'] = load_role_nickname(data)
+    data['search_dungeon_nickname'] = load_search_dungeon_nickname(data)
+    data['place_nickname'] = load_place_nickname(data)
     print("All data loaded!")
     return data
 

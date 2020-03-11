@@ -160,6 +160,7 @@ def crawl_zhidao(content):
                     break
             reply = answer_text
             break
+    driver.delete_all_cookies()
     driver.quit()
     return reply
 
@@ -174,6 +175,7 @@ def crawl_baike(item):
         reply = re.sub('\[.*\]', '', content)
     except:
         reply = "好像……没听说过这个"
+    driver.delete_all_cookies()
     driver.quit()
     return reply
 
@@ -188,6 +190,7 @@ def crawl_image(item):
         reply = generate_image_cq(image)
     except:
         reply = "好像……没听说过这个"
+    driver.delete_all_cookies()
     driver.quit()
     return reply
 
@@ -244,6 +247,7 @@ def crawl_item(item):
                 reply = '没有找到与"{}"相关的物品。'.format(item)
         except:
             reply = "服务器繁忙，请稍候再试！"
+        driver.delete_all_cookies()
         driver.quit()
     return reply
 
