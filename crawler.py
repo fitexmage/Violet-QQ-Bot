@@ -189,11 +189,15 @@ def crawl_image(item):
         url_list = []
         for image in image_list:
             url = image.get_attribute('data-objurl')
-            if '.jpg' in url or '.jpeg' in url or '.png' in url or '.gif' in url:
+            width = int(re.search('width: ([0-9]*)', image.get_attribute('style')).group(1))
+            height = int(re.search('height: ([0-9]*)', image.get_attribute('style')).group(1))
+            if width * height < 200000:
                 url_list.append(url)
-
-        image_url = random.choice(url_list)
-        reply = generate_image_cq(image_url)
+        if len(url_list) != 0:
+            image_url = random.choice(url_list)
+            reply = generate_image_cq(image_url)
+        else:
+            reply = '图片好大，顶不住了……'
     except:
         reply = "好像……没听说过这个"
     driver.delete_all_cookies()
