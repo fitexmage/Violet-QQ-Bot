@@ -182,8 +182,8 @@ def crawl_baike(item):
 
 def crawl_image(item):
     driver = get_driver()
-    driver.get(IMAGE_URL + item)
     try:
+        driver.get(IMAGE_URL + item)
         image_list = driver.find_element_by_class_name('imglist').find_elements_by_class_name('imgitem')
         time.sleep(1)
         image = random.choice(image_list).get_attribute('data-objurl')
