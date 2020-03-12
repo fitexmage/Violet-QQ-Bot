@@ -106,7 +106,6 @@ def check_ready(last_reply):
 
 
 def generate_image_cq(path):
-    print(path)
     return "[CQ:image,file={}]".format(path)
 
 

@@ -191,11 +191,12 @@ def crawl_image(item):
             url = image.get_attribute('data-objurl')
             width = int(re.search('width: ([0-9]*)', image.get_attribute('style')).group(1))
             height = int(re.search('height: ([0-9]*)', image.get_attribute('style')).group(1))
-            print(width, height)
             if width * height < 200000:
+                print(width, height)
                 url_list.append(url)
         if len(url_list) != 0:
             image_url = random.choice(url_list)
+            print(image_url)
             reply = generate_image_cq(image_url)
         else:
             reply = '图片好大，顶不住了……'
