@@ -191,6 +191,7 @@ def crawl_image(item):
             url = image.get_attribute('data-objurl')
             width = int(re.search('width: ([0-9]*)', image.get_attribute('style')).group(1))
             height = int(re.search('height: ([0-9]*)', image.get_attribute('style')).group(1))
+            print(width, height)
             if width * height < 200000:
                 url_list.append(url)
         if len(url_list) != 0:
