@@ -53,7 +53,7 @@ class MC_System:
         qq_number = context['sender']['user_id']
 
         if par_list[0] == 'help':
-            reply = reply_intro()
+            reply = intro()
         # elif command == '占卜':
         #     if not done_today(self.luck_dict, qq_number):
         elif qq_number == PARTNER_QQ_NUMBER:
