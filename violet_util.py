@@ -51,16 +51,16 @@ def where_r_u(self):
 
 def what_is(at_content):
     reply = None
-    if re.match('.+是什么.*', at_content):
+    if regex_match('.+是什么.*', at_content):
         item = re.search('(.+)是什么.*', at_content).group(1)
         reply = crawl_baike(item)
-    elif re.match('.+是啥.*', at_content):
+    elif regex_match('.+是啥.*', at_content):
         item = re.search('(.+)是啥.*', at_content).group(1)
         reply = crawl_baike(item)
-    elif re.match('.+长啥样.*', at_content):
+    elif regex_match('.+长啥样.*', at_content):
         item = re.search('(.+)长啥样.*', at_content).group(1)
         reply = crawl_image(item)
-    elif re.match('.+长什么样.*', at_content):
+    elif regex_match('.+长什么样.*', at_content):
         item = re.search('(.+)长什么样.*', at_content).group(1)
         reply = crawl_image(item)
     return reply

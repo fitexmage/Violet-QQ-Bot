@@ -74,7 +74,7 @@ class Violet:
             reply = connect_server(at_content)
         elif at_content == "服务器时间":
             reply = server_time()
-        elif re.match('你在哪', at_content):
+        elif regex_match('你在哪', at_content):
             reply = where_r_u(self)
         elif "是什么" in at_content or "是啥" in at_content or "长啥样" in at_content or "长什么样" in at_content:
             if check_ready(self.last_reply):

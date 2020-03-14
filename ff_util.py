@@ -61,15 +61,15 @@ def dice(par_list):
             reply = '你在{}条件下掷出了{}点'.format(par_list[1], num)
         else:
             item = par_list[1]
-            if len(item) > 20:
-                reply = "你确定有这么长名字的物品吗……"
+            if len(item) > 20 or not regex_match('^[\u4e00-\u9fff0-9a-zA-Z]+$', item):
+                reply = "你确定有名字这么奇怪的物品吗……"
             else:
                 reply = '你在需求条件下对"{}"掷出了{}点'.format(par_list[1], num)
     elif len(par_list) == 3:
         if par_list[1] in {"需求", "贪婪"}:
             item = par_list[1]
-            if len(item) > 20:
-                reply = "你确定有这么长名字的物品吗……"
+            if len(item) > 20 or not regex_match('^[\u4e00-\u9fff0-9a-zA-Z]+$', item):
+                reply = "你确定有名字这么奇怪的物品吗……"
             else:
                 reply = '你在{}条件下对"{}"掷出了{}点'.format(par_list[1], par_list[2], num)
     return reply
@@ -156,7 +156,7 @@ def house(par_list):
     if pos in HOUSE_NICKNAME_DICT:
         pos = HOUSE_NICKNAME_DICT[pos]
     if pos in HOUSE_DICT:
-        if re.match(r'[0-9]+', idx):
+        if regex_match(r'[0-9]+', idx):
             idx = int(idx)
             if idx >= 1 and idx <= 60:
                 if str(idx) in HOUSE_DICT[pos]:
