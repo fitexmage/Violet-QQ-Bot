@@ -235,7 +235,7 @@ def crawl_dps(server, dungeon, role):
 
 
 def crawl_item(item):
-    if len(item) > 30:
+    if len(item) > 20:
         reply = "你确定有这么长名字的物品吗……"
         return reply
     url = WIKI_URL + urllib.parse.quote("物品") + ":" + urllib.parse.quote(item)

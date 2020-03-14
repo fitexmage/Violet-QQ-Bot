@@ -61,14 +61,14 @@ def dice(par_list):
             reply = '你在{}条件下掷出了{}点'.format(par_list[1], num)
         else:
             item = par_list[1]
-            if len(item) > 30:
+            if len(item) > 20:
                 reply = "你确定有这么长名字的物品吗……"
             else:
                 reply = '你在需求条件下对"{}"掷出了{}点'.format(par_list[1], num)
     elif len(par_list) == 3:
         if par_list[1] in {"需求", "贪婪"}:
             item = par_list[1]
-            if len(item) > 30:
+            if len(item) > 20:
                 reply = "你确定有这么长名字的物品吗……"
             else:
                 reply = '你在{}条件下对"{}"掷出了{}点'.format(par_list[1], par_list[2], num)
