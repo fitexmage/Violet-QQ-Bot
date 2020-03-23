@@ -184,19 +184,16 @@ def crawl_baike(item):
 
 
 def crawl_image(item):
-    wb_data = requests.get(IMAGE_URL + 'q={}&src=srp&correct=&sn=&pn='.format(item))
+    wb_data = requests.get(IMAGE_URL + 'q={}&src=srp&correct=&sn=&pn=60'.format(item))
     image_list = json.loads(wb_data.text)['list']
     if len(image_list) == 0:
         reply = "好像……没听说过这个"
         return reply
-
     url_list = []
     for image in image_list:
         url = image['img']
-        width = int(image['width'])
-        height = int(image['height'])
-        if width * height < 200000:
-            print(width, height)
+        image_size = image['imgsize']
+        if int(image_size.replace('KB', '')) < 100:
             url_list.append(url)
 
     if len(url_list) != 0:
@@ -210,8 +207,8 @@ def crawl_image(item):
 
 def crawl_music(music_name):
     wb_data = requests.get(NETEASE_MUSIC_URL + music_name)
-    result = json.loads(wb_data.text)['result']
-    if result['songCount'] == 0:
+    data = json.loads(wb_data.text)
+    if data['code'] != 200 or data['result']['songCount'] == 0:
         reply = "好像……没听说过这首歌"
     else:
         music_id = json.loads(wb_data.text)['result']['songs'][0]['id']
