@@ -59,5 +59,7 @@ class FF_System:
             reply = fish(par_list)
         elif func == 'house':
             reply = house(par_list)
+        elif func == 'tianshu':
+            reply = tianshu(par_list)
         return reply
 

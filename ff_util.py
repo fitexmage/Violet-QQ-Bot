@@ -17,13 +17,11 @@ def intro():
             "7. /ff nuannuan：查看每周暖暖攻略。\n" \
             "8. /ff fish：查看渔场。（/ff fish 雷克兰德）\n" \
             "9. /ff house：查看房屋信息。（/ff house 白银乡 5）\n" \
-            "10. /ff tianshu：查看获得各项奖励的概率。（/ff tianshu 1100101000001110）"
+            "10. /ff tianshu：查看获得各项奖励的概率。（/ff tianshu 1100 1010 0000 1110）"
     return reply
 
 
 def dps(par_list):
-    reply = None
-
     dungeon = par_list[1]
     role = par_list[2]
 
@@ -183,15 +181,16 @@ def house(par_list):
 
 
 def tianshu(par_list):
-    if len(par_list) != 2 or len(par_list[1]) != 16:
+    if len(par_list) != 5:
         reply = "格式不对！"
         return reply
 
-    num_array = np.array([False if num=="0" else True for num in par_list[1]])
+    num_array = np.empty((4, 4))
+    for i in range(4):
+         num_array[i] = np.array([False if num=="0" else True for num in par_list[i+1]])
     if np.sum(num_array == True) != 7:
         reply = "目前只能处理贴7个的情况！"
         return reply
-    num_array = np.reshape(num_array, (4, 4))
     num_lines_array = np.array(tianshu_dfs(num_array, 2))
     total_length = np.sum(num_lines_array)
     reply = "什么都没有的几率为{}%\n一条线的几率为{}%\n两条线的几率为{}%\n三条线的几率为{}%"\
