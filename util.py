@@ -109,6 +109,10 @@ def generate_image_cq(path):
     return "[CQ:image,file={}]".format(path)
 
 
+def generate_music_cq(id, type):
+    return "[CQ:music,id={},type={}]".format(id, type)
+
+
 def move_on_earth(lat, lon):
     lat += random.uniform(-2, 2)
     lon += random.uniform(-2, 2)

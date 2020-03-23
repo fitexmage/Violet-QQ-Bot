@@ -66,6 +66,14 @@ def what_is(at_content):
     return reply
 
 
+def music(par_list):
+    if len(par_list) == 1:
+        return "格式不正确！"
+
+    music_name = ' '.join(par_list[1:])
+    NETEASE_MUSIC_URL
+
+
 async def duel(self, bot, context, par_list):
     group_id = str(context['group_id'])
     self_qq = str(context['user_id'])

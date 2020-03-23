@@ -30,7 +30,7 @@ def dps(par_list):
     elif len(par_list) == 4:
         server = par_list[3]
     else:
-        reply = "格式不对！"
+        reply = "格式不正确！"
         return reply
 
     if dungeon in DPS_DUNGEON_NICKNAME_DICT:
@@ -151,7 +151,7 @@ def fish(par_list):
 def house(par_list):
     reply = None
     if len(par_list) != 3:
-        reply = "格式不对！"
+        reply = "格式不正确！"
         return reply
 
     pos = par_list[1]
@@ -182,7 +182,7 @@ def house(par_list):
 
 def tianshu(par_list):
     if len(par_list) != 5:
-        reply = "格式不对！"
+        reply = "格式不正确！"
         return reply
 
     num_array = np.empty((4, 4))

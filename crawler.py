@@ -207,6 +207,17 @@ def crawl_image(item):
     return reply
 
 
+def crawl_music(music_name):
+    wb_data = requests.get(NETEASE_MUSIC_URL + music_name)
+    result = json.loads(wb_data.text)['result']
+    if result['songCount'] == 0:
+        reply = "好像……没听说过这首歌"
+    else:
+        music_id = json.loads(wb_data.text)['result']['songs'][0]['id']
+        reply = generate_music_cq(music_id, '163')
+    return reply
+
+
 def crawl_dps(server, dungeon, role):
     if server == "国际服":
         server= DPS_DUNGEON_DICT[dungeon]['global_server']
