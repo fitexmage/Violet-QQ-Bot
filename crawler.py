@@ -184,29 +184,27 @@ def crawl_baike(item):
 
 
 def crawl_image(item):
-    driver = get_driver()
-    try:
-        driver.get(IMAGE_URL + item)
-        time.sleep(1)
-        image_list = driver.find_element_by_class_name('imglist').find_elements_by_class_name('imgitem')
-        url_list = []
-        for image in image_list:
-            url = image.get_attribute('data-objurl')
-            width = int(re.search('width: ([0-9]*)', image.get_attribute('style')).group(1))
-            height = int(re.search('height: ([0-9]*)', image.get_attribute('style')).group(1))
-            if width * height < 200000:
-                print(width, height)
-                url_list.append(url)
-        if len(url_list) != 0:
-            image_url = random.choice(url_list)
-            print(image_url)
-            reply = generate_image_cq(image_url)
-        else:
-            reply = '图片好大，顶不住了……'
-    except:
+    wb_data = requests.get(IMAGE_URL + 'q={}&src=srp&correct=&sn=&pn='.format(item))
+    image_list = json.loads(wb_data.text)['list']
+    if len(image_list) == 0:
         reply = "好像……没听说过这个"
-    driver.delete_all_cookies()
-    driver.quit()
+        return reply
+
+    url_list = []
+    for image in image_list:
+        url = image['img']
+        width = int(image['width'])
+        height = int(image['height'])
+        if width * height < 200000:
+            print(width, height)
+            url_list.append(url)
+
+    if len(url_list) != 0:
+        image_url = random.choice(url_list)
+        print(image_url)
+        reply = generate_image_cq(image_url)
+    else:
+        reply = '图片都好大，顶不住了……'
     return reply
 
 

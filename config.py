@@ -13,7 +13,7 @@ data = load_all_file()
 DUEL_PATH = "data/duel.json"
 ZHIDAO_URL = "https://zhidao.baidu.com/search?word="
 BAIKE_URL = "https://baike.baidu.com/item/"
-IMAGE_URL = "http://image.baidu.com/search/index?tn=baiduimage&fm=result&ie=utf-8&word="
+IMAGE_URL = "http://image.so.com/j?"
 NETEASE_MUSIC_URL = "http://musicapi.leanapp.cn/search?keywords="
 
 MULTI_KILL = data['multi_kill']
