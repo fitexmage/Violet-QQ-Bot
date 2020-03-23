@@ -192,12 +192,12 @@ def tianshu(par_list):
         reply = "目前只能处理贴7个的情况！"
         return reply
     num_lines_array = np.array(tianshu_dfs(num_array, 2))
-    total_length = np.sum(num_lines_array)
+    total_length = len(num_lines_array)
     reply = "什么都没有的几率为{}%\n一条线的几率为{}%\n两条线的几率为{}%\n三条线的几率为{}%"\
-        .format(round(np.sum(num_lines_array == 0)/total_length, 3),
-                round(np.sum(num_lines_array == 1)/total_length, 3),
-                round(np.sum(num_lines_array == 2)/total_length, 3),
-                round(np.sum(num_lines_array == 3)/total_length, 3))
+        .format(round(np.sum(num_lines_array == 0)/total_length * 100, 1),
+                round(np.sum(num_lines_array == 1)/total_length * 100, 1),
+                round(np.sum(num_lines_array == 2)/total_length * 100, 1),
+                round(np.sum(num_lines_array == 3)/total_length * 100, 1))
     return reply
 
 
