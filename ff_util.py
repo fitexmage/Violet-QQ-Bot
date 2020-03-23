@@ -3,6 +3,7 @@ from config import *
 from crawler import crawl_dps, crawl_dungeon
 
 import random
+import numpy as np
 
 def intro():
     reply = "你好呀~我是夏月熦风的人工智能cp小紫，目前我可以:\n" \
@@ -15,7 +16,8 @@ def intro():
             "6. /ff dungeon：搜索副本信息。（/ff dungeon 迦楼罗歼灭战）\n" \
             "7. /ff nuannuan：查看每周暖暖攻略。\n" \
             "8. /ff fish：查看渔场。（/ff fish 雷克兰德）\n" \
-            "9. /ff house：查看房屋信息。（/ff house 白银乡 5）"
+            "9. /ff house：查看房屋信息。（/ff house 白银乡 5）\n" \
+            "10. /ff tianshu：查看获得各项奖励的概率。（/ff tianshu 1100101000001110）"
     return reply
 
 
@@ -30,6 +32,7 @@ def dps(par_list):
     elif len(par_list) == 4:
         server = par_list[3]
     else:
+        reply = "格式不对！"
         return reply
 
     if dungeon in DPS_DUNGEON_NICKNAME_DICT:
@@ -39,6 +42,7 @@ def dps(par_list):
         role = ROLE_NICKNAME_DICT[role]
 
     if dungeon not in DPS_DUNGEON_DICT or role not in ROLE_DICT:
+        reply = "没找到这个副本，是不是那里输错了呀~"
         return reply
 
     dps_list = crawl_dps(server, dungeon, role)
@@ -149,6 +153,7 @@ def fish(par_list):
 def house(par_list):
     reply = None
     if len(par_list) != 3:
+        reply = "格式不对！"
         return reply
 
     pos = par_list[1]
@@ -175,3 +180,53 @@ def house(par_list):
         reply = "没有找到这个地方，是不是哪里打错了呀~"
 
     return reply
+
+
+def tianshu(par_list):
+    if len(par_list) != 2 or len(par_list[1]) != 16:
+        reply = "格式不对！"
+        return reply
+
+    num_array = np.array([False if num=="0" else True for num in par_list[1]])
+    if np.sum(num_array == True) != 7:
+        reply = "目前只能处理贴7个的情况！"
+        return reply
+    num_array = np.reshape(num_array, (4, 4))
+    num_lines_array = np.array(tianshu_dfs(num_array, 2))
+    total_length = np.sum(num_lines_array)
+    reply = "什么都没有的几率为{}%\n一条线的几率为{}%\n两条线的几率为{}%\n三条线的几率为{}%"\
+        .format(round(np.sum(num_lines_array == 0)/total_length, 3),
+                round(np.sum(num_lines_array == 1)/total_length, 3),
+                round(np.sum(num_lines_array == 2)/total_length, 3),
+                round(np.sum(num_lines_array == 3)/total_length, 3))
+    return reply
+
+
+def tianshu_dfs(num_array, rest_num):
+    if rest_num == 0:
+        return [tianshu_complete_line(num_array)]
+
+    num_lines_list = []
+
+    for i in range(len(num_array)):
+        for j in range(len(num_array[i])):
+            if num_array[i][j] == False:
+                num_array[i][j] = True
+                num_lines_list.extend(tianshu_dfs(num_array, rest_num-1))
+                num_array[i][j] = False
+    return num_lines_list
+
+
+def tianshu_complete_line(num_array):
+    num_lines = 0
+    for row in num_array:
+        if np.sum(row == True) == 4:
+            num_lines += 1
+    for col in np.transpose(num_array):
+        if np.sum(col == True) == 4:
+            num_lines += 1
+    if num_array[0][0] and num_array[1][1] and num_array[2][2] and num_array[3][3]:
+        num_lines += 1
+    if num_array[0][3] and num_array[1][2] and num_array[2][1] and num_array[3][0]:
+        num_lines += 1
+    return num_lines
