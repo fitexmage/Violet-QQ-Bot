@@ -137,10 +137,13 @@ def crawl_zhidao(content):
             return reply
 
     driver = get_driver()
-    driver.get(ZHIDAO_URL + content)
-    body = driver.find_element_by_id('wgt-list')
-    answer_list = body.find_elements_by_class_name('dl')
-    answer_list = random.sample(answer_list, k=len(answer_list) * 2 // 3)
+    try:
+        driver.get(ZHIDAO_URL + content)
+        body = driver.find_element_by_id('wgt-list')
+        answer_list = body.find_elements_by_class_name('dl')
+        answer_list = random.sample(answer_list, k=len(answer_list) * 2 // 3)
+    except:
+        return reply
 
     for answer in answer_list:
         question = answer.find_element_by_class_name('ti').text

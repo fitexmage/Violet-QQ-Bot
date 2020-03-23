@@ -3,7 +3,7 @@ from util import *
 
 import re
 import os
-from crawler import crawl_baike, crawl_image
+from crawler import crawl_baike, crawl_image, crawl_music
 
 
 def intro():
@@ -71,7 +71,8 @@ def music(par_list):
         return "格式不正确！"
 
     music_name = ' '.join(par_list[1:])
-    NETEASE_MUSIC_URL
+    reply = crawl_music(music_name)
+    return reply
 
 
 async def duel(self, bot, context, par_list):
