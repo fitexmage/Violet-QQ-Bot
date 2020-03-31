@@ -231,7 +231,7 @@ def crawl_dps(server, dungeon, role):
         r = s.get(url=fflogs_url, timeout=10)
     except:
         return []
-
+    print(r.text)
     dps_list = []
     for level in LEVEL_LIST:
         if level == "100":
@@ -241,7 +241,7 @@ def crawl_dps(server, dungeon, role):
         dps = re.compile(str).findall(r.text)[-1][0]
         dps_list.append(dps)
     return dps_list
-
+print(crawl_dps('国服', '绝亚历山大', '黑魔法师'))
 
 def crawl_item(item):
     if len(item) > 20:
