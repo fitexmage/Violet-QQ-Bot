@@ -193,7 +193,7 @@ def crawl_image(item):
     for image in image_list:
         url = image['img']
         image_size = image['imgsize']
-        if int(image_size.replace('KB', '')) < 100:
+        if int(float(image_size.replace('KB', ''))) < 100:
             url_list.append(url)
 
     if len(url_list) != 0:

@@ -61,6 +61,7 @@ def what_is(at_content):
 
 
 def what_is_image(at_content):
+    reply = None
     if regex_match('.+长啥样.*', at_content):
         item = re.search('(.+)长啥样.*', at_content).group(1)
         reply = crawl_image(item)
