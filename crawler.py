@@ -184,6 +184,13 @@ def crawl_baike(item):
 
 
 def crawl_image(item):
+    if item == '小紫':
+        reply = generate_image_cq(AVATAR_PATH + 'violet.jpeg')
+        return reply
+    elif item in ['腐竹', '夏月'] :
+        reply = generate_image_cq(AVATAR_PATH + 'myself.jpeg')
+        return reply
+
     wb_data = requests.get(IMAGE_URL + 'q={}&src=srp&correct=&sn=&pn=60'.format(item))
     image_list = json.loads(wb_data.text)['list']
     if len(image_list) == 0:
