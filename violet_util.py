@@ -95,6 +95,18 @@ def music(par_list):
     return reply
 
 
+def save_message(group_id, message):
+    print(message)
+    if '[CQ:' not in message:
+        file_name = CHAT_DATA_DIR_PATH + str(cur_time().date())
+        chat_data = load_file('{}.json'.format(file_name))
+
+        if group_id not in chat_data:
+            chat_data[group_id] = []
+        chat_data[group_id].append({"message": message, "time": str(cur_time())})
+        update_file(file_name, chat_data)
+
+
 async def duel(self, bot, context, par_list):
     group_id = str(context['group_id'])
     self_qq = str(context['user_id'])

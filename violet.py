@@ -56,14 +56,7 @@ class Violet:
                 reply = await self.reply_group_cmd_msg(bot, context, message)
             else:
                 group_id = str(context['group_id'])
-                if '[CQ:' not in message:
-                    file_name = CHAT_DATA_PATH + str(cur_time().date())
-                    chat_data = load_file('{}.json'.format(file_name))
-
-                    if group_id not in chat_data:
-                        chat_data[group_id] = []
-                    chat_data[group_id].append({"message": message, "time": str(cur_time())})
-                    update_file(file_name, chat_data)
+                save_message(group_id, message)
 
                 if random.random() < 0.09 and group_id == SHADOWVILLAGE_QQ_NUMBER:
                     reply = crawl_zhidao(message)
