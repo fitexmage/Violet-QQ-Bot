@@ -120,14 +120,3 @@ def get_name(info):
     else:
         name = info['nickname']
     return name
-
-
-def get_latest_file(dir_path):
-    max_file_date = None
-    for file in os.listdir(dir_path):
-        file_date = datetime.datetime.strptime(file, "%Y-%m-%d")
-        if max_file_date is None:
-            max_file_date = file_date
-        else:
-            max_file_date = max(max_file_date, file_date)
-    return max_file_date
