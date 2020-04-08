@@ -6,7 +6,7 @@ from crawler import crawl_item, crawl_nuannuan
 
 class FF_System:
     def __init__(self):
-        self.luck_dict = load_dict(FF_LUCK_PATH)
+        self.luck_dict = load_file(FF_LUCK_PATH)
 
     def reply_intro(self):
         reply = intro()

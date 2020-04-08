@@ -5,8 +5,8 @@ from util import *
 
 class MC_System:
     def __init__(self):
-        self.player_qq_dict = load_dict(PLAYER_QQ_PATH)
-        self.luck_dict = load_dict(MC_LUCK_PATH)
+        self.player_qq_dict = load_file(PLAYER_QQ_PATH)
+        self.luck_dict = load_file(MC_LUCK_PATH)
 
         with open(RCON_PASSWORD_PATH, "r") as f:
             self.rcon_password = f.readline()

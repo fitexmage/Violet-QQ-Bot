@@ -49,6 +49,21 @@ def where_r_u(self):
     return reply
 
 
+def move_on_earth(lat, lon):
+    lat += random.uniform(-2, 2)
+    lon += random.uniform(-2, 2)
+    if lat > 90:
+        lat = 180 - lat
+    elif lat < -90:
+        lat = -180 - lat
+
+    if lat > 180:
+        lat = lat - 360
+    elif lat < -180:
+        lat = lat + 360
+    return lat, lon
+
+
 def what_is(at_content):
     reply = None
     if regex_match('.+是什么.*', at_content):
@@ -167,45 +182,50 @@ async def duel_qq(self, bot, group_id, self_qq, opponent_qq):
                 opponent_point = random.randint(1, 99)
                 reply = "{}掷出了{}点\n{}掷出了{}点\n" \
                     .format(self_name, str(self_point), opponent_name, str(opponent_point))
+
                 if self_point < opponent_point:
+                    win_qq = opponent_qq
+                    win_name = opponent_name
+                    lose_qq = self_qq
+                    loss_name = self_name
                     reply += "你在决斗中失败了……"
-                    if str(self.duel_dict[group_id][self_qq]['multi_kill']) in MULTI_KILL:
-                        ban_time = (self.duel_dict[group_id][self_qq]['multi_kill'] - 3) * 5 + 10
-                    else:
-                        ban_time = 10
-                    await bot.set_group_ban(group_id=int(group_id), user_id=int(self_qq), duration=ban_time * 60)
-
-                    if str(self.duel_dict[group_id][self_qq]['multi_kill']) in MULTI_KILL:
-                        reply += "\n{}被终结了！".format(self_name)
-
-                    record_duel_info(self.duel_dict[group_id], self_qq, False)
-                    record_duel_info(self.duel_dict[group_id], opponent_qq, True)
-                    update_dict(DUEL_PATH, self.duel_dict)
-                    if str(self.duel_dict[group_id][opponent_qq]['multi_kill']) in MULTI_KILL:
-                        reply += "\n{}{}".format(opponent_name,
-                                                 MULTI_KILL[self.duel_dict[group_id][opponent_qq]['multi_kill']])
-
                 elif self_point > opponent_point:
+                    win_qq = self_qq
+                    win_name = self_name
+                    lose_qq = opponent_qq
+                    loss_name = opponent_name
                     reply += "你在决斗中胜利了！"
-                    if str(self.duel_dict[group_id][opponent_qq]['multi_kill']) in MULTI_KILL:
-                        ban_time = (self.duel_dict[group_id][opponent_qq]['multi_kill'] - 3) * 5 + 10
-                    else:
-                        ban_time = 10
-                    await bot.set_group_ban(group_id=int(group_id), user_id=int(opponent_qq),
-                                            duration=ban_time * 60)
-
-                    if str(self.duel_dict[group_id][opponent_qq]['multi_kill']) in MULTI_KILL:
-                        reply += "\n{}被终结了！".format(opponent_name)
-
-                    record_duel_info(self.duel_dict[group_id], self_qq, True)
-                    record_duel_info(self.duel_dict[group_id], opponent_qq, False)
-                    update_dict(DUEL_PATH, self.duel_dict)
-                    if str(self.duel_dict[group_id][self_qq]['multi_kill']) in MULTI_KILL:
-                        reply += "\n{}{}".format(self_name,
-                                                 MULTI_KILL[self.duel_dict[group_id][self_qq]['multi_kill']])
-
                 else:
                     reply += "平局！"
+                    return reply
+
+                if str(self.duel_dict[group_id][lose_qq]['multi_kill']) in MULTI_KILL:
+                    ban_time = (self.duel_dict[group_id][lose_qq]['multi_kill'] - 3) * 5 + 10
+                else:
+                    ban_time = 10
+                await bot.set_group_ban(group_id=int(group_id), user_id=int(lose_qq), duration=ban_time * 60)
+
+                if str(self.duel_dict[group_id][lose_qq]['multi_kill']) in MULTI_KILL:
+                    reply += "\n{}被终结了！".format(loss_name)
+
+                record_duel_info(self.duel_dict[group_id], lose_qq, False)
+                record_duel_info(self.duel_dict[group_id], win_qq, True)
+                update_file(DUEL_PATH, self.duel_dict)
+                if str(self.duel_dict[group_id][win_qq]['multi_kill']) in MULTI_KILL:
+                    reply += "\n{}{}".format(win_name, MULTI_KILL[self.duel_dict[group_id][win_qq]['multi_kill']])
         except:
             reply = "群里貌似并没有这个人……"
     return reply
+
+
+def record_duel_info(dict, qq, win):
+    cur_date = str(cur_time().date())
+    qq = str(qq)
+    if qq not in dict or dict[qq]['date'] != cur_date:
+        dict[qq] = {'date': cur_date, 'win_times': 0, 'lose_times': 0, 'multi_kill': 0}
+    if win:
+        dict[qq]['win_times'] += 1
+        dict[qq]['multi_kill'] += 1
+    else:
+        dict[qq]['lose_times'] += 1
+        dict[qq]['multi_kill'] = 0

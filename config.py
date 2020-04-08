@@ -11,8 +11,9 @@ data = load_all_file()
 ################################################
 
 AVATAR_PATH = "file:///Z:\\home\\user\\coolq\\data\\image\\local\\avatar\\"
-
+CHAT_DATA_PATH = "data/chat_data"
 DUEL_PATH = "data/duel.json"
+
 ZHIDAO_URL = "https://zhidao.baidu.com/search?word="
 BAIKE_URL = "https://baike.baidu.com/item/"
 IMAGE_URL = "http://image.so.com/j?"

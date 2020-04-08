@@ -120,7 +120,7 @@ def luck(self, qq_number):
 
         reply += "宜：{}\n    {}\n忌：{}\n    {}".format(good_to_do['name'], good, hard_to_do['name'], bad)
         self.luck_dict[qq_number] = str(cur_time().date())
-        update_dict(FF_LUCK_PATH, self.luck_dict)
+        update_file(FF_LUCK_PATH, self.luck_dict)
     else:
         reply = "你今天已经占卜过啦，请明天再来！"
     return reply

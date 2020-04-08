@@ -13,7 +13,7 @@ class Violet:
         self.cur_lon = random.uniform(-180, 180)
         self.last_reply = None
 
-        self.duel_dict = load_dict(DUEL_PATH)
+        self.duel_dict = load_file(DUEL_PATH)
 
         self.mc_system = MC_System()
         self.ff_ststem = FF_System()
@@ -48,14 +48,21 @@ class Violet:
                 reply = self.close()
 
         if self.enable:
-            if message == "小紫" or message == "@【影之接待】小紫" or message == "[CQ:at,qq=" + SELF_QQ_NUMBER + "] ":
+            if message == "[CQ:at,qq=" + SELF_QQ_NUMBER + "] ":
                 reply = intro()
             elif regex_match('\\[CQ:at,qq={}\\].*'.format(SELF_QQ_NUMBER), message):
                 reply = self.reply_group_at_msg(context, message, qq_number)
             elif regex_match('^/', message):
                 reply = await self.reply_group_cmd_msg(bot, context, message)
-            elif random.random() < 0.09 and context['group_id'] == int(SHADOWVILLAGE_QQ_NUMBER):
-                reply = crawl_zhidao(message)
+            else:
+                if '[CQ:' not in message:
+                    file_name = CHAT_DATA_PATH + str(cur_time().date())
+                    chat_data = load_file('{}.json'.format(file_name), list)
+                    chat_data.append({"message": message, "time": str(cur_time())})
+                    update_file(file_name, chat_data)
+
+                if random.random() < 0.09 and context['group_id'] == int(SHADOWVILLAGE_QQ_NUMBER):
+                    reply = crawl_zhidao(message)
 
         return reply
 
