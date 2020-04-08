@@ -98,8 +98,8 @@ def music(par_list):
 def save_message(group_id, message):
     print(message)
     if '[CQ:' not in message:
-        file_name = CHAT_DATA_DIR_PATH + str(cur_time().date())
-        chat_data = load_file('{}.json'.format(file_name))
+        file_name = CHAT_DATA_DIR_PATH + str(cur_time().date()) + ".json"
+        chat_data = load_file(file_name)
 
         if group_id not in chat_data:
             chat_data[group_id] = []
