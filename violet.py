@@ -26,12 +26,14 @@ class Violet:
         if self.enable:
             if message == "你好":
                 reply = "你好呀~"
+            else:
+                reply = "目前私聊业务不开放，请转至群聊！"
 
-            if reply is None:
-                reply = self.mc_system.reply_private_msg(context)
-
-            if reply is None:
-                reply = self.ff_ststem.reply_private_msg(context)
+            # if reply is None:
+            #     reply = self.mc_system.reply_private_msg(context)
+            #
+            # if reply is None:
+            #     reply = self.ff_ststem.reply_private_msg(context)
 
         return reply
 

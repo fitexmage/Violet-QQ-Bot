@@ -184,10 +184,10 @@ def crawl_baike(item):
 
 
 def crawl_image(item):
-    if item == '小紫':
+    if item in ["你", "小紫"]:
         reply = generate_image_cq(AVATAR_PATH + 'violet.jpeg')
         return reply
-    elif item in ['腐竹', '夏月'] :
+    elif item in ["腐竹", "夏月"] :
         reply = generate_image_cq(AVATAR_PATH + 'myself.jpeg')
         return reply
 
@@ -244,8 +244,11 @@ def crawl_dps(server, dungeon, role):
             str = ("series" + r".data.push\(([0-9]+(\.[0-9])*)")
         else:
             str = ("series%s" % (level) + r".data.push\(([0-9]+(\.[0-9])*)")
-        dps = re.compile(str).findall(r.text)[-1][0]
-        dps_list.append(dps)
+        try:
+            dps = re.compile(str).findall(r.text)[-1][0]
+            dps_list.append(dps)
+        except:
+            pass
     return dps_list
 
 

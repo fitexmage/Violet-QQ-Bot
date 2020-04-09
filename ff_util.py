@@ -49,7 +49,7 @@ def dps(par_list):
         for i in range(len(LEVEL_LIST)):
             reply += '\n{}%：{}'.format(LEVEL_LIST[i], dps_list[i])
     else:
-        reply = "当前服务器繁忙，请稍候再试！"
+        reply = "当前服务器繁忙或暂无数据，请稍候再试！"
     return reply
 
 

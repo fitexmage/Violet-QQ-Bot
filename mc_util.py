@@ -34,7 +34,7 @@ def add_white_list(self, message, qq_number):
             player_name = re.match("白名单 ([a-zA-Z0-9_?]{3})$", message).group(1)
             rcon_command(self, "wladd " + player_name)
             self.player_qq_dict[qq_number] = player_name
-            update_dict(PLAYER_QQ_PATH, self.player_qq_dict)
+            update_file(PLAYER_QQ_PATH, self.player_qq_dict)
             reply = "白名单添加成功！"
     else:
         reply = "游戏名格式有误！"
@@ -66,14 +66,13 @@ def who_is_qq(self, message):
 
 
 def who_is_name(self, at_content):
+    reply = ""
     id = re.search("(.+)是谁", at_content).group(1)
-    get_result = False
     for qq_number in self.player_qq_dict:
         if self.player_qq_dict[qq_number] == id:
             reply = "这位玩家的QQ是" + qq_number + "！"
-            get_result = True
             break
-    if not get_result:
+    if reply == "":
         reply = "此人未获得白名单！"
     return reply
 

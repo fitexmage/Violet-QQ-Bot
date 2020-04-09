@@ -41,7 +41,7 @@
     },
     "红玉神兵1": {
       "id": "1051",
-      "name": "红玉神兵1",
+      "name": "红玉神兵第一阶段",
       "quest": "28",
       "difficulty": "100",
       "global_server": 3,
@@ -49,11 +49,20 @@
     },
     "红玉神兵2": {
       "id": "1052",
-      "name": "红玉神兵2",
+      "name": "红玉神兵第二阶段",
       "quest": "28",
       "difficulty": "100",
       "global_server": 3,
       "cn_server": 5
+    },
+    "瓦厉斯·佐斯·加尔乌斯": {
+      "id": "1053",
+      "name": "瓦厉斯·佐斯·加尔乌斯",
+      "quest": "28",
+      "difficulty": "100",
+      "global_server": 3,
+      "cn_server": 5,
+      "nickname": ["皇帝", "瓦厉斯"]
     },
     "e1": {
       "id": "65",
