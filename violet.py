@@ -65,7 +65,7 @@ class Violet:
 
     def reply_group_at_msg(self, context, message, qq_number):
         at_content = re.match('\\[CQ:at,qq={}\\](.*)'.format(SELF_QQ_NUMBER), message).group(1).strip()
-        at_content = re.sub('\\[CQ:at,qq=[0-9]+\\]', '', message)
+        at_content = re.sub('\\[CQ:at,qq=[0-9]+\\] ', '', message)
         print(at_content)
 
         reply = None
