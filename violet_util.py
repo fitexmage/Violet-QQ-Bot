@@ -97,7 +97,7 @@ def music(par_list):
 
 def save_message(group_id, qq_number, message):
     if regex_match('\\[CQ:at,qq=[0-9]+\\].*', message):
-        message = re.sub('\\[CQ:at,qq=[0-9]+\\]', '', message)
+        message = re.sub('\\[CQ:at,qq=[0-9]+\\] ', '', message)
 
     if '[CQ:' not in message:
         file_name = CHAT_DATA_DIR_PATH + str(cur_time().date()) + ".json"
