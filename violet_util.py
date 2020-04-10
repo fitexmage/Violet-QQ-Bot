@@ -96,8 +96,8 @@ def music(par_list):
 
 
 def save_message(group_id, qq_number, message):
-    if regex_match('\\[CQ:at,qq=[0-9]+\\].*', message):
-        message = re.sub('\\[CQ:at,qq=[0-9]+\\] ', '', message)
+    if regex_match('\\[CQ:.*\\].*', message):
+        message = re.sub('\\[CQ:.*\\]', '', message).strip()
 
     if '[CQ:' in message or message == "":
         message = "<unk>"
