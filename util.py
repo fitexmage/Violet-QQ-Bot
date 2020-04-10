@@ -71,7 +71,7 @@ def load_file(path, type=dict):
 
 def update_file(path, file):
     with open(path, 'w+') as f:
-        json.dump(file, f)
+        json.dump(file, f, ensure_ascii=False)
 
 
 def get_gaussian():

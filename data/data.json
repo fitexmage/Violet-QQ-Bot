@@ -12,50 +12,52 @@
     "12": "已经超越神了！"
   },
   "dps_dungeon": {
-    "缇坦妮雅": {
+    "缇坦妮雅歼殛战": {
       "id": "1045",
       "name": "缇坦妮雅",
       "quest": "28",
       "difficulty": "100",
       "global_server": 3,
       "cn_server": 5,
-      "nickname": ["妖灵王", "10w"]
+      "nickname": ["缇坦妮雅", "妖灵王", "10w"]
     },
-    "无瑕灵君": {
+    "无瑕灵君歼殛战": {
       "id": "1046",
       "name": "无瑕灵君",
       "quest": "28",
       "difficulty": "100",
       "global_server": 3,
       "cn_server": 5,
-      "nickname": ["肥宅", "肥宅王"]
+      "nickname": ["无瑕灵君", "肥宅", "肥宅王"]
     },
-    "哈迪斯": {
+    "哈迪斯孤念歼灭战": {
       "id": "1049",
       "name": "哈迪斯",
       "quest": "28",
       "difficulty": "100",
       "global_server": 3,
       "cn_server": 5,
-      "nickname": ["hds"]
+      "nickname": ["哈迪斯", "hds"]
     },
-    "红玉神兵1": {
+    "红玉神兵歼殛战1": {
       "id": "1051",
       "name": "红玉神兵第一阶段",
       "quest": "28",
       "difficulty": "100",
       "global_server": 3,
-      "cn_server": 5
+      "cn_server": 5,
+      "nickname": ["红玉神兵1", "红玉1"]
     },
-    "红玉神兵2": {
+    "红玉神兵歼殛战2": {
       "id": "1052",
       "name": "红玉神兵第二阶段",
       "quest": "28",
       "difficulty": "100",
       "global_server": 3,
-      "cn_server": 5
+      "cn_server": 5,
+      "nickname": ["红玉神兵2", "红玉2"]
     },
-    "瓦厉斯·佐斯·加尔乌斯": {
+    "瓦厉斯歼殛战": {
       "id": "1053",
       "name": "瓦厉斯·佐斯·加尔乌斯",
       "quest": "28",
@@ -64,135 +66,151 @@
       "cn_server": 5,
       "nickname": ["皇帝", "瓦厉斯"]
     },
-    "e1": {
+    "伊甸希望乐园 觉醒之章1": {
       "id": "65",
       "name": "普通 至尊伊甸",
       "quest": "29",
       "difficulty": "100",
       "global_server": 3,
-      "cn_server": 5
+      "cn_server": 5,
+      "nickname": ["e1"]
     },
-    "e2": {
+    "伊甸希望乐园 觉醒之章2": {
       "id": "66",
       "name": "普通 虚空行者",
       "quest": "29",
       "difficulty": "100",
       "global_server": 3,
-      "cn_server": 5
+      "cn_server": 5,
+      "nickname": ["e2"]
     },
-    "e3": {
+    "伊甸希望乐园 觉醒之章3": {
       "id": "67",
       "name": "普通 利威亚桑",
       "quest": "29",
       "difficulty": "100",
       "global_server": 3,
-      "cn_server": 5
+      "cn_server": 5,
+      "nickname": ["e3"]
     },
-    "e4": {
+    "伊甸希望乐园 觉醒之章4": {
       "id": "68",
       "name": "普通 泰坦",
       "quest": "29",
       "difficulty": "100",
       "global_server": 3,
-      "cn_server": 5
+      "cn_server": 5,
+      "nickname": ["e4"]
     },
-    "e5": {
+    "伊甸希望乐园 觉醒之章5": {
       "id": "69",
       "name": "普通 拉姆",
       "quest": "33",
       "difficulty": "100",
       "global_server": 1,
-      "cn_server": 5
+      "cn_server": 5,
+      "nickname": ["e5"]
     },
-    "e6": {
+    "伊甸希望乐园 觉醒之章6": {
       "id": "70",
       "name": "普通 伊弗利特和迦楼罗",
       "quest": "33",
       "difficulty": "100",
       "global_server": 1,
-      "cn_server": 5
+      "cn_server": 5,
+      "nickname": ["e6"]
     },
-    "e7": {
+    "伊甸希望乐园 觉醒之章7": {
       "id": "71",
-      "name": "普通 暗之偶像",
+      "name": "普通 暗之人偶",
       "quest": "33",
       "difficulty": "100",
       "global_server": 1,
-      "cn_server": 5
+      "cn_server": 5,
+      "nickname": ["e7"]
     },
-    "e8": {
+    "伊甸希望乐园 觉醒之章8": {
       "id": "72",
       "name": "普通 希瓦",
       "quest": "33",
       "difficulty": "100",
       "global_server": 1,
-      "cn_server": 5
+      "cn_server": 5,
+      "nickname": ["e8"]
     },
-    "e1s": {
+    "伊甸零式希望乐园 觉醒之章1": {
       "id": "65",
       "name": "零式 虚空行者",
       "quest": "29",
       "difficulty": "101",
       "global_server": 3,
-      "cn_server": 5
+      "cn_server": 5,
+      "nickname": ["e1s"]
     },
-    "e2s": {
+    "伊甸零式希望乐园 觉醒之章2": {
       "id": "66",
       "name": "零式 虚空行者",
       "quest": "29",
       "difficulty": "101",
       "global_server": 3,
-      "cn_server": 5
+      "cn_server": 5,
+      "nickname": ["e2s"]
     },
-    "e3s": {
+    "伊甸零式希望乐园 觉醒之章3": {
       "id": "67",
       "name": "零式 利威亚桑",
       "quest": "29",
       "difficulty": "101",
       "global_server": 3,
-      "cn_server": 5
+      "cn_server": 5,
+      "nickname": ["e3s"]
     },
-    "e4s": {
+    "伊甸零式希望乐园 觉醒之章4": {
       "id": "68",
       "name": "零式 泰坦",
       "quest": "29",
       "difficulty": "101",
       "global_server": 3,
-      "cn_server": 5
+      "cn_server": 5,
+      "nickname": ["e4s"]
     },
-    "e5s": {
+    "伊甸零式希望乐园 觉醒之章5": {
       "id": "69",
       "name": "零式 拉姆",
       "quest": "33",
       "difficulty": "101",
       "global_server": 1,
-      "cn_server": 5
+      "cn_server": 5,
+      "nickname": ["e5s"]
     },
-    "e6s": {
+    "伊甸零式希望乐园 觉醒之章6": {
       "id": "70",
       "name": "零式 伊弗利特和迦楼罗",
       "quest": "33",
       "difficulty": "101",
       "global_server": 1,
-      "cn_server": 5
+      "cn_server": 5,
+      "nickname": ["e6s"]
     },
-    "e7s": {
+    "伊甸零式希望乐园 觉醒之章7": {
       "id": "71",
-      "name": "零式 暗之偶像",
+      "name": "零式 暗之人偶",
       "quest": "33",
       "difficulty": "101",
       "global_server": 1,
-      "cn_server": 5
+      "cn_server": 5,
+      "nickname": ["e7s"]
     },
-    "e8s": {
+    "伊甸零式希望乐园 觉醒之章8": {
       "id": "72",
       "name": "零式 希瓦",
       "quest": "33",
       "difficulty": "101",
       "global_server": 1,
-      "cn_server": 5
+      "cn_server": 5,
+      "nickname": ["e8s"]
     },
-    "绝亚历山大": {
+    "亚历山大绝境战": {
       "id": "1050",
       "name": "亚历山大绝境战",
       "quest": "32",
