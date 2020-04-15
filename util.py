@@ -54,6 +54,12 @@ def load_all_file():
     return data
 
 
+def load_all_config():
+    with open('data/config.json', 'r') as f:
+        config = json.load(f)
+    return config
+
+
 def regex_match(pattern, message):
     if re.match(pattern, message):
         return True

@@ -8,9 +8,6 @@ class MC_System:
         self.player_qq_dict = load_file(PLAYER_QQ_PATH)
         self.luck_dict = load_file(MC_LUCK_PATH)
 
-        with open(RCON_PASSWORD_PATH, "r") as f:
-            self.rcon_password = f.readline()
-
     def reply_private_msg(self, context):
         message = context['message']
         qq_number = str(context['sender']['user_id'])
@@ -56,7 +53,7 @@ class MC_System:
             reply = intro()
         # elif command == '占卜':
         #     if not done_today(self.luck_dict, qq_number):
-        elif qq_number == PARTNER_QQ_NUMBER:
+        elif qq_number == PARTNER_QQ:
             reply = rcon_command(self, ' '.join(par_list))
         else:
             reply = "这个指令只有我和腐竹可以用！"

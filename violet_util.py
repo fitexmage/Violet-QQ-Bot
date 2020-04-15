@@ -19,7 +19,7 @@ def who_r_u():
 
 
 def i_love_u(qq_number):
-    if qq_number == PARTNER_QQ_NUMBER:
+    if qq_number == PARTNER_QQ:
         reply = "我也爱你呀~"
     else:
         reply = "我不是那么随便的人~"
@@ -173,7 +173,7 @@ async def duel_qq(self, bot, group_id, self_qq, opponent_qq):
         try:
             self_info = await bot.get_group_member_info(group_id=int(group_id), user_id=int(self_qq))
             opponent_info = await bot.get_group_member_info(group_id=int(group_id), user_id=int(opponent_qq))
-            if self_qq == PARTNER_QQ_NUMBER and opponent_qq == SELF_QQ_NUMBER:
+            if self_qq == PARTNER_QQ and opponent_qq == SELF_QQ:
                 reply = "不急，等晚上再一起玩~"
             elif self_info['role'] == 'admin' or self_info['role'] == 'owner':
                 if opponent_info['role'] == "admin" or opponent_info['role'] == "owner":
@@ -185,7 +185,7 @@ async def duel_qq(self, bot, group_id, self_qq, opponent_qq):
             elif opponent_info['role'] == "owner":
                 await bot.set_group_ban(group_id=int(group_id), user_id=int(self_qq), duration=5 * 60)
                 reply = "竟敢挑战群主，你将受到天罚！"
-            elif str(opponent_info['user_id']) == SELF_QQ_NUMBER:
+            elif str(opponent_info['user_id']) == SELF_QQ:
                 await bot.set_group_ban(group_id=int(group_id), user_id=int(self_qq), duration=5 * 60)
                 reply = "我定的规则，你觉得我会输吗~"
             elif opponent_info['role'] == "admin":

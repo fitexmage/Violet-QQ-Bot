@@ -1,12 +1,14 @@
 from util import *
 
+data = load_all_file()
+config = load_all_config()
+
 HOST = "127.0.0.1"  # '192.168.1.3' '172.17.67.53'
 PORT = 8080
-SELF_QQ_NUMBER = "2511310647"
-PARTNER_QQ_NUMBER = "424506920"
-SHADOWVILLAGE_QQ_NUMBER = "298466962"
+SELF_QQ = config['self_qq']
+PARTNER_QQ = config['partner_qq']
+SHADOWVILLAGE_QQ = config['shadowvillage_qq']
 
-data = load_all_file()
 
 ################################################
 
@@ -24,12 +26,12 @@ MULTI_KILL = data['multi_kill']
 ################################################
 
 PLAYER_QQ_PATH = "data/mc_qq.json"
-RCON_PASSWORD_PATH = "data/rcon_password.txt"
 RAW_URL_PATH = "data/url.csv"
 NEW_URL_PATH = "data/new_url.csv"
 STOPWORDS_PATH = "data/stopwords.txt"
 MC_LUCK_PATH = "data/mc_luck.json"
 
+RCON_PASSWORD = config['rcon_password']
 SERVER_HOST = "42.51.173.5"
 SERVER_PORT = 25565
 RCON_PORT = 25575

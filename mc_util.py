@@ -6,7 +6,7 @@ from mcrcon import MCRcon
 
 
 def rcon_command(self, command):
-    with MCRcon(host=SERVER_HOST, password=self.rcon_password, port=RCON_PORT) as mcr:
+    with MCRcon(host=SERVER_HOST, password=RCON_PASSWORD, port=RCON_PORT) as mcr:
         text = mcr.command(command)
         text = re.sub('§.', "", text).strip()
         return text

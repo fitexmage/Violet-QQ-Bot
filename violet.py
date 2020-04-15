@@ -43,16 +43,16 @@ class Violet:
 
         reply = None
 
-        if qq_number == PARTNER_QQ_NUMBER:
+        if qq_number == PARTNER_QQ:
             if message == "小紫 启":
                 reply = self.start()
             elif message == "小紫 散":
                 reply = self.close()
 
         if self.enable:
-            if message == "[CQ:at,qq=" + SELF_QQ_NUMBER + "] ":
+            if message == "[CQ:at,qq=" + SELF_QQ + "] ":
                 reply = intro()
-            elif regex_match('\\[CQ:at,qq={}\\].*'.format(SELF_QQ_NUMBER), message):
+            elif regex_match('\\[CQ:at,qq={}\\].*'.format(SELF_QQ), message):
                 reply = self.reply_group_at_msg(context, message, qq_number)
             elif regex_match('^/', message):
                 reply = await self.reply_group_cmd_msg(bot, context, message)
@@ -60,7 +60,7 @@ class Violet:
                 group_id = str(context['group_id'])
                 save_message(group_id, qq_number, message)
 
-                if random.random() < 0.09 and group_id == SHADOWVILLAGE_QQ_NUMBER and '[CQ:' not in message:
+                if random.random() < 0.09 and group_id == SHADOWVILLAGE_QQ and '[CQ:' not in message:
                     reply = crawl_zhidao(message)
 
         return reply
@@ -91,7 +91,7 @@ class Violet:
         elif "长啥样" in at_content or "长什么样" in at_content:
             reply = what_is_image(at_content)
         elif at_content == "debug":
-            if qq_number == PARTNER_QQ_NUMBER:
+            if qq_number == PARTNER_QQ:
                 self.debug = not self.debug
                 reply = "Debug模式已更换为：{}！".format(str(self.debug))
 
@@ -113,7 +113,7 @@ class Violet:
         elif par_list[0] == 'music':
             reply = music(par_list)
 
-        elif par_list[0] == 'mc' and len(par_list) > 1 and context['group_id'] == int(SHADOWVILLAGE_QQ_NUMBER):
+        elif par_list[0] == 'mc' and len(par_list) > 1 and context['group_id'] == int(SHADOWVILLAGE_QQ):
             reply = self.mc_system.reply_group_cmd_msg(context, par_list[1:])
 
         elif par_list[0] == 'ff' and len(par_list) > 1:
