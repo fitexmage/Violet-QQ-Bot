@@ -26,6 +26,14 @@ def i_love_u(qq_number):
     return reply
 
 
+def my_cp(qq_number):
+    if qq_number == PARTNER_QQ:
+        reply = "是我呀~"
+    else:
+        reply = "我哪知道~"
+    return reply
+
+
 def connect_server(at_content):
     name = re.match('连接(.+)', at_content).group(1)
     backinfo = os.system('ping -c 1 -W 1 ' + name)

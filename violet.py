@@ -76,6 +76,8 @@ class Violet:
             reply = who_r_u()
         elif at_content == "我爱你":
             reply = i_love_u(qq_number)
+        elif at_content == "我的CP是谁":
+            reply = my_cp(qq_number)
         elif regex_match('连接.+', at_content):
             reply = connect_server(at_content)
         elif at_content == "服务器时间":
