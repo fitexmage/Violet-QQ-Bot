@@ -42,7 +42,7 @@ async def handle_group_increase(context):
         print(context)
 
     if violet.enable and context['group_id'] == int(SHADOWVILLAGE_QQ):
-        reply = "新人你好，我是人工智能小紫，欢迎加入影之乡服务器！\n现在为服务器大维护阶段，暂停运行，其他事宜请阅读群公告。"
+        reply = "新人你好，我是人工智能小紫，欢迎加入影之乡服务器！\n由于疫情原因，服务器进入大维护阶段，暂停运行，其他事宜请阅读群公告。"
         # reply = "新人你好，我是人工智能小紫，欢迎加入影之乡服务器！\n请在群共享中下载客户端，想要获取白名单请私聊我\"白名单\"，其他事宜请阅读群公告。"
         await bot.send(context, message=reply, at_sender=True, auto_escape=True)
 

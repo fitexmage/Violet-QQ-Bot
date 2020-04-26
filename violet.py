@@ -58,7 +58,7 @@ class Violet:
                 reply = await self.reply_group_cmd_msg(bot, context, message)
             else:
                 group_id = str(context['group_id'])
-                save_message(group_id, qq_number, message)
+                # save_message(group_id, qq_number, message)
 
                 if random.random() < 0.09 and group_id == SHADOWVILLAGE_QQ and '[CQ:' not in message:
                     reply = crawl_zhidao(message)

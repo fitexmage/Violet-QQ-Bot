@@ -81,7 +81,7 @@ def update_file(path, file):
 
 
 def get_gaussian():
-    r = random.normalvariate(0, 1.5)
+    r = random.normalvariate(0, 2.5)
     if r < -5:
         r = -5
     elif r > 5:
