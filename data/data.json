@@ -19,7 +19,7 @@
       "difficulty": "100",
       "global_server": 3,
       "cn_server": 5,
-      "nickname": ["缇坦妮雅", "妖灵王", "10w"]
+      "nickname": ["缇坦妮雅", "妖灵王", "极妖灵王", "10w"]
     },
     "无瑕灵君歼殛战": {
       "id": "1046",
@@ -28,7 +28,7 @@
       "difficulty": "100",
       "global_server": 3,
       "cn_server": 5,
-      "nickname": ["无瑕灵君", "肥宅", "肥宅王"]
+      "nickname": ["无瑕灵君", "肥宅", "肥宅王", "极肥宅"]
     },
     "哈迪斯孤念歼灭战": {
       "id": "1049",
@@ -37,7 +37,7 @@
       "difficulty": "100",
       "global_server": 3,
       "cn_server": 5,
-      "nickname": ["哈迪斯", "hds"]
+      "nickname": ["哈迪斯", "极哈迪斯", "hds"]
     },
     "极红玉神兵破坏作战1": {
       "id": "1051",

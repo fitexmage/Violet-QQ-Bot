@@ -40,7 +40,7 @@ def dps(par_list):
         role = ROLE_NICKNAME_DICT[role]
 
     if dungeon not in DPS_DUNGEON_DICT or role not in ROLE_DICT:
-        reply = "没找到这个副本，是不是那里输错了呀~"
+        reply = "没找到这个副本，是不是哪里输错了呀~"
         return reply
 
     dps_list = crawl_dps(server, dungeon, role)
