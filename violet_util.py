@@ -83,13 +83,17 @@ def what_is(at_content):
     return reply
 
 
-def what_is_image(at_content):
+def what_is_image(at_content, qq_number):
     reply = None
     if regex_match('.+长啥样.*', at_content):
         item = re.search('(.+)长啥样.*', at_content).group(1)
+        if item == "我" and qq_number == PARTNER_QQ:
+            item = "夏月"
         reply = crawl_image(item)
     elif regex_match('.+长什么样.*', at_content):
         item = re.search('(.+)长什么样.*', at_content).group(1)
+        if item == "我" and qq_number == PARTNER_QQ:
+            item = "夏月"
         reply = crawl_image(item)
     return reply
 

@@ -91,7 +91,7 @@ class Violet:
             else:
                 reply = "你发的太快啦！我处理不了这么多！"
         elif "长啥样" in at_content or "长什么样" in at_content:
-            reply = what_is_image(at_content)
+            reply = what_is_image(at_content, qq_number)
         elif at_content == "debug":
             if qq_number == PARTNER_QQ:
                 self.debug = not self.debug
