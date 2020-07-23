@@ -355,16 +355,16 @@ def crawl_market(server, item, show_num):
         return reply
     market_data = r.json()
 
-    TIMEFORMAT_YMDHMS = "%Y-%m-%d %H:%M:%S"
+    sorted_history = sorted(market_data['recentHistory'], key=lambda x:x['timestamp'], reverse=True)
 
     trade_list = []
-    for trade in market_data['recentHistory']:
+    for trade in sorted_history:
         if is_hq == trade['hq']:
-            last_upload_time = time.strftime(
+            trade_time = time.strftime(
                 TIMEFORMAT_YMDHMS, time.localtime(trade['timestamp'])
             )
             trade_list.append(
-                "价格：{} 数量：{}\n交易时间：{}".format(trade['pricePerUnit'], trade['quantity'], last_upload_time))
+                "价格：{} 数量：{}\n交易时间：{}".format(trade['pricePerUnit'], trade['quantity'], trade_time))
             if len(trade_list) == show_num:
                 break
 
@@ -386,6 +386,13 @@ def crawl_market(server, item, show_num):
     if len(listing_list) != 0:
         reply += "{}({})在{}区的板子数据：\n".format(result_list[0]['Name'], quality, server)
         reply += "\n".join(listing_list)
+        reply += "\n"
     if len(trade_list) == 0 and len(listing_list) == 0:
         reply = "服务器繁忙！"
+    else:
+        last_upload_time = time.strftime(
+            TIMEFORMAT_YMDHMS, time.localtime(market_data['lastUploadTime'] / 1000)
+        )
+        reply += "更新时间：{}".format(last_upload_time)
+
     return reply

@@ -9,6 +9,8 @@ SELF_QQ = config['self_qq']
 PARTNER_QQ = config['partner_qq']
 SHADOWVILLAGE_QQ = config['shadowvillage_qq']
 
+TIMEFORMAT_YMDHMS = "%Y-%m-%d %H:%M:%S"
+
 
 ################################################
 
