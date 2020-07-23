@@ -233,14 +233,15 @@ def tianshu_complete_line(num_array):
 
 
 def market(par_list):
-    if len(par_list) != 3:
+    if len(par_list) not in [3, 4]:
         reply = "格式不正确！"
         return reply
 
     item = par_list[1]
     server = par_list[2]
-
-    reply = crawl_market(server, item)
+    if len(par_list) == 4:
+        show_num = par_list[3]
+    else:
+        show_num = 5
+    reply = crawl_market(server, item, show_num)
     return reply
-
-print(market(["market", "矮人棉布", "鸟"]))

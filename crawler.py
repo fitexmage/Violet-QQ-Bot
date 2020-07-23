@@ -236,7 +236,6 @@ def crawl_dps(server, dungeon, role):
     s.headers.update({'referer': FFLOGS_URL})
     try:
         r = s.get(url=fflogs_url, timeout=10)
-        print(r.text)
     except:
         return []
     dps_list = []
@@ -316,7 +315,7 @@ def crawl_nuannuan():
     return reply
 
 
-def crawl_market(server, item):
+def crawl_market(server, item, show_num):
     if server in ["鸟", "1区", "一区"]:
         server = "陆行鸟"
     elif server == ["猪", "2区", "二区"]:
@@ -334,7 +333,12 @@ def crawl_market(server, item):
     else:
         is_hq = False
 
-    item_id_url = "https://cafemaker.wakingsands.com/search?indexes=Item&string={}".format(item)
+    try:
+        item_id_url = "https://cafemaker.wakingsands.com/search?indexes=Item&string={}".format(item)
+    except:
+        reply = "服务器繁忙！"
+        return reply
+
     r = requests.get(item_id_url, timeout=5)
     result_list = r.json()['Results']
     if len(result_list) > 0:
@@ -344,34 +348,44 @@ def crawl_market(server, item):
         return reply
 
     market_url = "https://universalis.app/api/{}/{}".format(server, item_id)
-    r = requests.get(market_url, timeout=5)
+    try:
+        r = requests.get(market_url, timeout=5)
+    except:
+        reply = "服务器繁忙！"
+        return reply
     market_data = r.json()
 
     TIMEFORMAT_YMDHMS = "%Y-%m-%d %H:%M:%S"
+
     trade_list = []
     for trade in market_data['recentHistory']:
         if is_hq == trade['hq']:
             last_upload_time = time.strftime(
                 TIMEFORMAT_YMDHMS, time.localtime(trade['timestamp'])
             )
-            trade_list.append("价格：{}, 数量：{}\n交易时间：{}".format(trade['pricePerUnit'], trade['quantity'], last_upload_time))
-            if len(trade_list) == 5:
+            trade_list.append(
+                "价格：{} 数量：{}\n交易时间：{}".format(trade['pricePerUnit'], trade['quantity'], last_upload_time))
+            if len(trade_list) == show_num:
                 break
 
     listing_list = []
-    for listing in market_data['recentHistory']:
+    for listing in market_data['listings']:
         if is_hq == listing['hq']:
-            listing_list.append("价格：{}, 数量：{}".format(listing['pricePerUnit'], listing['quantity']))
-            if len(listing_list) == 5:
+            listing_list.append("价格：{} 数量：{}".format(listing['pricePerUnit'], listing['quantity']))
+            if len(listing_list) == show_num:
                 break
 
     if is_hq:
         quality = "HQ"
     else:
         quality = "NQ"
-    reply = "{}({})在{}区的近期交易记录：\n".format(result_list[0]['Name'], quality, server)
-    reply += "\n".join(trade_list)
-    reply += "\n\n"
-    reply += "{}({})在{}区的板子数据：\n".format(result_list[0]['Name'], quality, server)
-    reply += "\n".join(listing_list)
+    if len(trade_list) != 0:
+        reply = "{}({})在{}区的近期交易记录：\n".format(result_list[0]['Name'], quality, server)
+        reply += "\n".join(trade_list)
+        reply += "\n\n"
+    if len(listing_list) != 0:
+        reply += "{}({})在{}区的板子数据：\n".format(result_list[0]['Name'], quality, server)
+        reply += "\n".join(listing_list)
+    if len(trade_list) == 0 and len(listing_list) == 0:
+        reply = "服务器繁忙！"
     return reply
