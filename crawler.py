@@ -236,6 +236,7 @@ def crawl_dps(server, dungeon, role):
     s.headers.update({'referer': FFLOGS_URL})
     try:
         r = s.get(url=fflogs_url, timeout=10)
+        print(r.text)
     except:
         return []
     dps_list = []
@@ -256,29 +257,22 @@ def crawl_item(item):
     if len(item) > 20:
         reply = "你确定有名字这么长的物品吗……"
         return reply
+
+    item_id_url = "https://cafemaker.wakingsands.com/search?indexes=Item&string={}".format(item)
+    r = requests.get(item_id_url, timeout=5)
+    result_list = r.json()['Results']
+    if len(result_list) > 0:
+        item = result_list[0]['Name']
+    else:
+        reply = "好像并没有搜到这个物品~"
+        return reply
+
     url = WIKI_URL + urllib.parse.quote("物品") + ":" + urllib.parse.quote(item)
     wb_data = requests.get(url)
     bs = BeautifulSoup(wb_data.text, "html.parser")
-    content = bs.find(attrs={'class':"noarticletext"})
-    if content is None:
-        content = bs.find(attrs={'class': "ff14-content-box-block"}).text[4:]
-        image = bs.find(attrs={"property": "og:image"})['content']
-        reply = "[CQ:share,url={},title={},content={},image={}]".format(url, item, content, image)
-    else:
-        url = WIKI_URL + "ItemSearch?name=" + urllib.parse.quote(item)
-        driver = get_driver()
-        try:
-            driver.get(url)
-            time.sleep(1)
-            content = driver.find_element_by_id('mw-content-text').find_element_by_class_name('mw-parser-output')
-            if "没有" not in content.text:
-                reply = '[CQ:share,url={},title="{}"的搜索结果]'.format(url, item)
-            else:
-                reply = '没有找到与"{}"相关的物品。'.format(item)
-        except:
-            reply = "服务器繁忙，请稍候再试！"
-        driver.delete_all_cookies()
-        driver.quit()
+    content = bs.find(attrs={'class': "ff14-content-box-block"}).text[4:]
+    image = bs.find(attrs={"property": "og:image"})['content']
+    reply = "[CQ:share,url={},title={},content={},image={}]".format(url, item, content, image)
     return reply
 
 
@@ -319,4 +313,65 @@ def crawl_nuannuan():
         reply = data['content']
     else:
         reply = "暖暖崩了，请稍候再试~"
+    return reply
+
+
+def crawl_market(server, item):
+    if server in ["鸟", "1区", "一区"]:
+        server = "陆行鸟"
+    elif server == ["猪", "2区", "二区"]:
+        server = "莫古力"
+    elif server == ["猫", "3区", "三区"]:
+        server = "猫小胖"
+
+    if len(item) > 20:
+        reply = "你确定有名字这么长的物品吗……"
+        return reply
+
+    if "hq" in item or "HQ" in item:
+        is_hq = True
+        item = item.replace("hq", "").replace("HQ", "")
+    else:
+        is_hq = False
+
+    item_id_url = "https://cafemaker.wakingsands.com/search?indexes=Item&string={}".format(item)
+    r = requests.get(item_id_url, timeout=5)
+    result_list = r.json()['Results']
+    if len(result_list) > 0:
+        item_id = result_list[0]['ID']
+    else:
+        reply = "好像并没有搜到这个物品~"
+        return reply
+
+    market_url = "https://universalis.app/api/{}/{}".format(server, item_id)
+    r = requests.get(market_url, timeout=5)
+    market_data = r.json()
+
+    TIMEFORMAT_YMDHMS = "%Y-%m-%d %H:%M:%S"
+    trade_list = []
+    for trade in market_data['recentHistory']:
+        if is_hq == trade['hq']:
+            last_upload_time = time.strftime(
+                TIMEFORMAT_YMDHMS, time.localtime(trade['timestamp'])
+            )
+            trade_list.append("价格：{}, 数量：{}\n交易时间：{}".format(trade['pricePerUnit'], trade['quantity'], last_upload_time))
+            if len(trade_list) == 5:
+                break
+
+    listing_list = []
+    for listing in market_data['recentHistory']:
+        if is_hq == listing['hq']:
+            listing_list.append("价格：{}, 数量：{}".format(listing['pricePerUnit'], listing['quantity']))
+            if len(listing_list) == 5:
+                break
+
+    if is_hq:
+        quality = "HQ"
+    else:
+        quality = "NQ"
+    reply = "{}({})在{}区的近期交易记录：\n".format(result_list[0]['Name'], quality, server)
+    reply += "\n".join(trade_list)
+    reply += "\n\n"
+    reply += "{}({})在{}区的板子数据：\n".format(result_list[0]['Name'], quality, server)
+    reply += "\n".join(listing_list)
     return reply

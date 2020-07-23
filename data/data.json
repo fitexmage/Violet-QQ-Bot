@@ -39,23 +39,23 @@
       "cn_server": 5,
       "nickname": ["哈迪斯", "极哈迪斯", "hds"]
     },
-    "极红玉神兵破坏作战1": {
+    "红宝石神兵狂想作战P1": {
       "id": "1051",
-      "name": "红玉神兵第一阶段",
+      "name": "红玉神兵1",
       "quest": "28",
       "difficulty": "100",
       "global_server": 3,
       "cn_server": 5,
-      "nickname": ["红玉神兵1", "红玉1"]
+      "nickname": ["红玉神兵1", "红宝石神兵1", "红玉神兵p1", "红宝石神兵p1", "红玉1", "红宝石1", "红玉p1", "红宝石p1"]
     },
-    "极红玉神兵破坏作战2": {
+    "红宝石神兵狂想作战P2": {
       "id": "1052",
-      "name": "红玉神兵第二阶段",
+      "name": "红玉神兵2",
       "quest": "28",
       "difficulty": "100",
       "global_server": 3,
       "cn_server": 5,
-      "nickname": ["红玉神兵2", "红玉2"]
+      "nickname": ["红玉神兵", "红宝石神兵", "红玉神兵2", "红宝石神兵2", "红玉神兵p2", "红宝石神兵p2", "红玉2", "红宝石2", "红玉p2", "红宝石p2"]
     },
     "瓦厉斯歼殛战": {
       "id": "1053",
@@ -379,6 +379,8 @@
     "无瑕灵君歼殛战": ["极肥宅", "极肥宅王"],
     "哈迪斯歼灭战": ["哈迪斯", "hds"],
     "哈迪斯孤念歼灭战": ["极哈迪斯", "极hds"],
+    "红宝石神兵歼灭战": ["红宝石神兵", "红玉神兵", "红宝石", "红玉"],
+    "红宝石神兵狂想作战": ["极红宝石神兵", "极红玉神兵", "极红宝石", "极红玉"],
     "水晶塔_古代人迷宫": ["塔1"],
     "水晶塔_希尔科斯塔": ["塔2"],
     "水晶塔_暗之世界": ["塔3", "暗之世界"],
@@ -387,6 +389,77 @@
     "乐欲之所瓯博讷修道院": ["修道院"],
     "复制工厂废墟": ["尼尔1"],
     "塔塔露歼殛战": ["塔塔露"]
+  },
+  "world": {
+    "红玉海": {
+      "universalis_id": "HongYuHai"
+    },
+    "神意之地": {
+      "universalis_id": "ShenYiZhiDi"
+    },
+    "拉诺西亚": {
+      "universalis_id": "LaNuoXiYa"
+    },
+    "幻影群岛": {
+      "universalis_id": "HuanYingQunDao"
+    },
+    "萌芽池": {
+      "universalis_id": "MengYaChi"
+    },
+    "宇宙和音": {
+      "universalis_id": "YuZhouHeYin"
+    },
+    "沃仙曦染": {
+      "universalis_id": "WoXianXiRan"
+    },
+    "晨曦王座": {
+      "universalis_id": "ChenXiWangZuo"
+    },
+    "白银乡": {
+      "universalis_id": "BaiYinXiang"
+    },
+    "白金幻象": {
+      "universalis_id": "BaiJinHuanXiang"
+    },
+    "神拳痕": {
+      "universalis_id": "ShenQuanHen"
+    },
+    "潮风亭": {
+      "universalis_id": "ChaoFengTing"
+    },
+    "旅人栈桥": {
+      "universalis_id": "LvRenZhanQiao"
+    },
+    "拂晓之间": {
+      "universalis_id": "FuXiaoZhiJian"
+    },
+    "龙巢神殿": {
+      "universalis_id": "Longchaoshendian"
+    },
+    "梦羽宝境": {
+      "universalis_id": "MengYuBaoJing"
+    },
+    "紫水栈桥": {
+      "universalis_id": "ZiShuiZhanQiao"
+    },
+    "延夏": {
+      "universalis_id": "YanXia"
+    },
+    "静语庄园": {
+      "universalis_id": "JingYuZhuangYuan"
+    },
+    "摩杜纳": {
+      "universalis_id": "MoDuNa"
+    },
+    "海猫茶屋": {
+      "universalis_id": "HaiMaoChaWu"
+    },
+    "柔风海湾": {
+      "universalis_id": "RouFengHaiWan"
+    },
+    "琥珀原": {
+      "universalis_id": "HuPoYuan"
+    }
   },
   "luck_things": [
     {
@@ -809,6 +882,7 @@
   },
   "house": {
     "高地孤丘": {
+      "nickname": ["沙", "沙都"],
       "1": {
         "grade": 1,
         "size": "S"
@@ -931,6 +1005,7 @@
       }
     },
     "薰衣草苗圃": {
+      "nickname": ["森", "森都"],
       "1": {
         "grade": 3,
         "size": "M"
@@ -1053,6 +1128,7 @@
       }
     },
     "海雾村": {
+      "nickname": ["海", "海都"],
       "1": {
         "grade": 2,
         "size": "M"
@@ -1175,6 +1251,7 @@
       }
     },
     "白银乡": {
+      "nickname": ["白", "白银"],
       "1": {
         "grade": 1,
         "size": "M"
@@ -1296,16 +1373,6 @@
         "size": "L"
       }
     }
-  },
-  "house_nickname": {
-    "沙": "高地孤丘",
-    "沙都": "高地孤丘",
-    "森": "薰衣草苗圃",
-    "森都": "薰衣草苗圃",
-    "海": "海雾村",
-    "海都": "海雾村",
-    "白": "白银乡",
-    "白银": "白银乡"
   },
   "house_init_price": {
     "S": {

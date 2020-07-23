@@ -1,6 +1,6 @@
 from util import *
 from config import *
-from crawler import crawl_dps, crawl_dungeon
+from crawler import crawl_dps, crawl_dungeon, crawl_market
 
 import random
 import numpy as np
@@ -33,6 +33,7 @@ def dps(par_list):
         reply = "格式不正确！"
         return reply
 
+    dungeon = dungeon.lower()
     if dungeon in DPS_DUNGEON_NICKNAME_DICT:
         dungeon = DPS_DUNGEON_NICKNAME_DICT[dungeon]
 
@@ -229,3 +230,17 @@ def tianshu_complete_line(num_array):
     if num_array[0][3] and num_array[1][2] and num_array[2][1] and num_array[3][0]:
         num_lines += 1
     return num_lines
+
+
+def market(par_list):
+    if len(par_list) != 3:
+        reply = "格式不正确！"
+        return reply
+
+    item = par_list[1]
+    server = par_list[2]
+
+    reply = crawl_market(server, item)
+    return reply
+
+print(market(["market", "矮人棉布", "鸟"]))

@@ -37,29 +37,31 @@ class FF_System:
 
         reply = None
 
-        if func == 'help':
+        if func == "help":
             reply = intro()
-        elif func == 'dps':
+        elif func == "dps":
             reply = dps(par_list)
-        elif func == 'dice':
+        elif func == "dice":
             reply = dice(par_list)
-        elif func == 'gate':
+        elif func == "gate":
             reply = gate(par_list)
-        elif func == '占卜':
+        elif func == "占卜":
             reply = luck(self, qq_number)
-        elif func == 'item':
+        elif func == "item":
             if len(par_list) > 1:
                 item = par_list[1]
                 reply = crawl_item(item)
-        elif func == 'dungeon':
+        elif func == "dungeon":
             reply = dungeon(par_list)
-        elif func == 'nuannuan':
+        elif func == "nuannuan":
             reply = crawl_nuannuan()
-        elif func == 'fish':
+        elif func == "fish":
             reply = fish(par_list)
-        elif func == 'house':
+        elif func == "house":
             reply = house(par_list)
-        elif func == 'tianshu':
+        elif func == "tianshu":
             reply = tianshu(par_list)
+        elif func == "market":
+            reply = market(par_list)
         return reply
 
