@@ -318,9 +318,9 @@ def crawl_nuannuan():
 def crawl_market(server, item, show_num):
     if server in ["鸟", "1区", "一区"]:
         server = "陆行鸟"
-    elif server == ["猪", "2区", "二区"]:
+    elif server in ["猪", "2区", "二区"]:
         server = "莫古力"
-    elif server == ["猫", "3区", "三区"]:
+    elif server in ["猫", "3区", "三区"]:
         server = "猫小胖"
 
     if len(item) > 20:
@@ -388,7 +388,7 @@ def crawl_market(server, item, show_num):
         reply += "\n".join(listing_list)
         reply += "\n"
     if len(trade_list) == 0 and len(listing_list) == 0:
-        reply = "服务器繁忙！"
+        reply = "暂无数据！"
     else:
         last_upload_time = time.strftime(
             TIMEFORMAT_YMDHMS, time.localtime(market_data['lastUploadTime'] / 1000)
@@ -396,3 +396,7 @@ def crawl_market(server, item, show_num):
         reply += "更新时间：{}".format(last_upload_time)
 
     return reply
+
+
+if __name__=="__main__":
+    print(crawl_market("猫", "铜矿", 5))
