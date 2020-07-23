@@ -48,9 +48,7 @@ class FF_System:
         elif func == "占卜":
             reply = luck(self, qq_number)
         elif func == "item":
-            if len(par_list) > 1:
-                item = par_list[1]
-                reply = crawl_item(item)
+            reply = item(self, par_list)
         elif func == "dungeon":
             reply = dungeon(par_list)
         elif func == "nuannuan":

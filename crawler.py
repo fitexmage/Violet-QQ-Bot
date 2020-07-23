@@ -225,19 +225,21 @@ def crawl_music(music_name):
 
 def crawl_dps(server, dungeon, role):
     if server == "国际服":
-        server= DPS_DUNGEON_DICT[dungeon]['global_server']
+        server_id = DPS_DUNGEON_DICT[dungeon]['global_server']
     else:
-        server= DPS_DUNGEON_DICT[dungeon]['cn_server']
+        server_id = DPS_DUNGEON_DICT[dungeon]['cn_server']
 
     fflogs_url = "https://www.fflogs.com/zone/statistics/table/{}/dps/{}/{}/8/{}/100/1000/7/0/Global/{}/All/0/normalized/single/0/-1/?keystone=15&dpstype=adps" \
-        .format(DPS_DUNGEON_DICT[dungeon]['quest'], DPS_DUNGEON_DICT[dungeon]['id'], DPS_DUNGEON_DICT[dungeon]['difficulty'], server, ROLE_DICT[role]['attr'])
+        .format(DPS_DUNGEON_DICT[dungeon]['quest'], DPS_DUNGEON_DICT[dungeon]['id'], DPS_DUNGEON_DICT[dungeon]['difficulty'], server_id, ROLE_DICT[role]['attr'])
 
     s = requests.Session()
     s.headers.update({'referer': FFLOGS_URL})
     try:
         r = s.get(url=fflogs_url, timeout=10)
     except:
-        return []
+        reply = "服务器繁忙，请稍候再试！"
+        return reply
+
     dps_list = []
     for level in LEVEL_LIST:
         if level == "100":
@@ -249,14 +251,16 @@ def crawl_dps(server, dungeon, role):
             dps_list.append(dps)
         except:
             pass
-    return dps_list
+    if len(dps_list) != 0:
+        reply = '{} {} {}(adps)'.format(DPS_DUNGEON_DICT[dungeon]['name'], role, server)
+        for i in range(len(LEVEL_LIST)):
+            reply += '\n{}%：{}'.format(LEVEL_LIST[i], dps_list[i])
+    else:
+        reply = "当前暂无数据，请稍候再试！"
+    return reply
 
 
 def crawl_item(item):
-    if len(item) > 20:
-        reply = "你确定有名字这么长的物品吗……"
-        return reply
-
     item_id_url = "https://cafemaker.wakingsands.com/search?indexes=Item&string={}".format(item)
     r = requests.get(item_id_url, timeout=5)
     result_list = r.json()['Results']
@@ -276,10 +280,7 @@ def crawl_item(item):
 
 
 def crawl_dungeon(dungeon):
-    if len(dungeon) > 30:
-        reply = "你确定有这么长名字的副本吗……"
-        return reply
-    elif dungeon == '塔塔露歼殛战':
+    if dungeon == '塔塔露歼殛战':
         url = "https://www.baidu.com/s?wd=%E5%A4%A7%E8%83%83%E7%8E%8B%E6%AF%94%E8%B5%9B"
         reply = "[CQ:share,url={},title={}]".format(url, dungeon)
         return reply
@@ -315,31 +316,14 @@ def crawl_nuannuan():
     return reply
 
 
-def crawl_market(server, item, show_num):
-    if server in ["鸟", "1区", "一区"]:
-        server = "陆行鸟"
-    elif server in ["猪", "2区", "二区"]:
-        server = "莫古力"
-    elif server in ["猫", "3区", "三区"]:
-        server = "猫小胖"
-
-    if len(item) > 20:
-        reply = "你确定有名字这么长的物品吗……"
-        return reply
-
-    if "hq" in item or "HQ" in item:
-        is_hq = True
-        item = item.replace("hq", "").replace("HQ", "")
-    else:
-        is_hq = False
-
+def crawl_market(server, item, quality, show_num):
+    item_id_url = "https://cafemaker.wakingsands.com/search?indexes=Item&string={}".format(item)
     try:
-        item_id_url = "https://cafemaker.wakingsands.com/search?indexes=Item&string={}".format(item)
+        r = requests.get(item_id_url, timeout=5)
     except:
         reply = "服务器繁忙！"
         return reply
 
-    r = requests.get(item_id_url, timeout=5)
     result_list = r.json()['Results']
     if len(result_list) > 0:
         item_id = result_list[0]['ID']
@@ -359,7 +343,7 @@ def crawl_market(server, item, show_num):
 
     trade_list = []
     for trade in sorted_history:
-        if is_hq == trade['hq']:
+        if quality == "" or (quality == "hq") == trade['hq']:
             trade_time = time.strftime(
                 TIMEFORMAT_YMDHMS, time.localtime(trade['timestamp'])
             )
@@ -370,21 +354,21 @@ def crawl_market(server, item, show_num):
 
     listing_list = []
     for listing in market_data['listings']:
-        if is_hq == listing['hq']:
+        if quality == "" or (quality == "hq") == listing['hq']:
             listing_list.append("价格：{} 数量：{}".format(listing['pricePerUnit'], listing['quantity']))
             if len(listing_list) == show_num:
                 break
 
-    if is_hq:
-        quality = "HQ"
-    else:
-        quality = "NQ"
+    if quality == "hq":
+        quality = "(HQ)"
+    elif quality == "nq":
+        quality = "(NQ)"
     if len(trade_list) != 0:
-        reply = "{}({})在{}区的近期交易记录：\n".format(result_list[0]['Name'], quality, server)
+        reply = "{}{}在{}区的近期交易记录：\n".format(result_list[0]['Name'], quality, server)
         reply += "\n".join(trade_list)
         reply += "\n\n"
     if len(listing_list) != 0:
-        reply += "{}({})在{}区的板子数据：\n".format(result_list[0]['Name'], quality, server)
+        reply += "{}{}在{}区的板子数据：\n".format(result_list[0]['Name'], quality, server)
         reply += "\n".join(listing_list)
         reply += "\n"
     if len(trade_list) == 0 and len(listing_list) == 0:
@@ -394,9 +378,4 @@ def crawl_market(server, item, show_num):
             TIMEFORMAT_YMDHMS, time.localtime(market_data['lastUploadTime'] / 1000)
         )
         reply += "更新时间：{}".format(last_upload_time)
-
     return reply
-
-
-if __name__=="__main__":
-    print(crawl_market("猫", "铜矿", 5))

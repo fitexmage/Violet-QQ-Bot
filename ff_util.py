@@ -1,6 +1,6 @@
 from util import *
 from config import *
-from crawler import crawl_dps, crawl_dungeon, crawl_market
+from crawler import crawl_dps, crawl_item, crawl_dungeon, crawl_market
 
 import random
 import numpy as np
@@ -40,17 +40,14 @@ def dps(par_list):
     if role in ROLE_NICKNAME_DICT:
         role = ROLE_NICKNAME_DICT[role]
 
-    if dungeon not in DPS_DUNGEON_DICT or role not in ROLE_DICT:
+    if dungeon not in DPS_DUNGEON_DICT:
         reply = "没找到这个副本，是不是哪里输错了呀~"
         return reply
+    if role not in ROLE_DICT:
+        reply = "似乎并没有这个职业，是不是哪里输错了呀~"
+        return reply
 
-    dps_list = crawl_dps(server, dungeon, role)
-    if len(dps_list) != 0:
-        reply = '{} {} {}(adps)'.format(DPS_DUNGEON_DICT[dungeon]['name'], role, server)
-        for i in range(len(LEVEL_LIST)):
-            reply += '\n{}%：{}'.format(LEVEL_LIST[i], dps_list[i])
-    else:
-        reply = "当前服务器繁忙或暂无数据，请稍候再试！"
+    reply = crawl_dps(server, dungeon, role)
     return reply
 
 
@@ -127,14 +124,32 @@ def luck(self, qq_number):
     return reply
 
 
+def item(par_list):
+    if len(par_list) <= 1:
+        reply = "格式错误！"
+        return reply
+
+    item = par_list[1]
+    if len(item) > 20:
+        reply = "你确定有名字这么长的物品吗……"
+        return reply
+    reply = crawl_item(item)
+    return reply
+
+
 def dungeon(par_list):
-    if len(par_list) > 1:
-        dungeon_name = par_list[1]
-        if dungeon_name in SEARCH_DUNGEON_NICKNAME_DICT:
-            dungeon_name = SEARCH_DUNGEON_NICKNAME_DICT[dungeon_name]
-        reply = crawl_dungeon(dungeon_name)
-    else:
+    if len(par_list) <= 1:
         reply = "请选择想要查询的副本！"
+        return reply
+
+    dungeon_name = par_list[1]
+    if len(dungeon_name) > 30:
+        reply = "你确定有这么长名字的副本吗……"
+        return reply
+
+    if dungeon_name in SEARCH_DUNGEON_NICKNAME_DICT:
+        dungeon_name = SEARCH_DUNGEON_NICKNAME_DICT[dungeon_name]
+    reply = crawl_dungeon(dungeon_name)
     return reply
 
 
@@ -243,5 +258,29 @@ def market(par_list):
         show_num = par_list[3]
     else:
         show_num = 5
-    reply = crawl_market(server, item, show_num)
+
+    if len(item) > 20:
+        reply = "你确定有名字这么长的物品吗……"
+        return reply
+
+    if server in SERVER_NICKNAME_DICT:
+        server = SERVER_NICKNAME_DICT[server]
+    if server not in SERVER_DICT:
+        reply = "好像并没有这个服务器"
+        return reply
+
+    if "hq" in item or "HQ" in item:
+        quality = "hq"
+        item = item.replace("hq", "").replace("HQ", "")
+    elif "nq" in item or "NQ" in item:
+        quality = "nq"
+        item = item.replace("nq", "").replace("NQ", "")
+    else:
+        quality = ""
+    reply = crawl_market(server, item, quality, show_num)
     return reply
+
+
+if __name__=="__main__":
+#     print(dps(["dps", "e5s", "舞者", "国际服"]))
+    print(market(["market", "一水灵砂", "鸟", 5]))

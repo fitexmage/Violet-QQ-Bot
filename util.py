@@ -34,6 +34,15 @@ def load_search_dungeon_nickname(data):
     return nickname_dict
 
 
+def load_server_nickname(data):
+    nickname_dict = {}
+
+    for server in data['server']:
+        for nickname in data['server'][server]['nickname']:
+            nickname_dict[nickname] = server
+    return nickname_dict
+
+
 def load_universalis_id(data):
     id_dict = {}
 
@@ -69,6 +78,7 @@ def load_all_file():
     data['search_dungeon_nickname'] = load_search_dungeon_nickname(data)
     data['place_nickname'] = load_place_nickname(data)
     data['house_nickname'] = load_house_nickname(data)
+    data['server_nickname'] = load_server_nickname(data)
     data['universalis_id'] = load_universalis_id(data)
     print("All data loaded!")
     return data
