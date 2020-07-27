@@ -363,19 +363,21 @@ def crawl_market(server, item, quality, show_num):
         quality = "(HQ)"
     elif quality == "nq":
         quality = "(NQ)"
-    if len(trade_list) != 0:
-        reply = "{}{}在{}区的近期交易记录：\n".format(result_list[0]['Name'], quality, server)
-        reply += "\n".join(trade_list)
-        reply += "\n\n"
-    if len(listing_list) != 0:
-        reply += "{}{}在{}区的板子数据：\n".format(result_list[0]['Name'], quality, server)
-        reply += "\n".join(listing_list)
-        reply += "\n"
-    if len(trade_list) == 0 and len(listing_list) == 0:
-        reply = "暂无数据！"
-    else:
+
+    if len(trade_list) != 0 or len(listing_list) != 0:
+        reply = "{}大区市场信息：\n\n".format(server)
+        if len(trade_list) != 0:
+            reply = "{}{}的交易记录：\n".format(result_list[0]['Name'], quality, server)
+            reply += "\n".join(trade_list)
+            reply += "\n\n"
+        if len(listing_list) != 0:
+            reply += "{}{}的板子数据：\n".format(result_list[0]['Name'], quality, server)
+            reply += "\n".join(listing_list)
+            reply += "\n"
         last_upload_time = time.strftime(
             TIMEFORMAT_YMDHMS, time.localtime(market_data['lastUploadTime'] / 1000)
         )
         reply += "更新时间：{}".format(last_upload_time)
+    else:
+        reply = "暂无数据！"
     return reply

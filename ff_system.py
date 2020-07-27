@@ -1,7 +1,7 @@
 from ff_util import *
 from config import *
 from util import *
-from crawler import crawl_item, crawl_nuannuan
+from crawler import crawl_nuannuan
 
 
 class FF_System:
